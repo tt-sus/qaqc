@@ -6,6 +6,9 @@ import { PagerService } from "pagination";
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import * as _ from 'underscore';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { Project } from './project';
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
@@ -17,7 +20,11 @@ export class HomeComponent implements OnInit   {
   projectTitles:Array<any>=[];
    items: FirebaseListObservable<any[]>;
 
-  constructor(db: AngularFireDatabase,private pagerService: PagerService) {
+  constructor(db: AngularFireDatabase,
+              private pagerService: PagerService,
+              public authService: AuthService,
+              private router:Router
+              ) {
     this.items = db.list('/projects')
     this.items.subscribe(res=> {
       this.projectTitles=res;
@@ -41,7 +48,7 @@ export class HomeComponent implements OnInit   {
     // pager object
   pager: any = {};
     // paged items
-  pagedItems: any[];
+  pagedItems: Project[];
    ngOnInit() {
   // initialize to page 1
     
@@ -50,14 +57,15 @@ export class HomeComponent implements OnInit   {
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
-
         // get pager object from service
         this.pager = this.pagerService.getPager(this.projectTitles.length, page);
-
         // get current page of items
         this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
         console.log("paged"+this.pagedItems)
     }
-
+logOut(){
+this.authService.logout();
+}
+filter:Project=new Project();
 
 }

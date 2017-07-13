@@ -1,7 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { AuthComponent } from './auth/auth.component';
 export const appRoutes: Routes = [
-  { path: "", component: HomeComponent },
+  { path: "", component: AuthComponent },
+  { path: "home", component: HomeComponent },
 //   { path: 'hero/:id',      component: HeroDetailComponent },
 //   {
 //     path: 'heroes',
