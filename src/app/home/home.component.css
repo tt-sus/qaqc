@@ -1,0 +1,27 @@
+.pagination{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+.home-wrapper{
+    margin-top: 100px;
+}
+input[type=text]:focus {
+    width: 50%;
+   
+
+}
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-repeat: no-repeat !important;
+    background-position: 5px 5px !important; 
+    background-repeat: no-repeat;
+    padding: 5px 20px 5px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
