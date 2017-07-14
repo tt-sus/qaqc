@@ -18,11 +18,11 @@
       Signup
     </button>
     
-    <button (click)="login()" [disabled]="!email || !password">
+  
+  </div>
+  <button (click)="login()" [disabled]="!email || !password">
       Login
     </button>
-  </div>
-
   <button (click)="logout()" *ngIf="authService.user | async">
     Logout
   </button>
