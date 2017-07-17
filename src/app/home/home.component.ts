@@ -9,6 +9,9 @@ import * as _ from 'underscore';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Project } from './project';
+import { Manager } from './manager';
+
+
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
@@ -18,20 +21,27 @@ export class HomeComponent implements OnInit   {
  
   projects:Observable<any>;
   projectTitles:Array<any>=[];
-   items: FirebaseListObservable<any[]>;
-
+  items: FirebaseListObservable<any[]>;
+  users: FirebaseListObservable<any[]>;
+  Managers:any[]=[];
   constructor(db: AngularFireDatabase,
               private pagerService: PagerService,
               public authService: AuthService,
               private router:Router
               ) {
-    this.items = db.list('/projects')
-    this.items.subscribe(res=> {
-      this.projectTitles=res;
-        this.setPage(1);
-      console.log(this.projectTitles)
-    }) 
-  }
+                  this.items = db.list('/projects')
+                  this.items.subscribe(res=> {
+                    this.projectTitles=res;
+                    this.setPage(1);
+                 });
+                    this.users = db.list('/users')
+                    this.users.subscribe(res=> {
+                  
+                    this.Managers=res;
+                     this.checkManager()
+                 })  
+                }
+// add project
     addToList(item: any) {
     this.items.push(
       {
@@ -45,14 +55,24 @@ export class HomeComponent implements OnInit   {
       }
     );
   }
+  //authenticate manager
+  checkManager(){
+  for(let i=0;i<this.Managers.length;i++){
+      if(this.Managers[i].$value===this.authService.userName){
+       return true;
+      }
+  }
+  }
     // pager object
   pager: any = {};
     // paged items
   pagedItems: Project[];
    ngOnInit() {
   // initialize to page 1
+
     
     }
+//search filter
 transform(filter:Project){
   if(!filter){
  
@@ -80,20 +100,22 @@ transform(filter:Project){
     }
     return true;
 }
-     setPage(page: number) {
-        if (page < 1 || page > this.pager.totalPages) {
-            return;
-        }
-        // get pager object from service
-        this.pager = this.pagerService.getPager(this.projectTitles.length, page);
-        // get current page of items
-        this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
-        console.log("paged"+this.pagedItems)
-    }
+//pagination
+setPage(page: number) {
+  if (page < 1 || page > this.pager.totalPages) {
+      return;
+  }
+  // get pager object from service
+  this.pager = this.pagerService.getPager(this.projectTitles.length, page);
+  // get current page of items
+  this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
+  console.log("paged"+this.pagedItems)
+}
 logOut(){
 this.authService.logout();
 }
 filter:Project=new Project();
+//child routing
   goToProject(project) {
     console.log("p is"+project.$key);
     this.router.navigate(['projectDetail', project.$key]);

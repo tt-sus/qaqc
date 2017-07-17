@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
+  userName:string;
   isLoggedIn:boolean;
   constructor(private firebaseAuth: AngularFireAuth,private router:Router) {
     this.user = firebaseAuth.authState;
   }
-
+ 
   signup(email: string, password: string) {
     this.firebaseAuth
       .auth
@@ -33,7 +34,9 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(value => {
         if(this.firebaseAuth.auth){
+          this.userName=value.email;
            this.router.navigate(["home"]);
+           
         }
         console.log(value);
       })

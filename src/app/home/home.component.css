@@ -6,4 +6,6 @@
 .home-wrapper{
     margin-top: 100px;
 }
-
+table td{
+    cursor: pointer;
+}
