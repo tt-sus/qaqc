@@ -14,13 +14,15 @@ import {appRoutes} from './app.routes';
 import { AuthComponent } from './auth/auth.component';
 import { AuthService } from './auth.service';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
+import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AuthComponent,
-    ProjectFilterPipe
+    ProjectFilterPipe,
+    ProjectdetailsComponent
   ],
   imports: [
     BrowserModule,

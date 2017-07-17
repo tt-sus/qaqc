@@ -1,9 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
+import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
 export const appRoutes: Routes = [
   { path: "", component: AuthComponent },
   { path: "home", component: HomeComponent },
+  {path:"projectDetail/:id",component:ProjectdetailsComponent}
 //   { path: 'hero/:id',      component: HeroDetailComponent },
 //   {
 //     path: 'heroes',

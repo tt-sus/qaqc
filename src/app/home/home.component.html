@@ -17,7 +17,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let res of pagedItems |  projectfilter: filter ">
+                        <tr *ngFor="let res of pagedItems |  projectfilter: filter " (click)="goToProject(res)">
                             <td>{{res.project_number}}</td>
                             <td>{{res.title}}</td>
                             <td>{{res.manager}}</td>

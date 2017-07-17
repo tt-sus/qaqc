@@ -4,6 +4,5 @@ export class Project {
   manager: String;
   title: String;
   status:String;
-  
 
 }

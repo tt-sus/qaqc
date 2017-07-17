@@ -18,14 +18,16 @@ export class HomeComponent implements OnInit   {
  
   projects:Observable<any>;
   projectTitles:Array<any>=[];
-   items: FirebaseListObservable<any[]>;
+  items: FirebaseListObservable<any[]>;
+  timeline:FirebaseListObservable<any[]>;
 
   constructor(db: AngularFireDatabase,
               private pagerService: PagerService,
               public authService: AuthService,
               private router:Router
               ) {
-    this.items = db.list('/projects')
+    this.items = db.list('/projects');
+    this.timeline=db.list('/projecttimeline');
     this.items.subscribe(res=> {
       this.projectTitles=res;
         this.setPage(1);
@@ -33,17 +35,24 @@ export class HomeComponent implements OnInit   {
     }) 
   }
     addToList(item: any) {
-    this.items.push(
-      {
-        title: " Lord of the rings",
-      manager:"Sunny",
-      project_number:"1",
+      let key=this.timeline.push({}).key;
+     this.timeline.update(key,{
+       assignedto:"Elsa",
+       created:"02/07/2017"
+     });
+
+     this.items.push({
+       title: "Simulation",
+       timeline_id:key,
+      manager:"Elsa",
+      project_number:"201",
       services: {
         s1: "Building certification",
         s2:"Energy ANalytics"
       }
-      }
-    );
+     })
+
+    
   }
     // pager object
   pager: any = {};
@@ -67,5 +76,8 @@ logOut(){
 this.authService.logout();
 }
 filter:Project=new Project();
-
+  goToProject(project) {
+    console.log("p is"+project.$key);
+    this.router.navigate(['projectDetail', project.$key]);
+  };
 }

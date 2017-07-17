@@ -12,14 +12,13 @@
    <div class="col-lg-6">
     <input type="password" [(ngModel)]="password" placeholder="password">
   </div>
-  <div *ngIf="!(authService.user | async)">
-  <br>
-    <button (click)="signup()" [disabled]="!email || !password">
+
+    <button (click)="signup()" [disabled]="!email || !password" *ngIf="!(authService.user | async)">
       Signup
     </button>
     
   
-  </div>
+
   <button (click)="login()" [disabled]="!email || !password">
       Login
     </button>
