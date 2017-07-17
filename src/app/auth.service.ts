@@ -35,6 +35,7 @@ export class AuthService {
       .then(value => {
         if(this.firebaseAuth.auth){
           this.userName=value.email;
+          this.isLoggedIn=true;
            this.router.navigate(["home"]);
            
         }
@@ -49,6 +50,7 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
+
       this.router.navigate([""]);
   }
 

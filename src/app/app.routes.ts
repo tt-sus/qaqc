@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
 import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
+import { LoginRouteGuard } from './auth/login-route-guard';
 export const appRoutes: Routes = [
   { path: "", component: AuthComponent },
   { path: "home", component: HomeComponent },
@@ -16,5 +17,5 @@ export const appRoutes: Routes = [
 //     redirectTo: '/heroes',
 //     pathMatch: 'full'
 //   },
-//   { path: '**', component: PageNotFoundComponent }
+//   { path: '**', component: PageNotFoundComponent } canActivate: [LoginRouteGuard]
 ];

@@ -4,6 +4,7 @@ import 'rxjs/Rx'
 import { Observable } from "rxjs/Observable";
 import { PagerService } from "pagination";
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
 
 import * as _ from 'underscore';
 import { AuthService } from '../auth.service';
@@ -23,35 +24,47 @@ export class HomeComponent implements OnInit   {
   projectTitles:Array<any>=[];
   items: FirebaseListObservable<any[]>;
   users: FirebaseListObservable<any[]>;
+  timeline: FirebaseListObservable<any[]>;
   Managers:any[]=[];
+  database:any;
+  project_key:string;
   constructor(db: AngularFireDatabase,
               private pagerService: PagerService,
               public authService: AuthService,
-              private router:Router
+              private router:Router,
+              private fb:FormBuilder
               ) {
                   this.items = db.list('/projects')
                   this.items.subscribe(res=> {
                     this.projectTitles=res;
                     this.setPage(1);
                  });
+                    this.timeline = db.list('/projecttimeline');
                     this.users = db.list('/users')
                     this.users.subscribe(res=> {
                   
                     this.Managers=res;
-                     this.checkManager()
+                     this.checkManager();
+                     this.database=db;
                  })  
                 }
 // add project
-    addToList(item: any) {
+    addToList() {
+     
+     this.project_key= this.timeline.push({id:"adad",project_name:this.title}).key
+ console.log("key is"+this.project_key)
     this.items.push(
       {
-        title: " Lord of the rings",
-      manager:"Sunny",
-      project_number:"1",
+        title: this.title,
+      manager:this.manager,
+      project_number:this.projectNumber,
       services: {
         s1: "Building certification",
         s2:"Energy ANalytics"
-      }
+      },
+        startDate:this.startDate,
+        endDate:this.endDate,
+        timeline_key:this.project_key
       }
     );
   }
@@ -67,11 +80,7 @@ export class HomeComponent implements OnInit   {
   pager: any = {};
     // paged items
   pagedItems: Project[];
-   ngOnInit() {
-  // initialize to page 1
 
-    
-    }
 //search filter
 transform(filter:Project){
   if(!filter){
@@ -111,13 +120,34 @@ setPage(page: number) {
   this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
   console.log("paged"+this.pagedItems)
 }
-logOut(){
-this.authService.logout();
-}
+
 filter:Project=new Project();
 //child routing
   goToProject(project) {
-    console.log("p is"+project.$key);
+    console.log("key is from home"+project.$key);
     this.router.navigate(['projectDetail', project.$key]);
   };
+  inputsForm:FormGroup;
+startDate:Date=new Date();
+say(){
+  console.log(this.title)
+  console.log(this.manager)
+  console.log(this.projectNumber)
+  console.log(this.startDate)
+  console.log(this.endDate)
+}
+title:string;
+manager:string;
+projectNumber:string;
+endDate:Date;
+status:string;
+   ngOnInit() {
+     this.inputsForm=this.fb.group({
+     projectNumber:[null,[]],
+      title:[null,[]],
+      manager:[null,[]],
+      startDate:[this.startDate,[]],
+      endDate:[this.startDate,[]],
+     })
+   }
 }

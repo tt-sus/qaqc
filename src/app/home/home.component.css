@@ -1,8 +1,4 @@
-.pagination{
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-}
+
 .home-wrapper{
     margin-top: 100px;
 }

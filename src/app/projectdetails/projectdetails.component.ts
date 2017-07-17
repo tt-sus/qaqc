@@ -26,11 +26,11 @@ export class ProjectdetailsComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
-       console.log(this.id)
+       console.log(this.id + "from details")
     });  
    this.database.object('projects/'+this.id ).subscribe((res)=>{
          this.projectToShow=res;
-         this.getTimeline(this.projectToShow.timeline_id)
+         this.getTimeline(this.projectToShow.timeline_key)
   
       });    
   }
