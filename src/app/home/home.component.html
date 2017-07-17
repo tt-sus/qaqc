@@ -2,7 +2,12 @@
   <div class="home-wrapper">
     <button (click)="logOut()" class="pull-right">Log Out</button>
 
-    <input type="text"  placeholder="Project Name" name="Search" [(ngModel)]="filter.title"[style.background]="'url(./assets/images/searchicon.png)'"> 
+    <input  type="text"  
+            placeholder="Project Name" 
+            name="Search" 
+            [(ngModel)]="filter.title"
+ 
+            (keyup)="transform(filter.title)"> 
     <div>
         <div class="results">
             <div >
@@ -17,7 +22,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let res of pagedItems |  projectfilter: filter " (click)="goToProject(res)">
+                        <tr *ngFor="let res of pagedItems |projectfilter: filter" (click)="goToProject(res)">
                             <td>{{res.project_number}}</td>
                             <td>{{res.title}}</td>
                             <td>{{res.manager}}</td>
