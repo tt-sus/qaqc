@@ -5,3 +5,7 @@
 table td{
     cursor: pointer;
 }
+.search{
+    margin-left: 15px;
+    margin-bottom: 20px;
+}

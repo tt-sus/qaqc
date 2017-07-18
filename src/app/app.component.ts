@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
+import {Observable, Subject, BehaviorSubject} from "rxjs/Rx";
 
 import * as _ from 'underscore';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,8 +13,28 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit   {
 
   constructor(  public authService: AuthService,
-              private router:Router){
-
+                private router:Router,
+                private auth: AngularFireAuth){
+                  console.log(this.auth.authState)
+                  console.log(this.authService.isLoggedIn)
+        if(this.auth.authState){
+       this.auth.authState.subscribe((auth)=>{
+         if(auth){
+           this.authService.isLoggedIn=true;
+           
+         }
+          else{
+           this.authService.isLoggedIn=false;
+          }
+       })
+      }
+      //  if(this.auth.authState){
+      //  this.auth.authState.subscribe((auth)=>{
+      //     this.authService.isLoggedIn=true;
+      //  })
+      // }
+       console.log(this.auth.authState)
+                  console.log(this.authService.isLoggedIn)
   }
   logout(){
     this.authService.logout();
@@ -28,7 +49,6 @@ export class AppComponent implements OnInit   {
     }
   }
    ngOnInit() {
-  // initialize to page 1
  
     
     }

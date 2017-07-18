@@ -4,5 +4,5 @@ export class Project {
   manager: String;
   title: String;
   status:String;
-
+  timeline_key:string;
 }

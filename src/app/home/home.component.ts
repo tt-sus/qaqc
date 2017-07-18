@@ -44,16 +44,17 @@ export class HomeComponent implements OnInit   {
                     this.users.subscribe(res=> {
                   
                     this.Managers=res;
-                     this.checkManager();
+                    //  this.checkManager();
                      this.database=db;
                  })  
                 }
 // add project
     addToList() {
-     
-     this.project_key= this.timeline.push({id:"adad",project_name:this.title}).key
- console.log("key is"+this.project_key)
-    this.items.push(
+     this.project_key= this.timeline.push({
+                      project_name:this.title, 
+                      project_number:this.projectNumber,
+                      manager:this.manager}).key
+      this.items.push(
       {
         title: this.title,
       manager:this.manager,
@@ -68,14 +69,17 @@ export class HomeComponent implements OnInit   {
       }
     );
   }
+  //delete Project
+  delete(key:string,project:Project){
+    let time_key=project.timeline_key;
+    this.items.remove(key).then((project)=>{
+      this.timeline.remove(time_key);
+    })
+   
+  }
+
   //authenticate manager
-  checkManager(){
-  for(let i=0;i<this.Managers.length;i++){
-      if(this.Managers[i].$value===this.authService.userName){
-       return true;
-      }
-  }
-  }
+  
     // pager object
   pager: any = {};
     // paged items
