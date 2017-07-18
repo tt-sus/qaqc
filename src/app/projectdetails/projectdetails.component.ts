@@ -2,27 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
+import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
 @Component({
   selector: 'app-projectdetails',
   templateUrl: './projectdetails.component.html',
   styleUrls: ['./projectdetails.component.css']
 })
 export class ProjectdetailsComponent implements OnInit {
+  query_id: any;
   timelineToShow: any;
   projectId: number;
   database:any;
   projectToShow;
   sub:any;
   id:any;
+  inputsForm:FormGroup;
+  taskListObs: FirebaseListObservable<any[]>;
+  taskList:any[]=[];
   constructor(
-     private location: Location,
-                private db: AngularFireDatabase,
+              private location: Location,
+              private db: AngularFireDatabase,
               private route: ActivatedRoute,
-             
+              private fb: FormBuilder
             ) { 
                 this.database=db;
+           
               }
-
+//modelling inputs
+taskName:string;
+category:string;
+assigned_to:string;
+startDate:Date;
+dueDate:Date;
+timeline_key:string;
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
@@ -31,16 +43,64 @@ export class ProjectdetailsComponent implements OnInit {
    this.database.object('projects/'+this.id ).subscribe((res)=>{
          this.projectToShow=res;
          this.getTimeline(this.projectToShow.timeline_key)
-  
-      });    
+      });  
+        
+       
+        this.inputsForm=this.fb.group({
+          taskName:[this.taskName],
+          category:[this.category],
+          assigned_to:[this.assigned_to],
+          startDate:[this.startDate],
+          dueDate:[this.dueDate]
+        })
+        console.log(this.taskList)
   }
      getTimeline(id){
-        let query_id=id;
-        this.database.object('projecttimeline/'+query_id).subscribe((res)=>{
-          this.timelineToShow=res;
-          console.log(this.timelineToShow)
+      this.query_id=id;
+      this.database.object('projecttimeline/'+this.query_id).subscribe((res)=>{
+        this.timelineToShow=res;
+        console.log(this.timelineToShow)
+        this.timeline_key=this.timelineToShow.$key;
+        this.taskListObs=this.database.list(`projecttimeline/${this.timeline_key}/tasks`)
+        this.taskListObs.subscribe(res => {
+        this.taskList=res;
+        console.log(this.taskList)
+         })
       });
-  
+
      }
+addTask(){
+ 
+ 
+  this.taskListObs.push({
+    task_name:this.taskName,
+    category:this.category,
+    assigned_to:this.assigned_to,
+    start_date:this.startDate,
+    due_date:this.dueDate
+  })
+  console.log(this.taskList);
+  // this.database.object('projecttimeline/'+this.query_id).push({
+  //   task:{
+  //     task_name:this.taskName,
+  //     category:this.category,
+  //     assigned_to:this.assigned_to,
+  //     start_date:this.startDate,
+  //     due_date:this.dueDate
+  //   }
+   
+  // });
+
+  //  let link=`/projecttimeline/${this.id}/task`;
+  //       console.log("/projecttimeline/-KpLe55CoJZxGK-1DT2b/task")
+  //       console.log(link)
+  //            this.TaskListObs = this.db.list(link)
+  //               this.TaskListObs.subscribe(res=>{
+  //                console.log(res)
+  //                this.taskList=res;
+  //                console.log("it is")
+  //                console.log(this.taskList)
+  //              })
+}
 
 }

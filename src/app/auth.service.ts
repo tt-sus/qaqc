@@ -53,18 +53,6 @@ export class AuthService {
 
       this.router.navigate([""]);
   }
-  checkManager(){
-        if(this.firebaseAuth.authState){
-       this.firebaseAuth.authState.subscribe((auth)=>{
-         if(auth){
-         return true
-           
-         }
-          else{
-          return false;
-          }
-       })
-      }
-  }
+
 
 }

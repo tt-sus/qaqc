@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit   {
                     this.users.subscribe(res=> {
                   
                     this.Managers=res;
-                    //  this.checkManager();
+                     this.checkManager();
                      this.database=db;
                  })  
                 }
@@ -79,7 +79,14 @@ export class HomeComponent implements OnInit   {
   }
 
   //authenticate manager
-  
+  checkManager(){
+    for(let i=0;i<this.Managers.length; i++){
+      console.log(this.authService.userName);
+      if(this.Managers[i].email==this.authService.userName){
+        return true;
+      }
+    }
+  }
     // pager object
   pager: any = {};
     // paged items

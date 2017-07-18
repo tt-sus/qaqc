@@ -1,5 +1,116 @@
 <div class="container">
-    <h3> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}</h3>
-    <p> <b> Project Manager:</b> {{timelineToShow?.manager}}</p>
+    <div class="timeline-wrapper">
+        <h3> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}</h3>
+        <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal">New Task</button>
+        <p><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
+        <!--modal-->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Task</h4>
+                </div>
+                <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="inputsForm">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Task Name</label>
+                        <div class="col-sm-6">
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Task Name"
+                                formControlName="taskName"
+                                [(ngModel)]="taskName"
+                                name="taskName">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="pwd">Category Name:</label>
+                        <div class="col-sm-6"> 
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Category"
+                                formControlName=category
+                                [(ngModel)]="category"
+                                name="category">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="pwd">Assign To:</label>
+                        <div class="col-sm-6"> 
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Assign To"
+                                formControlName="assigned_to"
+                                [(ngModel)]="assigned_to"
+                                name="assigned_to">
+                        </div>
+                    </div>
+                    <div class="form-group"> 
+                    <label class="control-label col-sm-4" for="pwd">Start Date:</label>
+                        <div class="col-sm-6"> 
+                        <input  
+                                (ngModelChange)="startDate = $event" 
+                                type="date" 
+                                name="startDate"
+                                formControlName="startDate">
+                        </div>
+                    </div>
+                    <div class="form-group"> 
+                    <label class="control-label col-sm-4" for="pwd">Due Date:</label>
+                        <div class="col-sm-6"> 
+                        <input  
+                                (ngModelChange)="dueDate = $event" 
+                                type="date" 
+                                name="dueDate"
+                                formControlName="dueDate">
+                        </div>
+                    </div>
+                    <!-- <div class="form-group"> 
+                        <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"(click)="addTask()" >Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
+       <!-- Modalend content-->
+       <ul class="timeline">
+           <li *ngFor="let item of taskList">
+                <div class="timelineItem">
+                    <div class="header">
+                          {{item.task_name}} // {{item.assigned_to}}
+                    </div>
+                    <div class="itemContent">
+
+                    </div>
+                      <div class="panel-group">
+                        <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body">Panel Body</div>
+                            <div class="panel-footer">Panel Footer</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+           </li>
+       </ul>
+       <div class="timelineItem">
+
+       </div>
+    </div>
 </div>
 

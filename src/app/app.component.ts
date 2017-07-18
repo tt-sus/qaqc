@@ -28,11 +28,7 @@ export class AppComponent implements OnInit   {
           }
        })
       }
-      //  if(this.auth.authState){
-      //  this.auth.authState.subscribe((auth)=>{
-      //     this.authService.isLoggedIn=true;
-      //  })
-      // }
+    
        console.log(this.auth.authState)
                   console.log(this.authService.isLoggedIn)
   }
