@@ -90,20 +90,25 @@
                           {{item.task_name}} // {{item.assigned_to}}
                     </div>
                     <div class="itemContent">
-
+                          <!-- item content-->
                     </div>
-                      <div class="panel-group">
-                        <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                            <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse">
-                            <div class="panel-body">Panel Body</div>
-                            <div class="panel-footer">Panel Footer</div>
-                        </div>
-                        </div>
+                    <div class="col-lg-3 details">
+                        <p>Start Date: {{item.start_date}}</p>
+                    </div>
+                    <div class="col-lg-3 details">
+                         <p>Due Date: {{item.due_date}}</p>
+                    </div>
+                    <div class="col-lg-3 details">
+                        <p>Category: {{item.category}}</p>
+                    </div>
+                    <div class="col-lg-3 details">
+                        <button type="button" class="btn btn-sm" data-toggle="collapse" [attr.data-target]="'#' + item.task_name">+</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div id={{item.task_name}} class="collapse collapse-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </div>
                 </div>
            </li>

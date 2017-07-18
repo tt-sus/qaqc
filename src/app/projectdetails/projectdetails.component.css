@@ -1,0 +1,21 @@
+.timeline{
+    list-style: none;
+        padding: 0;
+}
+.timelineItem{
+   
+    border:2px solid #F7F7F7;
+    margin-bottom: 30px;
+    margin-top:30px;
+}
+.header{
+    padding:10px;
+    background:#F7F7F7;
+    margin-bottom: 10px;
+}
+.details{
+    padding:10px;
+}
+.collapse-content{
+    padding: 10px;
+}
