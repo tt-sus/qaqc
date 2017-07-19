@@ -1,0 +1,15 @@
+.login-form{
+    position: absolute;
+    top:38%;
+    padding:20px;
+    left:50%;
+    transform: translateX(-50%);
+    height: 200px;
+    width:500px;
+    border:1px solid #ccc;
+   
+} 
+.login-form input{
+    margin-bottom: 15px;
+    height:30px;
+} 

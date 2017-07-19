@@ -1,0 +1,142 @@
+<div class="container">
+
+  <div class="home-wrapper">
+     
+<button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal">New project</button>
+    <input  type="text"  
+            placeholder="Project Name" 
+            name="Search" 
+            [(ngModel)]="filter.title"
+            class="search"
+            (keyup)="transform(filter.title)"> 
+    <div>
+        <div class="results">
+            <div >
+                <div class="col-lg-12">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Project Number </th>
+                            <th>Project Name </th>
+                            <th>Project Manager </th>
+                            <th>Current state </th>
+                             <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let res of pagedItems |projectfilter: filter" (click)="goToProject(res)">
+                            <td>{{res.project_number}}</td>
+                            <td>{{res.title}}</td>
+                            <td>{{res.manager}}</td>
+                            <td>Open</td>
+                            <td><button type="button" class="btn btn-default" (click)="delete(res.$key,res)">Delete</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+  </div>
+<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+    <li [ngClass]="{disabled:pager.currentPage === 1}">
+      <a (click)="setPage(1)">First</a>
+    </li>
+    <li [ngClass]="{disabled:pager.currentPage === 1}">
+      <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+    </li>
+                     <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                      <a (click)="setPage(page)">{{page}}</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                      <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                      <a (click)="setPage(pager.totalPages)">Last</a>
+                  </li>
+      </ul>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Project</h4>
+      </div>
+      <div class="modal-body">
+       <form class="form-horizontal" [formGroup]="inputsForm">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="email">Project Number:</label>
+            <div class="col-sm-6">
+              <input  type="email" 
+                      class="form-control" 
+                      placeholder="Project Number"
+                      formControlName="projectNumber"
+                      [(ngModel)]="projectNumber"
+                      name="projectNumber">
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-sm-4" for="pwd">Project Name:</label>
+            <div class="col-sm-6"> 
+              <input  type="text" 
+                      class="form-control" 
+                      placeholder="Enter password"
+                      formControlName=title
+                      [(ngModel)]="title"
+                      name="title">
+            </div>
+          </div>
+           <div class="form-group" >
+            <label class="control-label col-sm-4" for="pwd">Manager Name:</label>
+            <div class="col-sm-6"> 
+              <input  type="text" 
+                      class="form-control" 
+                      placeholder="Enter password"
+                      formControlName="manager"
+                      [(ngModel)]="manager"
+                      name="manager">
+            </div>
+          </div>
+          <div class="form-group"> 
+           <label class="control-label col-sm-4" for="pwd">Start Date:</label>
+            <div class="col-sm-6"> 
+             <input  
+                    (ngModelChange)="startDate = $event" 
+                    type="date" 
+                    name="startDate"
+                    formControlName="startDate">
+            </div>
+          </div>
+           <div class="form-group"> 
+           <label class="control-label col-sm-4" for="pwd">Start Date:</label>
+            <div class="col-sm-6"> 
+             <input  
+                    (ngModelChange)="endDate = $event" 
+                    type="date" 
+                    name="startDate"
+                    formControlName="startDate">
+            </div>
+          </div>
+          <!-- <div class="form-group"> 
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+          </div> -->
+        </form>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-default"(click)="addToList()" >Add</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="say()">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

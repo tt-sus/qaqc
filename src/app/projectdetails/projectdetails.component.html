@@ -1,0 +1,145 @@
+<div class="container">
+    <div class="timeline-wrapper">
+        <h3> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}</h3>
+        <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal"(click)="edit=false">New Task</button>
+        <p><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
+        <!--modal-->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Task</h4>
+                </div>
+                <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="inputsForm">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Task Name</label>
+                        <div class="col-sm-6">
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Task Name"
+                                formControlName="taskName"
+                                [(ngModel)]="taskName"
+                                name="taskName">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="pwd">Category Name:</label>
+                        <div class="col-sm-6"> 
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Category"
+                                formControlName=category
+                                [(ngModel)]="category"
+                                name="category">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="pwd">Assign To:</label>
+                        <div class="col-sm-6"> 
+                        <input  type="text" 
+                                class="form-control" 
+                                placeholder="Assign To"
+                                formControlName="assigned_to"
+                                [(ngModel)]="assigned_to"
+                                name="assigned_to">
+                        </div>
+                    </div>
+                    <div class="form-group"> 
+                    <label class="control-label col-sm-4" for="pwd">Start Date:</label>
+                        <div class="col-sm-6"> 
+                        <input  
+                                (ngModelChange)="startDate = $event" 
+                                type="date" 
+                                name="startDate"
+                                formControlName="startDate">
+                        </div>
+                    </div>
+                    <div class="form-group"> 
+                    <label class="control-label col-sm-4" for="pwd">Due Date:</label>
+                        <div class="col-sm-6"> 
+                        <input  
+                                (ngModelChange)="dueDate = $event" 
+                                type="date" 
+                                name="dueDate"
+                                formControlName="dueDate">
+                        </div>
+                    </div>
+                    <!-- <div class="form-group"> 
+                        <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"(click)="addTask()" *ngIf="!edit">Add</button>
+                     <button type="button" class="btn btn-default"(click)="editTask()" *ngIf="edit" >Edit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
+       <!--add  Modalend content-->
+       <!--edit Modalend content-->
+       <!--<div id="editModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">-->
+
+            <!-- Modal content-->
+            <!--<div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"(click)="editTask()">Close</button>
+            </div>
+            </div>
+
+        </div>
+        </div>-->
+               <!--edit Modalend ednd-->
+       <ul class="timeline">
+           <li *ngFor="let item of taskList; let i =index">
+                <div class="timelineItem">
+                    <div class="header">
+                          {{item.task_name}} // {{item.assigned_to}}
+                    </div>
+                    <div class="itemContent">
+                          <!-- item content-->
+                    </div>
+                    <div class="col-lg-3 details">
+                        <p>Start Date: {{item.start_date}}</p>
+                    </div>
+                    <div class="col-lg-3 details">
+                         <p>Due Date: {{item.due_date}}</p>
+                    </div>
+                    <div class="col-lg-3 details">
+                        <p>Category: {{item.category}}</p>
+                    </div>
+                    <div class="col-lg-3 details">
+                        <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i">+</button>
+                        <button type="button" class="btn btn-default btn-sm action-buttons" data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)">Edit Task</button>
+                        <button type="button" class="btn btn-default btn-sm action-buttons" (click)="getTask(item.$key);deleteTask()">Delete Task</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div id={{i}} class="collapse collapse-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                </div>
+           </li>
+       </ul>
+       <div class="timelineItem">
+
+       </div>
+    </div>
+</div>
+
