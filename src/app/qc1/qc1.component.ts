@@ -52,7 +52,6 @@ inputsForm:FormGroup;
       styling:this.styling,
       spell:this.spell,
       generalComment:this.generalComment
-
     });
    
     this.taskQC1Observable=this.database.list(`${this.taskId}/qaqc`);
