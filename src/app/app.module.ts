@@ -16,6 +16,8 @@ import { AuthService } from './auth.service';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
 import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
 import { LoginRouteGuard } from './auth/login-route-guard';
+import { QaComponent } from './qa/qa.component';
+import { Qc1Component } from './qc1/qc1.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { LoginRouteGuard } from './auth/login-route-guard';
     HomeComponent,
     AuthComponent,
     ProjectFilterPipe,
-    ProjectdetailsComponent
+    ProjectdetailsComponent,
+    QaComponent,
+    Qc1Component
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input  } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
@@ -70,44 +70,18 @@ timeline_key:string;
 
      }
 addTask(){
-<<<<<<< HEAD
- 
- 
-=======
   this.edit=false;
->>>>>>> 04f3a36d4b355a59a01bce9bdfd12ec019c2b66d
   this.taskListObs.push({
     task_name:this.taskName,
     category:this.category,
     assigned_to:this.assigned_to,
     start_date:this.startDate,
-    due_date:this.dueDate
+    due_date:this.dueDate,
+    qaqc:[{task_name:this.taskName}]
   })
   console.log(this.taskList);
-<<<<<<< HEAD
-  // this.database.object('projecttimeline/'+this.query_id).push({
-  //   task:{
-  //     task_name:this.taskName,
-  //     category:this.category,
-  //     assigned_to:this.assigned_to,
-  //     start_date:this.startDate,
-  //     due_date:this.dueDate
-  //   }
-   
-  // });
-
-  //  let link=`/projecttimeline/${this.id}/task`;
-  //       console.log("/projecttimeline/-KpLe55CoJZxGK-1DT2b/task")
-  //       console.log(link)
-  //            this.TaskListObs = this.db.list(link)
-  //               this.TaskListObs.subscribe(res=>{
-  //                console.log(res)
-  //                this.taskList=res;
-  //                console.log("it is")
-  //                console.log(this.taskList)
-  //              })
-=======
 }
+
 taskId:any;
 edit:boolean=false;
 getTask(taskKey){
@@ -135,7 +109,6 @@ deleteTask(){
   taskToDelete=task;
  });
  taskToDeleteObs.remove();
->>>>>>> 04f3a36d4b355a59a01bce9bdfd12ec019c2b66d
 }
 
 }

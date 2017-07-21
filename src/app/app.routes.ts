@@ -4,9 +4,10 @@ import { AuthComponent } from './auth/auth.component';
 import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
 import { LoginRouteGuard } from './auth/login-route-guard';
 export const appRoutes: Routes = [
-  { path: "", component: AuthComponent },
-  { path: "home", component: HomeComponent },
-  {path:"projectDetail/:id",component:ProjectdetailsComponent}
+  { path: "", component: AuthComponent,pathMatch:"full"},
+  { path: "home", component: HomeComponent,  canActivate: [LoginRouteGuard]},
+  {path:"projectDetail/:id",component:ProjectdetailsComponent},
+  { path: '**', component: AuthComponent}
 //   { path: 'hero/:id',      component: HeroDetailComponent },
 //   {
 //     path: 'heroes',

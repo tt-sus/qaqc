@@ -39,6 +39,9 @@ export class AuthService {
            this.router.navigate(["home"]);
            
         }
+          else{
+             this.router.navigate([""]);
+          }
         console.log(value);
       })
       .catch(err => {
