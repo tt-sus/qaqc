@@ -79,11 +79,17 @@
             </div>
             </div>
                <!--edit Modalend ednd-->
-       <ul class="timeline">
-           <li *ngFor="let item of taskList; let i =index">
-                <div class="timelineItem">
+        <ul class="timeline">
+            <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
+                <!-- timelineItem-left -->
+                <div class="timelineItem-left col-lg-2 ">
+                    <p>{{item.start_date}}</p>
+                    <img class="img-circle" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/35.png" title="Michael Pulaski">
+                </div>
+                <!-- timelineItem-middle -->
+                <div class="timelineItem-body col-lg-9">
                     <div class="header">
-                          {{item.task_name}} // {{item.assigned_to}}
+                        <strong class="text-capitalize"> {{item.task_name}} </strong> // {{item.assigned_to}}
                     </div>
                     <div class="itemContent">
                           <!-- item content-->
@@ -99,8 +105,7 @@
                     </div>
                     <div class="col-lg-3 details">
                         <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i"(click)= "getTask(item.$key)">+</button>
-                        <button type="button" class="btn btn-default btn-sm action-buttons" data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)">Edit Task</button>
-                        <button type="button" class="btn btn-default btn-sm action-buttons" (click)="getTask(item.$key);deleteTask()">Delete Task</button>
+                        
                     </div>
                     <div class="clearfix"></div>
                     <div id={{i}} class="collapse collapse-content">
@@ -168,6 +173,12 @@
                     </div>
                     <div class="clearfix"></div>
 
+                </div>
+
+                <!-- timelineItem-right -->
+                <div class="timelineItem-edit col-lg-1">
+                    <button type="button" class="btn btn-default btn-sm btn-circle col-lg-6" data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="button" class="btn btn-default btn-sm btn-circle col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
                 </div>
            </li>
        </ul>
