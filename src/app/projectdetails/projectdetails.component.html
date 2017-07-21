@@ -79,9 +79,10 @@
             </div>
             </div>
                <!--edit Modalend ednd-->
-       <ul class="timeline">
-           <li *ngFor="let item of taskList; let i =index">
-                <div class="timelineItem">
+        <ul class="timeline">
+            <li *ngFor="let item of taskList; let i =index"  class="timelineItem col-lg-12">
+                <div class="timelineItem-left col-lg-1"></div>
+                <div class="timelineItem-body col-lg-10">
                     <div class="header">
                           {{item.task_name}} // {{item.assigned_to}}
                     </div>
@@ -99,8 +100,7 @@
                     </div>
                     <div class="col-lg-3 details">
                         <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i"(click)= "getTask(item.$key)">+</button>
-                        <button type="button" class="btn btn-default btn-sm action-buttons" data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)">Edit Task</button>
-                        <button type="button" class="btn btn-default btn-sm action-buttons" (click)="getTask(item.$key);deleteTask()">Delete Task</button>
+                        
                     </div>
                     <div class="clearfix"></div>
                     <div id={{i}} class="collapse collapse-content">
@@ -168,6 +168,11 @@
                     </div>
                     <div class="clearfix"></div>
 
+                </div>
+
+                <div class="timelineItem-edit col-lg-1">
+                    <button type="button" class="btn btn-default btn-sm action-buttons btn-circle" data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="button" class="btn btn-default btn-sm action-buttons btn-circle" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
                 </div>
            </li>
        </ul>

@@ -3,10 +3,11 @@
         padding: 0;
 }
 .timelineItem{
-   
-    border:2px solid #F7F7F7;
-    margin-bottom: 30px;
     margin-top:30px;
+}
+.timelineItem-body{
+    border:2px solid #F7F7F7;
+    padding: 0;
 }
 .header{
     padding:10px;
@@ -21,4 +22,14 @@
 }
 .action-buttons{
     margin-right:20px;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
 }
