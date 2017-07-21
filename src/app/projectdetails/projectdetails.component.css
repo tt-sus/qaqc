@@ -9,6 +9,9 @@
     border:2px solid #F7F7F7;
     padding: 0;
 }
+.timelineItem-edit{
+    margin-top: 0.5em;
+}
 .header{
     padding:10px;
     background:#F7F7F7;
@@ -21,7 +24,7 @@
     padding: 10px;
 }
 .action-buttons{
-    margin-right:20px;
+    margin-right:2px;
 }
 
 .btn-circle {
