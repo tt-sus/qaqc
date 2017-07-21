@@ -38,7 +38,7 @@ timeline_key:string;
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
-       console.log(this.id + "from details")
+     
     });  
    this.database.object('projects/'+this.id ).subscribe((res)=>{
          this.projectToShow=res;
@@ -53,18 +53,18 @@ timeline_key:string;
           startDate:[this.startDate],
           dueDate:[this.dueDate]
         })
-        console.log(this.taskList)
+      
   }
      getTimeline(id){
       this.query_id=id;
       this.database.object('projecttimeline/'+this.query_id).subscribe((res)=>{
         this.timelineToShow=res;
-        console.log(this.timelineToShow)
+       
         this.timeline_key=this.timelineToShow.$key;
         this.taskListObs=this.database.list(`projecttimeline/${this.timeline_key}/tasks`)
         this.taskListObs.subscribe(res => {
         this.taskList=res;
-        console.log(this.taskList)
+       
          })
       });
 
@@ -79,7 +79,7 @@ addTask(){
     due_date:this.dueDate,
     qaqc:[{task_name:this.taskName}]
   })
-  console.log(this.taskList);
+ 
 }
 
 taskId:any;

@@ -15,8 +15,7 @@ export class AppComponent implements OnInit   {
   constructor(  public authService: AuthService,
                 private router:Router,
                 private auth: AngularFireAuth){
-                  console.log(this.auth.authState)
-                  console.log(this.authService.isLoggedIn)
+            
         if(this.auth.authState){
        this.auth.authState.subscribe((auth)=>{
          if(auth){
@@ -29,8 +28,7 @@ export class AppComponent implements OnInit   {
        })
       }
     
-       console.log(this.auth.authState)
-                  console.log(this.authService.isLoggedIn)
+   
   }
   logout(){
     this.authService.logout();
