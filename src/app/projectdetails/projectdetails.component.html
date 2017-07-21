@@ -84,26 +84,28 @@
                 <!-- timelineItem-left -->
                 <div class="timelineItem-left col-lg-2 ">
                     <p>{{item.start_date}}</p>
-                    <img class="img-circle" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/35.png" title="Michael Pulaski">
                 </div>
+
                 <!-- timelineItem-middle -->
-                <div class="timelineItem-body col-lg-9">
+                <div class="timelineItem-body col-lg-8">
+                    <span></span>
+                    <img class="img-circle timeline-avatar" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/40.png" title="Michael Pulaski">
                     <div class="header">
                         <strong class="text-capitalize"> {{item.task_name}} </strong> // {{item.assigned_to}}
                     </div>
-                    <div class="itemContent">
-                          <!-- item content-->
+                    <div class="col-lg-12 details itemContent">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                    </div>
+                    <div class="col-lg-4 details">
+                        <p><strong class="text-capitalize">Start Date:</strong> {{item.start_date}}</p>
+                    </div>
+                    <div class="col-lg-4 details">
+                         <p><strong class="text-capitalize">Due Date:</strong> {{item.due_date}}</p>
                     </div>
                     <div class="col-lg-3 details">
-                        <p>Start Date: {{item.start_date}}</p>
+                        <p><strong class="text-capitalize">Category:</strong> {{item.category}}</p>
                     </div>
-                    <div class="col-lg-3 details">
-                         <p>Due Date: {{item.due_date}}</p>
-                    </div>
-                    <div class="col-lg-3 details">
-                        <p>Category: {{item.category}}</p>
-                    </div>
-                    <div class="col-lg-3 details">
+                    <div class="col-lg-1 details">
                         <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i"(click)= "getTask(item.$key)">+</button>
                         
                     </div>
@@ -176,14 +178,11 @@
                 </div>
 
                 <!-- timelineItem-right -->
-                <div class="timelineItem-edit col-lg-1">
-                    <button type="button" class="btn btn-default btn-sm btn-circle col-lg-6" data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
-                    <button type="button" class="btn btn-default btn-sm btn-circle col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
+                <div class="timelineItem-edit col-lg-2">
+                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
                 </div>
            </li>
        </ul>
-       <div class="timelineItem">
-  
-       </div>
     </div>
 </div>
