@@ -1,6 +1,6 @@
 <ul class="chat">
   <li *ngFor="let comment of commentsArray">
-    {{comment.chat}}
+    {{comment.chat}}  <span>-{{user}}</span>
   </li>
 </ul>
 <form [formGroup]="inputsForm">
