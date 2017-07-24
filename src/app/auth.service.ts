@@ -11,7 +11,7 @@ export class AuthService {
   user: Observable<firebase.User>;
   userName:string;
   isLoggedIn:boolean;
-  constructor(private firebaseAuth: AngularFireAuth,private router:Router) {
+  constructor(private firebaseAuth: AngularFireAuth,private router:Router, ) {
     this.user = firebaseAuth.authState;
   }
  
@@ -47,6 +47,7 @@ export class AuthService {
       .catch(err => {
         console.log('Something went wrong:',err.message);
       });
+      this.sendUser()
   }
 
   logout() {
@@ -55,6 +56,10 @@ export class AuthService {
       .signOut();
 
       this.router.navigate([""]);
+  }
+      sendUser(){
+      
+     
   }
 
 

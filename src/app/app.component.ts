@@ -20,6 +20,7 @@ export class AppComponent implements OnInit   {
        this.auth.authState.subscribe((auth)=>{
          if(auth){
            this.authService.isLoggedIn=true;
+           console.log(auth.email)
            
          }
           else{
@@ -41,6 +42,18 @@ export class AppComponent implements OnInit   {
     else{
       return false;
     }
+  }
+  sendUser(){
+    if(this.auth.authState){
+       this.auth.authState.subscribe((auth)=>{
+         if(auth){
+           
+          return auth.email
+           
+         }
+        
+       })
+      }
   }
    ngOnInit() {
  

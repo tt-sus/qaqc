@@ -32,6 +32,11 @@
 .timelineItem-body:hover{
     border-color: #f39c12;
     transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
+ 
+}
+
+.timelineItem-body .header:hover{
+  color:#fff;
 }
 .timelineItem-body:hover:before{
     border-right-color: #f39c12;
@@ -99,4 +104,11 @@
   font-size: 12px;
   line-height: 1.428571429;
   border-radius: 15px;
+}
+.nav-pills>li.active>a{
+    background-color: #F39C12;
+    color:#fff;
+}
+.nav-item a{
+ color: #F39C12;
 }
