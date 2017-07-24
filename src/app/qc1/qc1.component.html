@@ -265,5 +265,6 @@
         </div>
       </div>
   </div>  
-    <button type="button" (click)="submitQC1()" class="pull-right">Submit</button>
+    <button type="button" *ngIf="QCObject.add" (click)="submitQC1()" class="pull-right">Submit</button>
+    <button type="button" *ngIf="!QCObject.add" (click)="editQC1()" class="pull-right">Edit</button>
 </form>

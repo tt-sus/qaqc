@@ -1,0 +1,16 @@
+.chat-input textarea{
+    width:100%;
+}
+.chat{
+    list-style:none;
+    padding: 15px;
+}
+.chat li{
+    padding: 10px;
+    background: #F39C12;
+    margin-top: 10px;
+    border-radius: 10px;
+    color: #fff;
+    width: 80%;
+    margin-bottom: 10px;
+}

@@ -9,11 +9,22 @@ import { QC1 } from './qc1';
   styleUrls: ['./qc1.component.css']
 })
 export class Qc1Component implements OnInit {
-@Input()
+  QCObject: { coverPage: boolean; tableContents: boolean; executiveSummary: boolean; frontComment: string; matchNumbers: boolean; significantDigits: boolean; updatedFigures: boolean; alignment: boolean; consistentFormatting: boolean; accuracy: boolean; tablesComment: string; referenceConsistency: boolean; referenceComment: string; acronyms: boolean; fonts: boolean; highlighting: boolean; styling: boolean; spell: boolean; generalComment: string; add: boolean; };
+  @Input()
 taskId:string;
 taskQC1Observable: FirebaseListObservable<any[]>;
 
-QCObject={
+
+
+database:any;
+inputsForm:FormGroup;
+  constructor(private fb:FormBuilder, private db: AngularFireDatabase) { 
+      this.database=db;
+  }
+  QCObservableObject:FirebaseListObservable<any[]>;
+  taskArray:any;
+  ngOnInit() {
+    this.QCObject={
 // large Form Inputs // Front Section
 coverPage:false,tableContents:false,executiveSummary:false,
 frontComment:"",
@@ -27,17 +38,9 @@ referenceConsistency:false,referenceComment:"",
 
 //general format
 acronyms:false,fonts:false,highlighting:false,
-styling:false,spell:false, generalComment:""
+styling:false,spell:false, generalComment:"",
+add:true
 }
-
-database:any;
-inputsForm:FormGroup;
-  constructor(private fb:FormBuilder, private db: AngularFireDatabase) { 
-      this.database=db;
-  }
-  QCObservableObject:FirebaseListObservable<any[]>;
-  taskArray:any;
-  ngOnInit() {
     this.inputsForm=this.fb.group({
       coverPage:[this.QCObject.coverPage],
       tableContents:[this.QCObject.tableContents],
@@ -70,7 +73,9 @@ inputsForm:FormGroup;
         this.QCObservableObject.subscribe((i)=>{
          
           console.log(i[Object.keys(i)[0]]);
-          console.log(this.QCObject)
+          console.log("key is")
+          console.log(Object.keys(i)[0])
+          this.qc= Object.keys(i)[0]
           if(i[Object.keys(i)[0]]){
               this.QCObject=i[Object.keys(i)[0]];
           }
@@ -81,10 +86,11 @@ inputsForm:FormGroup;
         })
   }
 QCId:string;
+qc="";
 submitQC1(){
   this.taskQC1Observable.push({
     coverPage:this.QCObject.coverPage,
-    tablecontents:this.QCObject.tableContents,
+    tableContents:this.QCObject.tableContents,
     executiveSummary:this.QCObject.executiveSummary,
     frontComment:this.QCObject.frontComment,
     matchNumbers:this.QCObject.matchNumbers,
@@ -101,9 +107,11 @@ submitQC1(){
     highlighting:this.QCObject.highlighting,
     styling:this.QCObject.styling,
     spell:this.QCObject.spell,
-    generalComment:this.QCObject.generalComment
+    generalComment:this.QCObject.generalComment,
+    add:false
   }).then((a)=>{
     let key=a.getKey();
+  
       this.QCId=key;
       this.getTask(this.QCId);
   });
@@ -113,6 +121,7 @@ submitQC1(){
 qcArray:Array<any>=[];
 getTask(key){
   this.QCObservableObject=this.database.object(`${this.taskId}/qaqc/${this.QCId}`);
+  this.QCId=this.QCId;
   this.QCObservableObject.subscribe((a)=>{
     
      this.qcArray.push(a);
@@ -120,5 +129,34 @@ getTask(key){
     
    
   })
+}
+editQC1(){
+ let QCEditObs;
+ console.log(this.QCObject.tableContents,)
+ QCEditObs=this.database.object(`${this.taskId}/qaqc/${this.qc}`);
+
+ QCEditObs.update({
+    coverPage:this.QCObject.coverPage,
+     tableContents:this.QCObject.tableContents,
+    executiveSummary:this.QCObject.executiveSummary,
+    frontComment:this.QCObject.frontComment,
+    matchNumbers:this.QCObject.matchNumbers,
+    significantDigits:this.QCObject.significantDigits,
+    updatedFigures:this.QCObject.updatedFigures,
+    alignment:this.QCObject.alignment,
+    consistentFormatting:this.QCObject.consistentFormatting,
+    accuracy:this.QCObject.accuracy,
+    tablesComment:this.QCObject.tablesComment,
+    referenceConsistency:this.QCObject.referenceConsistency,
+    referenceComment:this.QCObject.referenceComment,
+    acronyms:this.QCObject.acronyms,
+    fonts:this.QCObject.fonts,
+    highlighting:this.QCObject.highlighting,
+    styling:this.QCObject.styling,
+    spell:this.QCObject.spell,
+    generalComment:this.QCObject.generalComment,
+    add:false
+ })
+ 
 }
 }

@@ -35,6 +35,7 @@ assigned_to:string;
 startDate:Date;
 dueDate:Date;
 timeline_key:string;
+details:string;
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
@@ -51,7 +52,8 @@ timeline_key:string;
           category:[this.category],
           assigned_to:[this.assigned_to],
           startDate:[this.startDate],
-          dueDate:[this.dueDate]
+          dueDate:[this.dueDate],
+          details:this.details
         })
       
   }
@@ -77,6 +79,7 @@ addTask(){
     assigned_to:this.assigned_to,
     start_date:this.startDate,
     due_date:this.dueDate,
+    details:this.details,
     qaqc:[{task_name:this.taskName}]
   })
  
@@ -99,7 +102,8 @@ editTask(){
     category:this.category,
     assigned_to:this.assigned_to,
     start_date:this.startDate,
-    due_date:this.dueDate
+    due_date:this.dueDate,
+    details:this.details
  })
 }
 deleteTask(){

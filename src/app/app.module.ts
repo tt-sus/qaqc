@@ -18,6 +18,8 @@ import { ProjectdetailsComponent } from './projectdetails/projectdetails.compone
 import { LoginRouteGuard } from './auth/login-route-guard';
 import { QaComponent } from './qa/qa.component';
 import { Qc1Component } from './qc1/qc1.component';
+import { Qc2Component } from './qc2/qc2.component';
+import { QcResultsComponent } from './qc-results/qc-results.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { Qc1Component } from './qc1/qc1.component';
     ProjectFilterPipe,
     ProjectdetailsComponent,
     QaComponent,
-    Qc1Component
+    Qc1Component,
+    Qc2Component,
+    QcResultsComponent
   ],
   imports: [
     BrowserModule,
