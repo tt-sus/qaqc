@@ -49,14 +49,43 @@ details:string;
        
         this.inputsForm=this.fb.group({
           taskName:[this.taskName],
-          category:[this.category],
+          categoryType:[this.categoryType],
           assigned_to:[this.assigned_to],
           startDate:[this.startDate],
           dueDate:[this.dueDate],
-          details:this.details
+          details:[this.details]
         })
-      
+       
   }
+// category
+  categoryType:string;
+  categoryArray:Array<Object> = [
+      {num: 0, name: "Task"},
+      {num: 1, name: "Milestone"}
+  ];
+    toNumber(){
+      console.log(this.categoryType)
+    }
+//end
+  taskCategory=[];
+  MilestoneCategory=[];
+  globalTasks=[];
+      filterTaskCategory(){
+          this.taskList=this.globalTasks.filter((task)=>{
+            return task.categoryType=== "Task";
+          })
+
+      }
+      filterMilestoneCategory(){
+        this.taskList=this.globalTasks.filter((task)=>{
+          return task.categoryType==="Milestone";
+        })
+        }
+       showAll(){
+           this.taskList=this.globalTasks;
+       }
+
+     
      getTimeline(id){
       this.query_id=id;
       this.database.object('projecttimeline/'+this.query_id).subscribe((res)=>{
@@ -66,7 +95,7 @@ details:string;
         this.taskListObs=this.database.list(`projecttimeline/${this.timeline_key}/tasks`)
         this.taskListObs.subscribe(res => {
         this.taskList=res;
-       
+        this.globalTasks=res;
          })
       });
 
@@ -75,7 +104,7 @@ addTask(){
   this.edit=false;
   this.taskListObs.push({
     task_name:this.taskName,
-    category:this.category,
+    categoryType:this.categoryType,
     assigned_to:this.assigned_to,
     start_date:this.startDate,
     due_date:this.dueDate,
@@ -99,7 +128,7 @@ editTask(){
  });
  taskToEditObs.update({
     task_name:this.taskName,
-    category:this.category,
+    categoryType:this.categoryType,
     assigned_to:this.assigned_to,
     start_date:this.startDate,
     due_date:this.dueDate,

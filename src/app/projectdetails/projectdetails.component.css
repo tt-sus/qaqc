@@ -111,3 +111,15 @@
 .nav-item a{
  color: #F39C12;
 }
+.filter-buttons{
+    text-align:center;
+}
+.select select{
+        width: 100%;
+    height: 35px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+textarea{
+    width:100%;
+}

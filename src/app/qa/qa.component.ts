@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { ActivatedRoute } from "@angular/router";
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-qa',
@@ -7,11 +9,24 @@ import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from
   styleUrls: ['./qa.component.css']
 })
 export class QaComponent implements OnInit {
-inputsForm:FormGroup
-constructor(private fb:FormBuilder) { }
-
+  id: any;
+  projectToShow: any;
+  database: AngularFireDatabase;
+  inputsForm: FormGroup
+constructor(private fb:FormBuilder,private route: ActivatedRoute,private db: AngularFireDatabase,) { 
+  this.database=db;
+}
+  sub:any;
   ngOnInit() {
-    
-  }
+     this.sub = this.route.params.subscribe(params => {
+       this.id = params['id'];
+       console.log(this.id);
+     
+    });  
+   this.database.object('projects/'+this.id ).subscribe((res)=>{
+         this.projectToShow=res;
+        
+  });
 
+  }
 }

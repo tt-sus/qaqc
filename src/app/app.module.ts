@@ -20,6 +20,7 @@ import { QaComponent } from './qa/qa.component';
 import { Qc1Component } from './qc1/qc1.component';
 import { Qc2Component } from './qc2/qc2.component';
 import { QcResultsComponent } from './qc-results/qc-results.component';
+import { CloseoutComponent } from './closeout/closeout.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { QcResultsComponent } from './qc-results/qc-results.component';
     QaComponent,
     Qc1Component,
     Qc2Component,
-    QcResultsComponent
+    QcResultsComponent,
+    CloseoutComponent
   ],
   imports: [
     BrowserModule,

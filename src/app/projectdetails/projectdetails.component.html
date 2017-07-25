@@ -25,15 +25,12 @@
                                 name="taskName">
                         </div>
                     </div>
-                    <div class="form-group" >
+                    <div class="form-group select" >
                         <label class="control-label col-sm-4" for="pwd">Category Name:</label>
                         <div class="col-sm-6"> 
-                        <input  type="text" 
-                                class="form-control" 
-                                placeholder="Category"
-                                formControlName=category
-                                [(ngModel)]="category"
-                                name="category">
+                            <select type="number" [(ngModel)]="categoryType" formControlName="categoryType" (ngModelChange)="toNumber()">
+                                <option *ngFor="let category of categoryArray" [ngValue]="category.name">{{category.name}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group" >
@@ -89,7 +86,13 @@
             </div>
             </div>
                <!--edit Modalend ednd-->
+      
         <ul class="timeline">
+            <div class="filter-buttons">
+                <button type="button" class="btn btn-default btn-sm action-buttons  "  (click)="filterTaskCategory()">Tasks</button>
+                <button type="button" class="btn btn-default btn-sm action-buttons  "  (click)="filterMilestoneCategory()">Milestones</button>
+                <button type="button" class="btn btn-default btn-sm action-buttons  "  (click)="showAll()">All</button>                     
+            </div>    
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
                 <div class="timelineItem-left col-lg-2 ">
@@ -113,7 +116,7 @@
                          <p><strong class="text-capitalize">Due Date:</strong> {{item.due_date}}</p>
                     </div>
                     <div class="col-lg-3 details">
-                        <p><strong class="text-capitalize">Category:</strong> {{item.category}}</p>
+                        <p><strong class="text-capitalize">Category:</strong> {{item.categoryType}}</p>
                     </div>
                     <div class="col-lg-1 details">
                         <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i"(click)= "getTask(item.$key)">+</button>
@@ -171,5 +174,43 @@
                 </div>
            </li>
        </ul>
+          <!--project closeout task-->
+          <ul class="timeline">
+            <li class="timelineItem row col-lg-12">
+                <div class="timelineItem-left closeout col-lg-2 ">
+                 
+                </div>
+
+                <!-- timelineItem-middle -->
+                <div class="timelineItem-body closeout col-lg-8">
+                    <span></span>
+                    <img class="img-circle timeline-avatar" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/40.png" title="Michael Pulaski">
+                    <div class="header">
+                        <strong class="text-capitalize"> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - Close Out </strong> 
+                    </div>
+                    <div class="col-lg-12 details itemContent">
+                        {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - click the button below to closeout
+                    </div>
+                
+                    <div class="col-lg-1 details">
+                        <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse"data-target="#closeout">+</button>
+                        
+                    </div>
+                    <div class="clearfix"></div>
+                   <div id="closeout" class="collapse collapse-content ">
+                      <app-closeout [projectId]="id"></app-closeout>
+                </div>
+                  
+
+                </div>
+                 <div class="timelineItem-edit col-lg-2">
+                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
+                </div>
+
+            </li>
+          </ul>
+                
+        <!--project closeout task end-->
     </div>
 </div>
