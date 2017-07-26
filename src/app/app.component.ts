@@ -43,18 +43,7 @@ export class AppComponent implements OnInit   {
       return false;
     }
   }
-  sendUser(){
-    if(this.auth.authState){
-       this.auth.authState.subscribe((auth)=>{
-         if(auth){
-           
-          return auth.email
-           
-         }
-        
-       })
-      }
-  }
+
    ngOnInit() {
  
     

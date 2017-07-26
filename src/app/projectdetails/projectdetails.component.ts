@@ -3,12 +3,15 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
+import * as _ from 'underscore';
 @Component({
   selector: 'app-projectdetails',
   templateUrl: './projectdetails.component.html',
   styleUrls: ['./projectdetails.component.css']
 })
 export class ProjectdetailsComponent implements OnInit {
+  dateInvalid: boolean=false;
+  isManager: boolean;
   query_id: any;
   timelineToShow: any;
   projectId: number;
@@ -25,22 +28,31 @@ export class ProjectdetailsComponent implements OnInit {
               private route: ActivatedRoute,
               private fb: FormBuilder
             ) { 
-                this.database=db;
            
+              this.database=db;
+             this.isManager=false;
               }
 //modelling inputs
-taskName:string;
-category:string;
-assigned_to:string;
-startDate:Date;
-dueDate:Date;
-timeline_key:string;
-details:string;
+  categoryType:string;
+taskObj={
+taskName:"",
+categoryType:this.categoryType,
+assigned_to:"",
+startDate:new Date(),
+dueDate:new Date(),
+details:"",
+hours:0
+}
+timeline_key:""
   ngOnInit() {
+
     this.sub = this.route.params.subscribe(params => {
-       this.id = params['id'];
+      this.id = params['id'];
+      this.isManager = params['manager'];
      
     });  
+  
+ 
    this.database.object('projects/'+this.id ).subscribe((res)=>{
          this.projectToShow=res;
          this.getTimeline(this.projectToShow.timeline_key)
@@ -48,15 +60,54 @@ details:string;
         
        
         this.inputsForm=this.fb.group({
-          taskName:[this.taskName],
-          category:[this.category],
-          assigned_to:[this.assigned_to],
-          startDate:[this.startDate],
-          dueDate:[this.dueDate],
-          details:this.details
+          taskName:[this.taskObj.taskName],
+          categoryType:[this.taskObj.categoryType],
+          assigned_to:[this.taskObj.assigned_to],
+          startDate:[this.taskObj.startDate],
+          dueDate:[this.taskObj.dueDate],
+          details:[this.taskObj.details],
+          hours:[this.taskObj.hours]
         })
-      
+       
   }
+  
+// category
+checkDate(){
+  if(new Date(this.taskObj.dueDate).getTime() - new Date(this.taskObj.startDate).getTime()<0 ){
+    this.dateInvalid=true;
+  }
+  else{
+    this.dateInvalid=false;
+  }
+}
+  categoryArray:Array<Object> = [
+      {num: 0, name: "Task"},
+      {num: 1, name: "Milestone"}
+  ];
+    toNumber(){
+      console.log(this.categoryType)
+      this.taskObj.categoryType=this.categoryType
+    }
+//end
+  taskCategory=[];
+  MilestoneCategory=[];
+  globalTasks=[];
+      filterTaskCategory(){
+          this.taskList=this.globalTasks.filter((task)=>{
+            return task.categoryType=== "Task";
+          })
+
+      }
+      filterMilestoneCategory(){
+        this.taskList=this.globalTasks.filter((task)=>{
+          return task.categoryType==="Milestone";
+        })
+        }
+       showAll(){
+           this.taskList=this.globalTasks;
+       }
+
+     
      getTimeline(id){
       this.query_id=id;
       this.database.object('projecttimeline/'+this.query_id).subscribe((res)=>{
@@ -66,23 +117,33 @@ details:string;
         this.taskListObs=this.database.list(`projecttimeline/${this.timeline_key}/tasks`)
         this.taskListObs.subscribe(res => {
         this.taskList=res;
-       
+        this.globalTasks=res;
+          this.sortTasks();
          })
       });
-
+       
      }
+    sortTasks(){
+           this.taskList=this.taskList.sort((a,b)=> { 
+          console.log(a);
+          return -new Date(a.startDate).getTime() + new Date(b.startDate).getTime() 
+          });
+    }
 addTask(){
   this.edit=false;
   this.taskListObs.push({
-    task_name:this.taskName,
-    category:this.category,
-    assigned_to:this.assigned_to,
-    start_date:this.startDate,
-    due_date:this.dueDate,
-    details:this.details,
-    qaqc:[{task_name:this.taskName}]
+    taskName:this.taskObj.taskName,
+          categoryType:this.taskObj.categoryType,
+          assigned_to:this.taskObj.assigned_to,
+          startDate:this.taskObj.startDate,
+          dueDate:this.taskObj.dueDate,
+          details:this.taskObj.details,
+          hours:this.taskObj.hours,
+    qaqc:[{task_name:this.taskObj.taskName}]
   })
- 
+  this.inputsForm.reset();
+ this.sortTasks();
+
 }
 
 taskId:any;
@@ -90,6 +151,11 @@ edit:boolean=false;
 getTask(taskKey){
   this.edit=true;
   this.taskId=taskKey;
+   let taskToget;
+  let taskToGetObs = this.database.object(`projecttimeline/${this.timeline_key}/tasks/${this.taskId}`);
+  taskToGetObs.subscribe((task)=>{
+  this.taskObj=task;
+  })
 }
 editTask(){
   let taskToEdit;
@@ -98,21 +164,25 @@ editTask(){
   taskToEdit=task;
  });
  taskToEditObs.update({
-    task_name:this.taskName,
-    category:this.category,
-    assigned_to:this.assigned_to,
-    start_date:this.startDate,
-    due_date:this.dueDate,
-    details:this.details
- })
+    taskName:this.taskObj.taskName,
+          categoryType:this.taskObj.categoryType,
+          assigned_to:this.taskObj.assigned_to,
+          startDate:this.taskObj.startDate,
+          dueDate:this.taskObj.dueDate,
+          details:this.taskObj.details,
+          hours:this.taskObj.hours,
+ });
+  this.sortTasks();
 }
 deleteTask(){
+  alert();
   let taskToDelete;
   let taskToDeleteObs = this.database.object(`projecttimeline/${this.timeline_key}/tasks/${this.taskId}`);
   taskToDeleteObs.subscribe(task=>{
   taskToDelete=task;
  });
  taskToDeleteObs.remove();
+
 }
 
 }

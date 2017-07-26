@@ -42,7 +42,8 @@ user:string;
       }
 submitComment(){
   console.log(this.chat)
- this.taskCommentsObservable.push({chat:this.chat});
+ this.taskCommentsObservable.push({chat:this.chat,user:this.user});
+ this.inputsForm.reset();
 }
 
 }

@@ -44,7 +44,9 @@ export class HomeComponent implements OnInit   {
                     this.users.subscribe(res=> {
                   
                     this.Managers=res;
-                     this.checkManager();
+                    
+                     
+                      this.checkManager(this.Managers)
                      this.database=db;
                  })  
                 }
@@ -56,7 +58,7 @@ export class HomeComponent implements OnInit   {
                       manager:this.manager}).key
       this.items.push(
       {
-        title: this.title,
+      title: this.title,
       manager:this.manager,
       project_number:this.projectNumber,
       services: {
@@ -77,13 +79,16 @@ export class HomeComponent implements OnInit   {
     })
    
   }
-
+isManager:boolean=false;
   //authenticate manager
-  checkManager(){
-    for(let i=0;i<this.Managers.length; i++){
-      console.log(this.authService.userName);
-      if(this.Managers[i].email==this.authService.userName){
-        return true;
+  checkManager(manager:Array<any>){
+    console.log(manager)
+   for(let i=0;i<this.Managers.length; i++){
+      if(manager[i].$value==this.authService.userName){
+        this.isManager= true;
+      }
+      else{
+       this.isManager= false;
       }
     }
   }
@@ -129,23 +134,19 @@ setPage(page: number) {
   this.pager = this.pagerService.getPager(this.projectTitles.length, page);
   // get current page of items
   this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
-  console.log("paged"+this.pagedItems)
+
 }
 
 filter:Project=new Project();
 //child routing
   goToProject(project) {
-    console.log("key is from home"+project.$key);
-    this.router.navigate(['projectDetail', project.$key]);
+  
+    this.router.navigate(['projectDetail', project.$key,`${this.isManager}`]);
   };
   inputsForm:FormGroup;
 startDate:Date=new Date();
 say(){
-  console.log(this.title)
-  console.log(this.manager)
-  console.log(this.projectNumber)
-  console.log(this.startDate)
-  console.log(this.endDate)
+
 }
 title:string;
 manager:string;
@@ -160,5 +161,7 @@ status:string;
       startDate:[this.startDate,[]],
       endDate:[this.startDate,[]],
      })
+       
    }
+
 }

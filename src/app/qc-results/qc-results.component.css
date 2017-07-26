@@ -11,7 +11,7 @@
     margin-top: 10px;
     border-radius: 10px;
     color: #fff;
-    width: 80%;
+word-wrap: break-word;
     margin-bottom: 10px;
 }
 .chat li span{

@@ -5,8 +5,8 @@ import { ProjectdetailsComponent } from './projectdetails/projectdetails.compone
 import { LoginRouteGuard } from './auth/login-route-guard';
 export const appRoutes: Routes = [
   { path: "", component: AuthComponent,pathMatch:"full"},
-  { path: "home", component: HomeComponent,  canActivate: [LoginRouteGuard]},
-  {path:"projectDetail/:id",component:ProjectdetailsComponent},
+  { path: "home", component: HomeComponent},
+  {path:"projectDetail/:id/:manager",component:ProjectdetailsComponent},
   { path: '**', component: AuthComponent}
 //   { path: 'hero/:id',      component: HeroDetailComponent },
 //   {
