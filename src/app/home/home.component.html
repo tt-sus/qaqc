@@ -4,7 +4,7 @@
       <div  class="col-lg-12 sus-header">
         <h1 class="page-header">Project List</h1>
         <!-- add new project -->
-        <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal">New project</button>
+        <button type="button" class="btn btn-default btn-sm pull-right" *ngIf="isManager" data-toggle="modal" data-target="#myModal">New project</button>
         <!-- search -->
         <div class="col-xs-5 row mb-2">
           <input  type="text"  
@@ -136,7 +136,7 @@
         </form>
       </div>
       <div class="modal-footer">
-         <button type="button" class="btn btn-default"(click)="addToList()" >Add</button>
+         <button type="button" class="btn btn-default"(click)="addToList()"*ngIf="isManager" >Add</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="say()">Close</button>
       </div>
     </div>

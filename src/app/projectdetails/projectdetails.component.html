@@ -1,8 +1,12 @@
 <div class="container">
-    <div class="timeline-wrapper">
-        <h3> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}</h3>
-        <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal"(click)="edit=false">New Task</button>
-        <p><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
+    <div class="timeline-wrapper" >
+        <h3> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}  </h3>
+        <button type="button" 
+                class="btn btn-default btn-sm pull-right" 
+                data-toggle="modal" 
+                data-target="#myModal"
+                (click)="edit=false"*ngIf="isManager==='true'">New Task</button>
+        <p ><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
         <!--modal-->
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -10,7 +14,8 @@
                 <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Create Task</h4>
+                    <h4 class="modal-title" *ngIf="!edit">Create Task</h4>
+                    <h4 class="modal-title" *ngIf="edit">Edit Task</h4>
                 </div>
                 <div class="modal-body">
                 <form class="form-horizontal" [formGroup]="inputsForm">
@@ -21,7 +26,7 @@
                                 class="form-control" 
                                 placeholder="Task Name"
                                 formControlName="taskName"
-                                [(ngModel)]="taskName"
+                                [(ngModel)]="taskObj.taskName"
                                 name="taskName">
                         </div>
                     </div>
@@ -40,7 +45,7 @@
                                 class="form-control" 
                                 placeholder="Assign To"
                                 formControlName="assigned_to"
-                                [(ngModel)]="assigned_to"
+                                [(ngModel)]="taskObj.assigned_to"
                                 name="assigned_to">
                         </div>
                     </div>
@@ -48,7 +53,7 @@
                     <label class="control-label col-sm-4" for="pwd">Start Date:</label>
                         <div class="col-sm-6"> 
                         <input  
-                                (ngModelChange)="startDate = $event" 
+                                (ngModelChange)="taskObj.startDate = $event" 
                                 type="date" 
                                 name="startDate"
                                 formControlName="startDate">
@@ -58,10 +63,20 @@
                     <label class="control-label col-sm-4" for="pwd">Due Date:</label>
                         <div class="col-sm-6"> 
                         <input  
-                                (ngModelChange)="dueDate = $event" 
+                                (ngModelChange)="taskObj.dueDate = $event; checkDate()" 
                                 type="date" 
                                 name="dueDate"
                                 formControlName="dueDate">
+                        </div>
+                    </div>
+                    <div class="form-group"> 
+                    <label class="control-label col-sm-4" for="pwd">Hours</label>
+                        <div class="col-sm-6"> 
+                        <input  
+                                [(ngModel)]="taskObj.hours" 
+                                type="number" 
+                                name="hours"
+                                formControlName="hours">
                         </div>
                     </div>
                     <div class="form-group"> 
@@ -69,16 +84,17 @@
                         <div class="col-sm-6"> 
                         <textarea  
                                     formControlName="details" 
-                                    [(ngModel)]="details"
+                                    [(ngModel)]="taskObj.details"
                                     rows="3">
                         </textarea>
                         </div>
                     </div>
                 </form>
+                <p *ngIf="dateInvalid" class="invalidDate">Enter Due Date after Start Date</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default"(click)="addTask()" *ngIf="!edit">Add</button>
-                     <button type="button" class="btn btn-default"(click)="editTask()" *ngIf="edit" >Edit</button>
+                    <button type="button" class="btn btn-default"(click)="addTask()"data-dismiss="modal" *ngIf="!edit" [disabled]="dateInvalid">Add</button>
+                     <button type="button" class="btn btn-default"(click)="editTask()"data-dismiss="modal" *ngIf="edit" [disabled]="dateInvalid">Edit</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
                 </div>
@@ -96,7 +112,7 @@
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
                 <div class="timelineItem-left col-lg-2 ">
-                    <p>{{item.start_date}}</p>
+                    <p>{{item.startDate}}</p>
                 </div>
 
                 <!-- timelineItem-middle -->
@@ -109,14 +125,17 @@
                     <div class="col-lg-12 details itemContent">
                         {{item.details}} 
                     </div>
-                    <div class="col-lg-4 details">
-                        <p><strong class="text-capitalize">Start Date:</strong> {{item.start_date}}</p>
+                    <div class="col-lg-3 details">
+                        <p><strong class="text-capitalize">Start Date:</strong> {{item.startDate}}</p>
                     </div>
-                    <div class="col-lg-4 details">
-                         <p><strong class="text-capitalize">Due Date:</strong> {{item.due_date}}</p>
+                    <div class="col-lg-3 details">
+                         <p><strong class="text-capitalize">Due Date:</strong> {{item.dueDate}}</p>
                     </div>
                     <div class="col-lg-3 details">
                         <p><strong class="text-capitalize">Category:</strong> {{item.categoryType}}</p>
+                    </div>
+                    <div class="col-lg-2 details">
+                        <p><strong class="text-capitalize">Hours:</strong> {{item.hours}}</p>
                     </div>
                     <div class="col-lg-1 details">
                         <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i"(click)= "getTask(item.$key)">+</button>
@@ -148,10 +167,10 @@
                                 <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="qc1{{i}}" role="tabpanel">
-                                            <app-qc1 [taskId]="item.$key"></app-qc1>
+                                            <app-qc1 [taskId]="item.$key"[isManager]="isManager"></app-qc1>
                                         </div>
                                         <div class="tab-pane " id="qc2{{i}}" role="tabpane2">
-                                             <app-qc2 [taskId]="item.$key"></app-qc2>
+                                             <app-qc2 [taskId]="item.$key" [isManager]="isManager"></app-qc2>
                                         </div>
                                         <div class="tab-pane " id="qcc{{i}}" role="tabpane2">
                                              <app-qc-results [taskId]="item.$key"></app-qc-results>
@@ -166,14 +185,26 @@
                     <div class="clearfix"></div>
 
                 </div>
-
                 <!-- timelineItem-right -->
                 <div class="timelineItem-edit col-lg-2">
-                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
-                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="button" 
+                            class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " 
+                            data-toggle="modal" 
+                            data-target="#myModal" 
+                            (click)="getTask(item.$key)"
+                            *ngIf="isManager==='true'">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" 
+                            class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" 
+                            (click)="getTask(item.$key);deleteTask()"
+                            *ngIf="isManager==='true'">
+                                <span class="glyphicon glyphicon-remove"></span>
+                        </button>
                 </div>
            </li>
        </ul>
+        <div class="clearfix"></div>
           <!--project closeout task-->
           <ul class="timeline">
             <li class="timelineItem row col-lg-12">
@@ -183,8 +214,6 @@
 
                 <!-- timelineItem-middle -->
                 <div class="timelineItem-body closeout col-lg-8">
-                    <span></span>
-                    <img class="img-circle timeline-avatar" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/40.png" title="Michael Pulaski">
                     <div class="header">
                         <strong class="text-capitalize"> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - Close Out </strong> 
                     </div>
@@ -204,13 +233,14 @@
 
                 </div>
                  <div class="timelineItem-edit col-lg-2">
-                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
-                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button>
+                    <!-- <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " data-toggle="modal" data-target="#myModal" (click)="getTask(item.$key)"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="button" class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" (click)="getTask(item.$key);deleteTask()"><span class="glyphicon glyphicon-remove"></span></button> -->
                 </div>
 
             </li>
           </ul>
-                
+              <div class="clearfix"></div>  
         <!--project closeout task end-->
     </div>
+    <div class="clearfix"></div>
 </div>

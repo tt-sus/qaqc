@@ -29,6 +29,10 @@
     border-right-color: #f8f8f8;
     border-width: 8px;
 }
+.closeout:before{
+  content: "" ;
+  border-width: 0px!important;
+}
 .timelineItem-body:hover{
     border-color: #f39c12;
     transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
@@ -122,4 +126,8 @@
 }
 textarea{
     width:100%;
+}
+.invalidDate{
+    font-size: 14px;
+    color:red;
 }

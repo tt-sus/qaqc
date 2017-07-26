@@ -9,8 +9,11 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class Qc2Component implements OnInit {
   qc: string;
-  @Input()
+@Input()
 taskId:string;
+
+@Input()
+isManager:string;
 
 taskQC1Observable: FirebaseListObservable<any[]>;
 database:any;

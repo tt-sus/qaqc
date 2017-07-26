@@ -10,8 +10,12 @@ import { QC1 } from './qc1';
 })
 export class Qc1Component implements OnInit {
   QCObject: { coverPage: boolean; tableContents: boolean; executiveSummary: boolean; frontComment: string; matchNumbers: boolean; significantDigits: boolean; updatedFigures: boolean; alignment: boolean; consistentFormatting: boolean; accuracy: boolean; tablesComment: string; referenceConsistency: boolean; referenceComment: string; acronyms: boolean; fonts: boolean; highlighting: boolean; styling: boolean; spell: boolean; generalComment: string; add: boolean; };
-  @Input()
+@Input()
 taskId:string;
+
+@Input()
+isManager:string;
+
 taskQC1Observable: FirebaseListObservable<any[]>;
 
 
@@ -24,6 +28,8 @@ inputsForm:FormGroup;
   QCObservableObject:FirebaseListObservable<any[]>;
   taskArray:any;
   ngOnInit() {
+    console.log("this.isManager")
+    console.log(this.isManager)
     this.QCObject={
 // large Form Inputs // Front Section
 coverPage:false,tableContents:false,executiveSummary:false,
