@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ProjectdetailsComponent implements OnInit {
   dateInvalid: boolean=false;
-  isManager: boolean;
+  isManager: string;
   query_id: any;
   timelineToShow: any;
   projectId: number;
@@ -33,7 +33,7 @@ export class ProjectdetailsComponent implements OnInit {
             ) { 
            
               this.database=db;
-             this.isManager=false;
+             this.isManager="false";
               }
 //modelling inputs
   categoryType:string;

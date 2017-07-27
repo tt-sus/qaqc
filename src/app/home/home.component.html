@@ -12,10 +12,9 @@
                 name="Search" 
                 [(ngModel)]="filter.title"
                 class="form-control"
-                (keyup)="transform(filter.title)"> 
+                (keyup)="transform(filter)"> 
         </div>
       </div>
-
       <!-- results list -->
       <div class="results col-lg-12">
         <table class="table table-striped">
@@ -30,7 +29,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let res of pagedItems |projectfilter: filter" (click)="goToProject(res)">
-              <td>{{res.projectNumber}}</td>
+              <td>{{res.project_number}}</td>
               <td>{{res.title}}</td>
               <td>{{res.manager}}</td>
               <td>Open</td>
@@ -81,9 +80,9 @@
               <input  type="email" 
                       class="form-control" 
                       placeholder="Project Number"
-                      formControlName="projectNumber"
-                      [(ngModel)]="projectNumber"
-                      name="projectNumber">
+                      formControlName="project_number"
+                      [(ngModel)]="project_number"
+                      name="project_number">
             </div>
           </div>
           <div class="form-group" >
