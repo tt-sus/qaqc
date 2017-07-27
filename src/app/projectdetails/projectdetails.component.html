@@ -1,19 +1,21 @@
 <div class="container">
     <div class="timeline-wrapper" >
-        <h3> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}  </h3>
+        <h3>{{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}
+            <span><a (click)="goToProjects()" class="pull-right">Go To Projects</a></span>
+        </h3>
         <button type="button" 
                 class="btn btn-default btn-sm pull-right" 
                 data-toggle="modal" 
                 data-target="#myModal"
                 (click)="edit=false"*ngIf="isManager==='true'">New Task</button>
-        <p ><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
+        <p class="desc"><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
         <!--modal-->
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" (click)="resetForm()">&times;</button>
                     <h4 class="modal-title" *ngIf="!edit">Create Task</h4>
                     <h4 class="modal-title" *ngIf="edit">Edit Task</h4>
                 </div>
@@ -93,9 +95,9 @@
                 <p *ngIf="dateInvalid" class="invalidDate">Enter Due Date after Start Date</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default"(click)="addTask()"data-dismiss="modal" *ngIf="!edit" [disabled]="dateInvalid">Add</button>
-                     <button type="button" class="btn btn-default"(click)="editTask()"data-dismiss="modal" *ngIf="edit" [disabled]="dateInvalid">Edit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default"(click)="addTask();resetForm()"data-dismiss="modal" *ngIf="!edit" [disabled]="dateInvalid">Add</button>
+                     <button type="button" class="btn btn-default"(click)="editTask();resetForm()"data-dismiss="modal" *ngIf="edit" [disabled]="dateInvalid">Edit</button>
+                    <button type="button" class="btn btn-default" (click)="resetForm()" data-dismiss="modal">Close</button>
                 </div>
                 </div>
 
@@ -105,9 +107,10 @@
       
         <ul class="timeline">
             <div class="filter-buttons">
-                <button type="button" class="btn btn-default btn-sm action-buttons  "  (click)="filterTaskCategory()">Tasks</button>
-                <button type="button" class="btn btn-default btn-sm action-buttons  "  (click)="filterMilestoneCategory()">Milestones</button>
-                <button type="button" class="btn btn-default btn-sm action-buttons  "  (click)="showAll()">All</button>                     
+                 <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="sortTasks()">Sort Tasks</button>
+                <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="filterTaskCategory()">Tasks</button>
+                <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="filterMilestoneCategory()">Milestones</button>
+                <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="showAll()">All</button>                     
             </div>    
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
@@ -120,7 +123,7 @@
                     <span></span>
                     <img class="img-circle timeline-avatar" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/40.png" title="Michael Pulaski">
                     <div class="header">
-                        <strong class="text-capitalize"> {{item.task_name}} </strong> // {{item.assigned_to}}
+                        <strong class="text-capitalize"> {{item.taskName}} </strong> // {{item.assigned_to}}
                     </div>
                     <div class="col-lg-12 details itemContent">
                         {{item.details}} 
