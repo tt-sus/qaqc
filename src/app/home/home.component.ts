@@ -3,7 +3,6 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import 'rxjs/Rx'
 import { Observable } from "rxjs/Observable";
 import { PagerService } from "pagination";
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
 
 import * as _ from 'underscore';
@@ -19,7 +18,8 @@ import { Manager } from './manager';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit   {
- 
+  currentUser: string;
+
   projects:Observable<any>;
   projectTitles:Array<any>=[];
   items: FirebaseListObservable<any[]>;
@@ -44,8 +44,7 @@ export class HomeComponent implements OnInit   {
                     this.users.subscribe(res=> {
                   
                     this.Managers=res;
-                    
-                     
+
                       this.checkManager(this.Managers)
                      this.database=db;
                  })  
@@ -79,16 +78,26 @@ export class HomeComponent implements OnInit   {
     })
    
   }
-isManager:boolean=false;
+isManager:string;
   //authenticate manager
   checkManager(manager:Array<any>){
-    console.log(manager)
-   for(let i=0;i<this.Managers.length; i++){
-      if(manager[i].$value==this.authService.userName){
-        this.isManager= true;
+    this.authService.user.subscribe((u)=>{
+     this.setCurrentUser(u.email,manager)
+    })
+  
+  }
+  setCurrentUser(user:string,manager){
+    this.currentUser=user;
+    console.log(this.currentUser);
+     for(let i=0;i<this.Managers.length; i++){
+     console.log(this.currentUser)
+      if(manager[i].$value==this.currentUser){
+        this.isManager= "true";
+        return
       }
       else{
-       this.isManager= false;
+       this.isManager= "false";
+      
       }
     }
   }

@@ -4,6 +4,8 @@ import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
 import * as _ from 'underscore';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-projectdetails',
   templateUrl: './projectdetails.component.html',
@@ -26,7 +28,8 @@ export class ProjectdetailsComponent implements OnInit {
               private location: Location,
               private db: AngularFireDatabase,
               private route: ActivatedRoute,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private router:Router
             ) { 
            
               this.database=db;
@@ -43,7 +46,10 @@ dueDate:new Date(),
 details:"",
 hours:0
 }
-timeline_key:""
+timeline_key:"";
+goToProjects(){
+  this.router.navigate(['home']);
+}
   ngOnInit() {
 
     this.sub = this.route.params.subscribe(params => {
@@ -123,12 +129,25 @@ checkDate(){
       });
        
      }
-    sortTasks(){
-           this.taskList=this.taskList.sort((a,b)=> { 
-          console.log(a);
-          return -new Date(a.startDate).getTime() + new Date(b.startDate).getTime() 
-          });
-    }
+    //true is latest dates at top/ false is latest dates at bottom
+sortUp:boolean=false;
+sortTasks(){
+  this.sortUp=!this.sortUp;
+
+  if(this.sortUp){
+    
+    this.taskList=this.taskList.sort((a,b)=> { 
+    console.log(a);
+    return -new Date(a.startDate).getTime() + new Date(b.startDate).getTime(); 
+  });
+  }
+else if(!this.sortUp){
+   this.taskList=this.taskList.sort((a,b)=> { 
+    console.log(a);
+    return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+  })
+}
+}
 addTask(){
   this.edit=false;
   this.taskListObs.push({
@@ -142,10 +161,12 @@ addTask(){
     qaqc:[{task_name:this.taskObj.taskName}]
   })
   this.inputsForm.reset();
- this.sortTasks();
-
+  this.sortUp=true;
+  this.sortTasks();
 }
-
+resetForm(){
+   this.inputsForm.reset();
+}
 taskId:any;
 edit:boolean=false;
 getTask(taskKey){
@@ -172,6 +193,7 @@ editTask(){
           details:this.taskObj.details,
           hours:this.taskObj.hours,
  });
+  this.sortUp=true;
   this.sortTasks();
 }
 deleteTask(){
@@ -182,7 +204,8 @@ deleteTask(){
   taskToDelete=task;
  });
  taskToDeleteObs.remove();
-
+ this.sortUp=true;
+  this.sortTasks();
 }
 
 }

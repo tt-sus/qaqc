@@ -1,6 +1,6 @@
 export class Project {
  
-  project_number: number;
+  projectNumber: number;
   manager: String;
   title: String;
   status:String;

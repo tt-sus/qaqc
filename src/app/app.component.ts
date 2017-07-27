@@ -20,7 +20,7 @@ export class AppComponent implements OnInit   {
        this.auth.authState.subscribe((auth)=>{
          if(auth){
            this.authService.isLoggedIn=true;
-           console.log(auth.email)
+         
            
          }
           else{

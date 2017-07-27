@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let res of pagedItems |projectfilter: filter" (click)="goToProject(res)">
-              <td>{{res.project_number}}</td>
+              <td>{{res.projectNumber}}</td>
               <td>{{res.title}}</td>
               <td>{{res.manager}}</td>
               <td>Open</td>
