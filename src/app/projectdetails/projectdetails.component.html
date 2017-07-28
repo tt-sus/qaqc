@@ -94,6 +94,16 @@
                         </textarea>
                         </div>
                     </div>
+                    <div class="form-group" *ngIf="edit">
+                        
+                         <label class="control-label col-sm-4" for="pwd">Status</label>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <input  type="checkbox" 
+                                formControlName="status" 
+                                [(ngModel)]="taskObj.status">
+                        </div>
+                  
+                </div>
                 </form>
                 <p *ngIf="dateInvalid" class="invalidDate">Enter Due Date after Start Date</p>
                 </div>
@@ -121,11 +131,12 @@
                 </div>
 
                 <!-- timelineItem-middle -->
-                <div class="timelineItem-body col-lg-8">
+                <div class="timelineItem-body  col-lg-8" [ngClass]="item.status==true?'done':'notdone'">
                     <span></span>
                     <img class="img-circle timeline-avatar" src="https://spark.thorntontomasetti.com/people/vgooje@thorntontomasetti.com/avatar/40.png" title="Michael Pulaski">
                     <div class="header">
-                        <strong class="text-capitalize"> {{item.taskName}} </strong> // {{item.assigned_to}}
+                  
+                      <p>  <strong class="text-capitalize"> {{item.taskName}} </strong> // {{item.assigned_to}}  <span class="status" *ngIf="item.status">Completed</span><span class="status" *ngIf="!item.status">In Progress</span></p>
                     </div>
                     <div class="col-lg-12 details itemContent">
                         {{item.details}} 
@@ -211,8 +222,8 @@
        </ul>
         <div class="clearfix"></div>
           <!--project closeout task-->
-          <ul class="timeline">
-            <li class="timelineItem row col-lg-12">
+          <ul class="timeline ">
+            <li class="timelineItem closeout-box row col-lg-12">
                 <div class="timelineItem-left closeout col-lg-2 ">
                  
                 </div>

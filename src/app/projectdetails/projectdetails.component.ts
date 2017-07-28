@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./projectdetails.component.css']
 })
 export class ProjectdetailsComponent implements OnInit {
-  dateInvalid: boolean=false;
+  projectStatus: string;
+  dateInvalid: boolean = false;
   isManager: string;
   query_id: any;
   timelineToShow: any;
@@ -44,7 +45,8 @@ assigned_to:"",
 startDate:new Date(),
 dueDate:new Date(),
 details:"",
-hours:0
+hours:0,
+status:false
 }
 timeline_key:"";
 goToProjects(){
@@ -72,9 +74,15 @@ goToProjects(){
           startDate:[this.taskObj.startDate],
           dueDate:[this.taskObj.dueDate],
           details:[this.taskObj.details],
-          hours:[this.taskObj.hours]
+          hours:[this.taskObj.hours],
+          status:[this.taskObj.status]
         })
-       
+       if(!this.taskObj.status){
+         this.projectStatus="In Progress";
+       }
+        else if(this.taskObj.status){
+           this.projectStatus="Completed";
+        }
   }
   
 // category
@@ -158,6 +166,7 @@ addTask(){
           dueDate:this.taskObj.dueDate,
           details:this.taskObj.details,
           hours:this.taskObj.hours,
+          status:false,
     qaqc:[{task_name:this.taskObj.taskName}]
   })
   this.inputsForm.reset();
@@ -192,6 +201,7 @@ editTask(){
           dueDate:this.taskObj.dueDate,
           details:this.taskObj.details,
           hours:this.taskObj.hours,
+          status:this.taskObj.status
  });
   this.sortUp=true;
   this.sortTasks();
