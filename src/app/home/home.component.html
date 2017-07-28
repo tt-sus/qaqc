@@ -1,16 +1,15 @@
 <div class="container">
-
   <div class="home-wrapper">
       <div  class="col-lg-12 sus-header">
         <h1 class="page-header">Project List</h1>
         <!-- add new project -->
-        <button type="button" class="btn btn-default btn-sm pull-right" *ngIf="isManager" data-toggle="modal" data-target="#myModal">New project</button>
+        <button type="button" class="btn btn-default btn-sm pull-right" *ngIf="isManager==='true'" data-toggle="modal" data-target="#myModal">New Project</button>
         <!-- search -->
         <div class="col-xs-5 row mb-2">
           <input  type="text"  
-                placeholder="Search: project number, name or project manager" 
+                placeholder="Search: project name" 
                 name="Search" 
-                [(ngModel)]="filter.title"
+                [(ngModel)]="filter.combined"
                 class="form-control"
                 (keyup)="transform(filter)"> 
         </div>
@@ -21,27 +20,29 @@
           <thead>
             <tr>
               <th class="col-lg-2">Project Number </th>
-              <th class="col-lg-4">Project Name </th>
+              <th class="col-lg-3">Project Name </th>
               <th class="col-lg-2">Project Manager </th>
-              <th class="col-lg-3">Current state </th>
-              <th class="col-lg-1">Action</th>
+              <th class="col-lg-2">Client </th>
+              <th class="col-lg-2">Climate Zone</th>
+              <th class="col-lg-3"> state </th>
+              <th class="col-lg-2" *ngIf="isManager==='true'">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let res of pagedItems |projectfilter: filter" (click)="goToProject(res)">
+            <tr *ngFor="let res of pagedItems " (click)="goToProject(res)">
               <td>{{res.project_number}}</td>
               <td>{{res.title}}</td>
               <td>{{res.manager}}</td>
+              <td>{{res.client}}</td>
+              <td>{{res.climate}}</td>
               <td>Open</td>
-              <td><button type="button" class="btn btn-default btn-xs" (click)="delete(res.$key,res)">Delete</button></td>
+              <td *ngIf="isManager==='true'"><button type="button" class="btn btn-default btn-xs" (click)="delete(res.$key,res)">Delete</button></td>
             </tr>
           </tbody>
         </table>
       </div>      
-
   </div>
-
-  <div class="col-lg-12 text-center">
+  <div class="col-lg-12">
     <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm">
       <li [ngClass]="{disabled:pager.currentPage === 1}">
         <a (click)="setPage(1)">First</a>
@@ -75,14 +76,15 @@
       <div class="modal-body">
        <form class="form-horizontal" [formGroup]="inputsForm">
           <div class="form-group">
-            <label class="control-label col-sm-4" for="email">Project Number:</label>
+            <label class="control-label col-sm-4" for="project_number">Project Number:</label>
             <div class="col-sm-6">
-              <input  type="email" 
+              <input  type="text" 
                       class="form-control" 
                       placeholder="Project Number"
                       formControlName="project_number"
                       [(ngModel)]="project_number"
                       name="project_number">
+                     <p *ngIf="inputsForm.controls.project_number.dirty && inputsForm.controls.project_number?.errors" class="formInvalid">Project Number is Required</p>
             </div>
           </div>
           <div class="form-group" >
@@ -90,10 +92,11 @@
             <div class="col-sm-6"> 
               <input  type="text" 
                       class="form-control" 
-                      placeholder="Project Name"
+                      placeholder="Enter Project Name"
                       formControlName=title
                       [(ngModel)]="title"
                       name="title">
+             <p *ngIf="inputsForm.controls.title.dirty && inputsForm.controls.title?.errors" class="formInvalid">Title is Required</p>
             </div>
           </div>
            <div class="form-group" >
@@ -101,10 +104,37 @@
             <div class="col-sm-6"> 
               <input  type="text" 
                       class="form-control" 
-                      placeholder="Manager Name"
+                      placeholder="Enter Manager Name"
                       formControlName="manager"
                       [(ngModel)]="manager"
                       name="manager">
+              <p *ngIf="inputsForm.controls.manager.dirty && inputsForm.controls.manager?.errors" class="formInvalid">Title is Required</p>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-sm-4" for="pwd">Client Name: </label>
+            <div class="col-sm-6"> 
+              <input  type="text" 
+                      class="form-control" 
+                      placeholder="Enter Client Name"
+                      formControlName="client"
+                      [(ngModel)]="client"
+                      name="client">
+                        <p *ngIf="inputsForm.controls.client.dirty && inputsForm.controls.client?.errors" class="formInvalid">Title is Required</p>
+
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-sm-4" for="pwd">Climate Zone:</label>
+            <div class="col-sm-6"> 
+              <input  type="text" 
+                      class="form-control" 
+                      placeholder="Climate Zone"
+                      formControlName="climate"
+                      [(ngModel)]="climate"
+                      name="climate">
+                       <p *ngIf="inputsForm.controls.climate.dirty && inputsForm.controls.climate?.errors" class="formInvalid">Title is Required</p>
+
             </div>
           </div>
           <div class="form-group"> 
@@ -115,16 +145,20 @@
                     type="date" 
                     name="startDate"
                     formControlName="startDate">
+                    <p *ngIf="inputsForm.controls.startDate.dirty && inputsForm.controls.startDate?.errors" class="formInvalid">Title is Required</p>
+
             </div>
           </div>
            <div class="form-group"> 
-           <label class="control-label col-sm-4" for="pwd">End Date:</label>
+           <label class="control-label col-sm-4" for="pwd">Due Date:</label>
             <div class="col-sm-6"> 
              <input  
-                    (ngModelChange)="endDate = $event" 
+                    (ngModelChange)="endDate = $event;checkDate()" 
                     type="date" 
-                    name="EndDate"
-                    formControlName="EndDate">
+                    name="endDate"
+                    formControlName="endDate">
+                       <p *ngIf="inputsForm.controls.endDate.dirty && inputsForm.controls.endDate?.errors" class="formInvalid">Due Date is Required</p>
+                <p *ngIf="dateInvalid" class="formInvalid">Enter Due Date after Start Date</p>
             </div>
           </div>
           <!-- <div class="form-group"> 
@@ -135,7 +169,7 @@
         </form>
       </div>
       <div class="modal-footer">
-         <button type="button" class="btn btn-default"(click)="addToList()"*ngIf="isManager" >Add</button>
+         <button type="button" [disabled]="inputsForm.invalid || dateInvalid" class="btn btn-default" data-dismiss="modal" (click)="addToList();reset()" >Add</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="say()">Close</button>
       </div>
     </div>

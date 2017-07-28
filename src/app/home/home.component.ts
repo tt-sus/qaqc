@@ -18,6 +18,7 @@ import { Manager } from './manager';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit   {
+  dateInvalid: boolean;
   currentUser: string;
 
   projects:Observable<any>;
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit   {
                 }
 // add project
     addToList() {
+    
      this.project_key= this.timeline.push({
                       project_name:this.title, 
                       project_number:this.project_number,
@@ -66,9 +68,16 @@ export class HomeComponent implements OnInit   {
       },
         startDate:this.startDate,
         endDate:this.endDate,
-        timeline_key:this.project_key
+        client:this.client,
+        climate:this.climate,
+        timeline_key:this.project_key,
+        combined:this.title+this.manager+this.project_number
       }
     );
+ 
+  }
+  reset(){
+     this.inputsForm.reset()
   }
   //delete Project
   delete(key:string,project:Project){
@@ -122,11 +131,12 @@ transform(filter:Project){
  this.pagedItems = temp.slice(this.pager.startIndex, this.pager.endIndex + 1);
 }
  applyFilter(project: Project, filter: Project=new Project()): boolean {
+   console.log(project)
     for (let field in filter) {
-      
+      console.log(project)
       if (filter[field]) {
 
-          if (project.title.toLowerCase().indexOf(filter[field].toLowerCase()) === -1) {
+          if (project.combined.toLowerCase().indexOf(filter[field].toLowerCase()) === -1) {
             return false;
           }
        
@@ -162,15 +172,33 @@ manager:string;
 project_number:string;
 endDate:Date;
 status:string;
+client:string;
+climate:string
    ngOnInit() {
-     this.inputsForm=this.fb.group({
-     project_number:[null,[]],
-      title:[null,[]],
-      manager:[null,[]],
-      startDate:[this.startDate,[]],
-      endDate:[this.startDate,[]],
+     if(this.authService.isLoggedIn){
+          this.inputsForm=this.fb.group({
+     project_number:[this.project_number,[Validators.required]],
+      title:[this.title,[Validators.required]],
+      manager:[this.manager,[Validators.required]],
+      startDate:[this.startDate,[Validators.required]],
+      endDate:[this.startDate,[Validators.required]],
+      client:[this.client,[Validators.required]],
+      climate:[this.climate,[Validators.required]]
      })
-       
+     }
+      else{
+          this.router.navigate([""]);
+      }
+
    }
+checkDate(){
+ 
+  if(new Date(this.endDate).getTime() - new Date(this.startDate).getTime()<0 ){
+    this.dateInvalid=true;
+  }
+  else{
+    this.dateInvalid=false;
+  }
+}
 
 }

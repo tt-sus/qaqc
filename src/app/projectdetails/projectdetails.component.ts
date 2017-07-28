@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
 import * as _ from 'underscore';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-projectdetails',
@@ -12,7 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./projectdetails.component.css']
 })
 export class ProjectdetailsComponent implements OnInit {
-  dateInvalid: boolean=false;
+  projectStatus: string;
+  dateInvalid: boolean = false;
   isManager: string;
   query_id: any;
   timelineToShow: any;
@@ -29,7 +31,8 @@ export class ProjectdetailsComponent implements OnInit {
               private db: AngularFireDatabase,
               private route: ActivatedRoute,
               private fb: FormBuilder,
-              private router:Router
+              private router:Router,
+              public authService: AuthService,
             ) { 
            
               this.database=db;
@@ -44,27 +47,23 @@ assigned_to:"",
 startDate:new Date(),
 dueDate:new Date(),
 details:"",
-hours:0
+hours:0,
+status:false
 }
 timeline_key:"";
 goToProjects(){
   this.router.navigate(['home']);
 }
   ngOnInit() {
-
-    this.sub = this.route.params.subscribe(params => {
+    if(this.authService.isLoggedIn){
+         this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.isManager = params['manager'];
-     
     });  
-  
- 
    this.database.object('projects/'+this.id ).subscribe((res)=>{
          this.projectToShow=res;
          this.getTimeline(this.projectToShow.timeline_key)
       });  
-        
-       
         this.inputsForm=this.fb.group({
           taskName:[this.taskObj.taskName],
           categoryType:[this.taskObj.categoryType],
@@ -72,9 +71,20 @@ goToProjects(){
           startDate:[this.taskObj.startDate],
           dueDate:[this.taskObj.dueDate],
           details:[this.taskObj.details],
-          hours:[this.taskObj.hours]
+          hours:[this.taskObj.hours],
+          status:[this.taskObj.status]
         })
-       
+       if(!this.taskObj.status){
+         this.projectStatus="In Progress";
+       }
+        else if(this.taskObj.status){
+           this.projectStatus="Completed";
+        }
+    }
+      else{
+        this.router.navigate([""]);
+      }
+ 
   }
   
 // category
@@ -158,6 +168,7 @@ addTask(){
           dueDate:this.taskObj.dueDate,
           details:this.taskObj.details,
           hours:this.taskObj.hours,
+          status:false,
     qaqc:[{task_name:this.taskObj.taskName}]
   })
   this.inputsForm.reset();
@@ -192,12 +203,13 @@ editTask(){
           dueDate:this.taskObj.dueDate,
           details:this.taskObj.details,
           hours:this.taskObj.hours,
+          status:this.taskObj.status
  });
   this.sortUp=true;
   this.sortTasks();
 }
 deleteTask(){
-  alert();
+
   let taskToDelete;
   let taskToDeleteObs = this.database.object(`projecttimeline/${this.timeline_key}/tasks/${this.taskId}`);
   taskToDeleteObs.subscribe(task=>{

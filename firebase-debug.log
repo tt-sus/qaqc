@@ -3,82 +3,29 @@
 [debug] CLI Version:  3.5.0
 [debug] Platform:     win32
 [debug] Node Version: v6.9.2
-[debug] Time:         Thu Jul 27 2017 11:41:54 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/wYiL_Y2r34hFjOJrptXsF1-LLRW-34uk2Zu-Iffp0h0',
-  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
-  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
-  grant_type: 'refresh_token',
-  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Thu Jul 27 2017 11:41:54 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/qaqc-f9eac  
- Thu Jul 27 2017 11:41:55 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/qaqc-f9eac/tokens  
- Thu Jul 27 2017 11:41:55 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\aksha\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.9.2
-[debug] Time:         Thu Jul 27 2017 12:19:31 GMT-0400 (Eastern Daylight Time)
+[debug] Time:         Fri Jul 28 2017 11:37:16 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/qaqc-f9eac  
- Thu Jul 27 2017 12:19:31 GMT-0400 (Eastern Daylight Time)
+ Fri Jul 28 2017 11:37:16 GMT-0400 (Eastern Daylight Time)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/qaqc-f9eac/tokens  
- Thu Jul 27 2017 12:19:36 GMT-0400 (Eastern Daylight Time)
+ Fri Jul 28 2017 11:37:17 GMT-0400 (Eastern Daylight Time)
 [debug] <<< HTTP RESPONSE 200
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\aksha\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.9.2
-[debug] Time:         Thu Jul 27 2017 12:33:01 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
+[debug] [2017-07-28T15:43:13.439Z] ----------------------------------------------------------------------
+[debug] [2017-07-28T15:43:13.442Z] Command:      C:\Program Files\nodejs\node.exe C:\Users\aksha\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-07-28T15:43:13.443Z] CLI Version:  3.9.1
+[debug] [2017-07-28T15:43:13.443Z] Platform:     win32
+[debug] [2017-07-28T15:43:13.443Z] Node Version: v6.9.2
+[debug] [2017-07-28T15:43:13.443Z] Time:         Fri Jul 28 2017 11:43:13 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-07-28T15:43:13.443Z] ----------------------------------------------------------------------
 [debug] 
-[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/wYiL_Y2r34hFjOJrptXsF1-LLRW-34uk2Zu-Iffp0h0',
-  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
-  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
-  grant_type: 'refresh_token',
-  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Thu Jul 27 2017 12:33:01 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/qaqc-f9eac  
- Thu Jul 27 2017 12:33:01 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/qaqc-f9eac/tokens  
- Thu Jul 27 2017 12:33:03 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\aksha\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.9.2
-[debug] Time:         Thu Jul 27 2017 13:48:02 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/wYiL_Y2r34hFjOJrptXsF1-LLRW-34uk2Zu-Iffp0h0',
-  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
-  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
-  grant_type: 'refresh_token',
-  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Thu Jul 27 2017 13:48:02 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/qaqc-f9eac  
- Thu Jul 27 2017 13:48:02 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/qaqc-f9eac/tokens  
- Thu Jul 27 2017 13:48:06 GMT-0400 (Eastern Daylight Time)
-[debug] <<< HTTP RESPONSE 200
+[debug] [2017-07-28T15:43:13.460Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-07-28T15:43:13.461Z] > authorizing via signed-in user
+[debug] [2017-07-28T15:43:13.464Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/qaqc-f9eac  
+ Fri Jul 28 2017 11:43:13 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-07-28T15:43:14.487Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-28T15:43:14.490Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/qaqc-f9eac/tokens  
+ Fri Jul 28 2017 11:43:14 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-07-28T15:43:14.967Z] <<< HTTP RESPONSE 200
