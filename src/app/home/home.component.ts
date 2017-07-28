@@ -53,13 +53,13 @@ export class HomeComponent implements OnInit   {
     addToList() {
      this.project_key= this.timeline.push({
                       project_name:this.title, 
-                      project_number:this.projectNumber,
+                      project_number:this.project_number,
                       manager:this.manager}).key
       this.items.push(
       {
       title: this.title,
       manager:this.manager,
-      project_number:this.projectNumber,
+      project_number:this.project_number,
       services: {
         s1: "Building certification",
         s2:"Energy ANalytics"
@@ -159,12 +159,12 @@ say(){
 }
 title:string;
 manager:string;
-projectNumber:string;
+project_number:string;
 endDate:Date;
 status:string;
    ngOnInit() {
      this.inputsForm=this.fb.group({
-     projectNumber:[null,[]],
+     project_number:[null,[]],
       title:[null,[]],
       manager:[null,[]],
       startDate:[this.startDate,[]],
