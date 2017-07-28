@@ -7,4 +7,5 @@ export class Project {
   timeline_key:string="";
   client:string="";
   climate_zone:string="";
+  combined: string = `${this.manager}${this.project_number}${this.title}`;
 }

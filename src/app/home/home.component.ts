@@ -70,7 +70,8 @@ export class HomeComponent implements OnInit   {
         endDate:this.endDate,
         client:this.client,
         climate:this.climate,
-        timeline_key:this.project_key
+        timeline_key:this.project_key,
+        combined:this.title+this.manager+this.project_number
       }
     );
  
@@ -130,11 +131,12 @@ transform(filter:Project){
  this.pagedItems = temp.slice(this.pager.startIndex, this.pager.endIndex + 1);
 }
  applyFilter(project: Project, filter: Project=new Project()): boolean {
+   console.log(project)
     for (let field in filter) {
-      
+      console.log(project)
       if (filter[field]) {
 
-          if (project.title.toLowerCase().indexOf(filter[field].toLowerCase()) === -1) {
+          if (project.combined.toLowerCase().indexOf(filter[field].toLowerCase()) === -1) {
             return false;
           }
        
@@ -182,7 +184,7 @@ climate:string
       client:[this.client,[Validators.required]],
       climate:[this.climate,[Validators.required]]
      })
-       
+   
    }
 checkDate(){
  

@@ -9,7 +9,7 @@
           <input  type="text"  
                 placeholder="Search: project name" 
                 name="Search" 
-                [(ngModel)]="filter.title"
+                [(ngModel)]="filter.combined"
                 class="form-control"
                 (keyup)="transform(filter)"> 
         </div>
@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let res of pagedItems |projectfilter: filter" (click)="goToProject(res)">
+            <tr *ngFor="let res of pagedItems " (click)="goToProject(res)">
               <td>{{res.project_number}}</td>
               <td>{{res.title}}</td>
               <td>{{res.manager}}</td>
@@ -169,7 +169,7 @@
         </form>
       </div>
       <div class="modal-footer">
-         <button type="button" [disabled]="inputsForm.invalid || invalidDate" class="btn btn-default" data-dismiss="modal" (click)="addToList();reset()" >Add</button>
+         <button type="button" [disabled]="inputsForm.invalid || dateInvalid" class="btn btn-default" data-dismiss="modal" (click)="addToList();reset()" >Add</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="say()">Close</button>
       </div>
     </div>
