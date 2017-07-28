@@ -175,7 +175,8 @@ status:string;
 client:string;
 climate:string
    ngOnInit() {
-     this.inputsForm=this.fb.group({
+     if(this.authService.isLoggedIn){
+          this.inputsForm=this.fb.group({
      project_number:[this.project_number,[Validators.required]],
       title:[this.title,[Validators.required]],
       manager:[this.manager,[Validators.required]],
@@ -184,7 +185,11 @@ climate:string
       client:[this.client,[Validators.required]],
       climate:[this.climate,[Validators.required]]
      })
-   
+     }
+      else{
+          this.router.navigate([""]);
+      }
+
    }
 checkDate(){
  

@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl, Validators,AbstractControl } from '@angular/forms';
 import * as _ from 'underscore';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-projectdetails',
@@ -30,7 +31,8 @@ export class ProjectdetailsComponent implements OnInit {
               private db: AngularFireDatabase,
               private route: ActivatedRoute,
               private fb: FormBuilder,
-              private router:Router
+              private router:Router,
+              public authService: AuthService,
             ) { 
            
               this.database=db;
@@ -53,20 +55,15 @@ goToProjects(){
   this.router.navigate(['home']);
 }
   ngOnInit() {
-
-    this.sub = this.route.params.subscribe(params => {
+    if(this.authService.isLoggedIn){
+         this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.isManager = params['manager'];
-     
     });  
-  
- 
    this.database.object('projects/'+this.id ).subscribe((res)=>{
          this.projectToShow=res;
          this.getTimeline(this.projectToShow.timeline_key)
       });  
-        
-       
         this.inputsForm=this.fb.group({
           taskName:[this.taskObj.taskName],
           categoryType:[this.taskObj.categoryType],
@@ -83,6 +80,11 @@ goToProjects(){
         else if(this.taskObj.status){
            this.projectStatus="Completed";
         }
+    }
+      else{
+        this.router.navigate([""]);
+      }
+ 
   }
   
 // category
@@ -207,7 +209,7 @@ editTask(){
   this.sortTasks();
 }
 deleteTask(){
-  alert();
+
   let taskToDelete;
   let taskToDeleteObs = this.database.object(`projecttimeline/${this.timeline_key}/tasks/${this.taskId}`);
   taskToDeleteObs.subscribe(task=>{
