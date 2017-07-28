@@ -1,7 +1,10 @@
 <div class="container">
     <div class="timeline-wrapper" >
         <h3>{{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}
-            <span><a (click)="goToProjects()" class="pull-right">Go To Projects</a></span>
+        
+     <span class=" back pull-right"(click)="goToProjects()"> Projects</span>
+           
+           
         </h3>
         <button type="button" 
                 class="btn btn-default btn-sm pull-right" 
@@ -103,8 +106,7 @@
 
             </div>
             </div>
-               <!--edit Modalend ednd-->
-      
+               <!--edit Modalend ednd-->     
         <ul class="timeline">
             <div class="filter-buttons">
                  <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="sortTasks()">Sort Tasks</button>

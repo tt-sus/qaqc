@@ -8,3 +8,10 @@ table td{
     margin-top: 30px;
     margin-bottom: 50px;
 }
+.results{
+    text-transform: uppercase;
+}
+.formInvalid{
+    color:red; 
+    font-size: 13px;
+}

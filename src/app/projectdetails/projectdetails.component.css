@@ -1,5 +1,6 @@
 h3, .desc{
     font-family: 'Dosis', sans-serif;
+    text-transform: uppercase;
 }
 h3 span a{
     font-size: 18px;
@@ -46,7 +47,7 @@ h3 span a{
  
 }
 
-.timelineItem-body .header:hover{
+.timelineItem-body:hover .header{
   color:#fff;
 }
 .timelineItem-body:hover:before{
@@ -90,6 +91,7 @@ h3 span a{
     top:-40px;
     padding:10px;
     padding-left: 15px;
+    text-transform: uppercase;
 }
 .details{
      padding-bottom:15px; 
@@ -138,4 +140,8 @@ textarea{
 .invalidDate{
     font-size: 14px;
     color:red;
+}
+.back{
+    font-size:16px;
+    cursor: pointer;
 }
