@@ -38,7 +38,7 @@ username:string="";
   }
 reset(email){
   email=`${email}@thorntontomasetti.com`;
-  alert(email)
+  alert("email sent to "+email)
   this.authService.resetPassword(email)
 }
 }

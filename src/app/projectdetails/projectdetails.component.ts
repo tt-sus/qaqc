@@ -45,7 +45,7 @@ export class ProjectdetailsComponent implements OnInit {
              this.userArray.push(user);
       
            })
-           console.log(this.userList)
+          
               }
 //modelling inputs
   categoryType:string;
@@ -74,14 +74,14 @@ this.inputsForm.reset();
     }
     toNumberUsers(){
      
-    console.log(this.assigned_to.user_key);
+
     this.taskObj.assigned_to=this.assigned_to.user_key.$key;
     this.taskObj.imageUrl=this.assigned_to.user_key.imageUrl;
   //       this.db.object(`users/${this.assigned_to.user_key}`).subscribe((user)=>{
   //  console.log(user.user_name)
   //  this.taskObj.imageUrl=user.imageUrl;
   //   this.taskObj.assigned_to=user.user_name;
-  console.log(this.taskObj)
+ 
   // })
       // this.taskObj.assigned_to=this.assigned_to.user_name;
       //  this.taskObj.imageUrl=this.assigned_to.imageUrl;
@@ -239,7 +239,7 @@ addTask(){
           imageUrl:this.taskObj.imageUrl,
     qaqc:[{task_name:this.taskObj.taskName}]
   })
-    console.log(this.taskObj.assigned_to);
+
   this.inputsForm.reset();
   this.sortUp=true;
   this.sortTasks();
@@ -258,7 +258,7 @@ getTask(taskKey){
   
   this.categoryType=task.categoryType;
   this.assigned_to.user_name=task.assigned_to;
-  console.log("is")
+
   this.taskObj=task;
   })
 }
