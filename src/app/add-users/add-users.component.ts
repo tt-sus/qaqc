@@ -13,7 +13,7 @@ export class AddUSersComponent implements OnInit {
   password: string;
   user_name:string;
   email:string="";
-  imageUrl:string;
+  imageUrl:string="";
   users: FirebaseListObservable<any[]>;
   userList=[];
   userObject={
