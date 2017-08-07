@@ -44,7 +44,7 @@ this.database.object(`users/${key}`).subscribe((retrievedUser)=>{
   this.userObject=user;
   console.log(user)
 }
-deleteUser(key){
+deleteUser(){
   this.database.object(`users/${this.userKey}`).remove();
  alert("User Deleted")
 }

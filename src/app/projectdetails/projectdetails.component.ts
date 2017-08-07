@@ -70,8 +70,8 @@ imageUrl:this.assigned_to.imageUrl,
      
       this.taskObj.categoryType=this.categoryType
     }
-    toNumberUsers(key){
-      this.user_key=key;
+    toNumberUsers(){
+      
     console.log(this.assigned_to.user_key);
     this.taskObj.assigned_to=this.assigned_to.user_key.$key;
     this.taskObj.imageUrl=this.assigned_to.user_key.imageUrl;
