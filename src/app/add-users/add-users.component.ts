@@ -28,7 +28,7 @@ export class AddUSersComponent implements OnInit {
   this.users=db.list("/users");
   this.users.subscribe((user)=>{
     this.userList.push(user);
-     console.log(this.userList[0])
+
   })
    }
 userObj$;
@@ -42,14 +42,14 @@ this.database.object(`users/${key}`).subscribe((retrievedUser)=>{
     user=retrievedUser;
   });
   this.userObject=user;
-  console.log(user)
+
 }
 deleteUser(){
   this.database.object(`users/${this.userKey}`).remove();
  alert("User Deleted")
 }
 saveUser(){
-  console.log(this.userObject)
+
   this.database.object(`users/${this.userKey}`).update({
      user_name:this.userObject.user_name,
       email:this.userObject.email,
@@ -81,7 +81,13 @@ saveUser(){
   }
 
   ngOnInit() {
- 
+  this.authService.user.subscribe((val=>{this.routeThis(val)}))
+    
+   }
+    routeThis(val){
+       if(!val){
+        this.router.navigate([""]);
+     }
   }
 toHome(){
   this.router.navigate(["/home"])

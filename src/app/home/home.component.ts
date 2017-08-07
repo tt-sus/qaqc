@@ -88,12 +88,19 @@ projectStatus:boolean=false;
     this.project_key=key
     this.project=project;
   }
+  tasks: FirebaseListObservable<any[]>;
   project:Project;
   //delete Project
   delete(){
     let time_key=this.project.timeline_key;
+      this.tasks = this.database.list(`/projecttimeline/${time_key}`);
+
+    
+    this.tasks.remove();
+  
     this.items.remove(this.project_key).then((project)=>{
       this.timeline.remove(time_key);
+
     })
   }
 isManager:string;
