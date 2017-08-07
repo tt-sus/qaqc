@@ -61,7 +61,9 @@ hours:0,
 status:false,
 imageUrl:this.assigned_to.imageUrl,
 }
-
+clean(){
+this.inputsForm.reset();
+}
   categoryArray:Array<Object> = [
       {num: 0, name: "Task"},
       {num: 1, name: "Milestone"}
@@ -70,8 +72,8 @@ imageUrl:this.assigned_to.imageUrl,
      
       this.taskObj.categoryType=this.categoryType
     }
-    toNumberUsers(key){
-      this.user_key=key;
+    toNumberUsers(){
+     
     console.log(this.assigned_to.user_key);
     this.taskObj.assigned_to=this.assigned_to.user_key.$key;
     this.taskObj.imageUrl=this.assigned_to.user_key.imageUrl;
