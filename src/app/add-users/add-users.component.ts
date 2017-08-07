@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
 })
 export class AddUSersComponent implements OnInit {
   database: AngularFireDatabase;
-  password: string;
-  user_name:string;
+  password: string="";
+  user_name:string="";
   email:string="";
-  imageUrl:string;
+  imageUrl:string="";
   users: FirebaseListObservable<any[]>;
   userList=[];
   userObject={
