@@ -43,7 +43,7 @@ user:string;
       }
 submitComment(){
  let d1 = new Date();
- alert(d1)
+
   console.log(this.chat)
  this.taskCommentsObservable.push({chat:this.chat,user:this.user,date:d1.toDateString()});
  this.inputsForm.reset();

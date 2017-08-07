@@ -23,7 +23,7 @@ username:string="";
 
   login() {
      this.email=`${this.email}@thorntontomasetti.com`;
-         alert(this.email)
+       
     this.authService.login(this.email, this.password)
     // this.router.navigate(["home"]);
     
