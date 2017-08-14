@@ -21,7 +21,6 @@ export class AppComponent implements OnInit   {
          if(auth){
            this.authService.isLoggedIn=true;
          
-           
          }
           else{
            this.authService.isLoggedIn=false;
@@ -33,6 +32,10 @@ export class AppComponent implements OnInit   {
   logout(){
     this.authService.logout();
   }
+
+  goToProjects(){
+  this.router.navigate(['home']);
+  }
   checkLogin(){
 
     if(this.authService.isLoggedIn){
@@ -43,10 +46,7 @@ export class AppComponent implements OnInit   {
     }
   }
 
-   ngOnInit() {
- 
-    
-    }
+   ngOnInit() {}
     
 
 }
