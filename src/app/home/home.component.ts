@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from "rxjs/Observable";
 import { PagerService } from "pagination";
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Project } from './project';
 import { Manager } from './manager';
 import { Projects } from './projects';
+import { TimelineComponent } from '../timeline/timeline.component';
 
 
 @Component({
@@ -18,6 +19,9 @@ import { Projects } from './projects';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit   {
+  @ViewChild(TimelineComponent) timelineCmp:TimelineComponent;
+
+  projectsName: Array<string>=[];
   userkey: string;
   params: string;
   isAdmin: string;
@@ -52,42 +56,78 @@ export class HomeComponent implements OnInit   {
                 }
 projectsTimeline:Array<any>=[];
 getCloseout(projects:Array<Project>){
-  let tasksA=[]
-  projects.forEach((project)=>{
-    this.projectsTimeline=[];
-    let userTasks=[];
-    // console.log(project.timeline_key);
-  let tasks= this.database.list(`/projecttimeline/${project.timeline_key}/tasks`);
-  tasks.subscribe(task=>{
-      task.map((item)=>{
-        tasksA.push(item);
-          userTasks=tasksA.filter((task)=>{
-          return task.assigned_to===this.userkey;
-        });
-      })
-      this.projectsTimeline=[...userTasks]
-    console.log(this.projectsTimeline)
-      userTasks=[];
-  })
+//   this.projectsName=[];
+//   let filteredProject=projects.filter((project)=>{
+//   let ukey="";
+// Object.keys(project.assigned_to).forEach(function(key,index) {
+//     // key: the name of the object key
+//     // index: the ordinal position of the key within the object 
+//      ukey=project.assigned_to[key][Object.keys(project.assigned_to[key])[0]];
+// });
+
+// //     for (let key in project.assigned_to) {
+// //       alert(key)
+// //       if (project.assigned_to.hasOwnProperty(key)) {
+      
+      
+// //       }
+// //      
+// // }
+//     return ukey===this.userkey;
+//   })
+
+   
+//   let tasksA=[];
+//     let userTasks=[];
+//   filteredProject.forEach((project,i)=>{
+  
+//     // console.log(project.timeline_key);
+//   let tasks= this.database.list(`/projecttimeline/${project.timeline_key}/tasks`);
+//   tasks.subscribe(task=>{
+//       task.forEach((item)=>{
+//         tasksA.push(item);
+//           userTasks=tasksA;
+        
+//       });
+       
+//  userTasks.forEach((task)=>{
+//     this.projectsTimeline.push({
+//         content:task.taskName,
+//         start:task.dueDate,
+//         group:i,
+      
+//     })
      
-  })
+//     })
+//    this.projectsName.push(project.title);
+
+//   tasksA=[];
+//    userTasks=[];
+ 
+   
+
+//       // userTasks=[];
+//   })
+     
+//   })
+ 
+//   filteredProject=[];
+// //learned {title:project.title,project_number:project.project_number,tasks:userTasks}
   
-//learned {title:project.title,project_number:project.project_number,tasks:userTasks}
-  
 
-  let closedProjects= projects.filter((project)=>{return project.projectStatus==true})
+//   let closedProjects= projects.filter((project)=>{return project.projectStatus==true})
 
 
-  for(let i=0;i<closedProjects.length;i++){
-    // console.log(closedProjects[i].$key)
-     let closeOut=this.database.object(closedProjects[i].$key);
-      closeOut.subscribe((item)=>{
-        // console.log(item);
-        let closeKey= item[Object.keys(item)[0]]
-        // console.log(Object.keys(closeKey)[0])
-          // console.log(closeKey[Object.keys(closeKey)[0]])
-      })
-  }
+//   for(let i=0;i<closedProjects.length;i++){
+//     // console.log(closedProjects[i].$key)
+//      let closeOut=this.database.object(closedProjects[i].$key);
+//       closeOut.subscribe((item)=>{
+//         // console.log(item);
+//         let closeKey= item[Object.keys(item)[0]]
+//         // console.log(Object.keys(closeKey)[0])
+//           // console.log(closeKey[Object.keys(closeKey)[0]])
+//       })
+//   }
 }
 // add project
 projectStatus:boolean=false;
@@ -112,7 +152,8 @@ projectStatus:boolean=false;
         climate:this.climate,
         timeline_key:this.project_key,
         projectStatus:this.projectStatus,
-        combined:this.title+this.manager+this.project_number
+        combined:this.title+this.manager+this.project_number,
+        assigned_to:[]
       }
     );
 
@@ -134,10 +175,12 @@ projectStatus:boolean=false;
     this.tasks.remove();
     this.items.remove(this.project_key).then((project)=>{
     this.timeline.remove(time_key);
-    console.log(this.projectTitles)
+    // console.log(this.projectTitles)
     this.getCloseout(this.projectTitles);
     });
   this.projectsTimeline=[];
+   this.timelineCmp.destroy()
+  this.timelineCmp.ngOnInit();
   }
 isManager:string;
   //authenticate manager
@@ -237,6 +280,7 @@ status:string;
 client:string;
 climate:string
    ngOnInit() {
+    
      this.items = this.database.list('/projects')
                     this.items.subscribe(res=> {
                     this.projectTitles=res;

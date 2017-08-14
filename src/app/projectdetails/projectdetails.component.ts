@@ -224,6 +224,8 @@ else if(!this.sortUp){
 }
 addTask(){
 
+  let projectObj= this.database.list(`projects/${this.id}/assigned_to` );
+  projectObj.push({assigned_to:this.taskObj.assigned_to})
 
   this.edit=false;
   this.taskListObs.push({
