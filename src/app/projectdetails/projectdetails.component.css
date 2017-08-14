@@ -119,6 +119,7 @@ position: relative !important;
 }
 .action-buttons{
     margin-right:5px;
+    padding: 3px 8.5px;
 }
 
 .btn-circle {
