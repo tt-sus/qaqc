@@ -88,9 +88,7 @@ this.inputsForm.reset();
 
     }
 timeline_key:"";
-goToProjects(){
-  this.router.navigate(['home']);
-}
+
 onComplete(bool){
   let projectObj= this.database.object('projects/'+this.id );
   projectObj.update({projectStatus:bool

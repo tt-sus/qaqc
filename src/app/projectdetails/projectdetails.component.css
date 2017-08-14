@@ -6,6 +6,10 @@ h3 span a{
     font-size: 18px;
     cursor: pointer;
 }
+.timeline-wrapper{
+    margin-top: 3em;
+}
+
 .timeline{
     list-style: none;
     padding: 0;
@@ -119,6 +123,7 @@ position: relative !important;
 }
 .action-buttons{
     margin-right:5px;
+    padding: 3px 8.5px;
 }
 
 .btn-circle {

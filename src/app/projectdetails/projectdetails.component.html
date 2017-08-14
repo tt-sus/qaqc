@@ -21,17 +21,7 @@
         </div>
      </div>
     <div class="timeline-wrapper" >
-        <h3>{{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}
-        
-     <span class=" back pull-right"(click)="goToProjects()"> Projects</span>
-           
-           
-        </h3>
-        <button type="button" 
-                class="btn btn-default btn-sm pull-right" 
-                data-toggle="modal" 
-                data-target="#myModal"
-                (click)="edit=false; clean();"*ngIf="isManager==='true'">New Task</button>
+        <h3>{{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}</h3>
         <p class="desc"><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
         <!--modal-->
         <div id="myModal" class="modal fade" role="dialog">
@@ -147,11 +137,23 @@
             </div>
                <!--edit Modalend ednd-->     
         <ul class="timeline">
-            <div class="filter-buttons">
-                 <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="sortTasks()">Sort Tasks</button>
-                <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="filterTaskCategory()">Tasks</button>
-                <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="filterMilestoneCategory()">Milestones</button>
-                <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="showAll()">All</button>                     
+            <div class="col-lg-offset-2">
+                <button type="button" 
+                class="btn btn-default btn-sm"
+                data-toggle="modal" 
+                data-target="#myModal"
+                (click)="edit=false; clean();"*ngIf="isManager==='true'">New Task</button>
+                <button type="button" class="btn btn-default btn-sm"  (click)="sortTasks()">Sort Tasks</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm"  (click)="filterTaskCategory()">Tasks</button>
+                    <button type="button" class="btn btn-default btn-sm"  (click)="filterMilestoneCategory()">Milestones</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" >InProgress</button>
+                    <button type="button" class="btn btn-default btn-sm" >Finished</button>
+                    <button type="button" class="btn btn-default btn-sm" >Attention</button>
+                </div>
+                <button type="button" class="btn btn-default btn-sm"  (click)="showAll()">All</button>                     
             </div>    
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
@@ -188,43 +190,38 @@
                     </div>
                     <div class="clearfix"></div>
                     <div id={{i}} class="collapse collapse-content ">
-                         <div class="panel-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#inputPanel{{i}}">QC Form</a>
-                                </h4>
+                        
+                            
+                        <div id="inputPanel{{i}}" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                        <!-- Nav tabs -->
+                            <ul class="nav nav-pills" role="tablist">
+                                <li class="nav-item active">
+                                <a class="nav-link active" data-toggle="tab" href="#qc1{{i}}" role="tab">QC-1</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#qc2{{i}}" role="tab">QC-2</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#qcc{{i}}" role="tab">Task logs</a>
+                                </li>
+                            </ul>
+                        <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="qc1{{i}}" role="tabpanel">
+                                    <app-qc1 [taskId]="item.$key"[isManager]="isManager"></app-qc1>
                                 </div>
-                                <div id="inputPanel{{i}}" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                <!-- Nav tabs -->
-                                    <ul class="nav nav-pills" role="tablist">
-                                        <li class="nav-item active">
-                                        <a class="nav-link active" data-toggle="tab" href="#qc1{{i}}" role="tab">QC-1</a>
-                                        </li>
-                                        <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#qc2{{i}}" role="tab">QC-2</a>
-                                        </li>
-                                        <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#qcc{{i}}" role="tab">QC Results</a>
-                                        </li>
-                                    </ul>
-                                <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="qc1{{i}}" role="tabpanel">
-                                            <app-qc1 [taskId]="item.$key"[isManager]="isManager"></app-qc1>
-                                        </div>
-                                        <div class="tab-pane " id="qc2{{i}}" role="tabpane2">
-                                             <app-qc2 [taskId]="item.$key" [isManager]="isManager"></app-qc2>
-                                        </div>
-                                        <div class="tab-pane " id="qcc{{i}}" role="tabpane2">
-                                             <app-qc-results [taskId]="item.$key"></app-qc-results>
-                                        </div>
-                                    </div>
-                                    </div>
+                                <div class="tab-pane " id="qc2{{i}}" role="tabpane2">
+                                        <app-qc2 [taskId]="item.$key" [isManager]="isManager"></app-qc2>
+                                </div>
+                                <div class="tab-pane " id="qcc{{i}}" role="tabpane2">
+                                        <app-qc-results [taskId]="item.$key"></app-qc-results>
                                 </div>
                             </div>
+                            </div>
                         </div>
+                            
+                        
                          
                     </div>
                     <div class="clearfix"></div>
@@ -261,14 +258,7 @@
                 <div class="timelineItem-body closeout col-lg-8">
                     <div class="header">
                         <strong class="text-capitalize"> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - Close Out </strong> 
-                    </div>
-                    <div class="col-lg-12 details itemContent">
-                        {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - click the button below to closeout
-                    </div>
-                
-                    <div class="col-lg-1 details">
-                        <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse"data-target="#closeout">+</button>
-                        
+                        <button type="button" class="btn btn-sm action-buttons pull-right" data-toggle="collapse"data-target="#closeout">+</button>
                     </div>
                     <div class="clearfix"></div>
                    <div id="closeout" class="collapse collapse-content ">
