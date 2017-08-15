@@ -10,56 +10,62 @@ import { Router } from '@angular/router';
 export class AuthService {
   auth: firebase.auth.Auth;
   user: Observable<firebase.User>;
-  userName:string;
-  isLoggedIn:boolean;
-  constructor(private firebaseAuth: AngularFireAuth,private router:Router, ) {
+
+
+  userName: string;
+  isLoggedIn: boolean;
+  
+  constructor(private firebaseAuth: AngularFireAuth, private router: Router, ) {
     this.user = firebaseAuth.authState;
   }
 
-  signup(email: string, password: string , displayName:string) {
+  signup(email: string, password: string, displayName: string) {
     alert(displayName)
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
         console.log(user);
-        return user.updateProfile({displayName:displayName})
-      
+        return user.updateProfile({ displayName: displayName })
+
       })
       .catch(err => {
         alert(`'Something went wrong:',${err.message}`);
-      });   
-     
+      });
+
   }
+
 
   login(email: string, password: string) {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
-        console.log(value)
-        if(this.firebaseAuth.auth){
-          this.userName=value.email;
-          if(this.firebaseAuth.auth.currentUser){ this.isLoggedIn=true;}
-         
-           this.router.navigate(["home"]);
-           
+
+        //console.log(value)
+        if (this.firebaseAuth.auth) {
+          this.userName = value.email;
+          if (this.firebaseAuth.auth.currentUser) { this.isLoggedIn = true; }
+
+          this.router.navigate(["home"]);
+
         }
-          else{
-             this.router.navigate([""]);
-          }
-        console.log(value);
+        else {
+          alert('Username or Password is not correct!');
+          this.router.navigate([""]);
+        }
+        //console.log(value);
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
+        alert(`'Something went wrong:', ${err.message}`);
       });
-       this.sendUser()
   }
-  sendToken(){
-    if(this.firebaseAuth.auth.currentUser){
+  sendToken() {
+    if (this.firebaseAuth.auth.currentUser) {
       return true;
     }
-    else{
+    else {
+
       return false;
     }
   }
@@ -69,19 +75,17 @@ export class AuthService {
       .auth
       .signOut();
 
-      this.router.navigate([""]);
+
+    this.router.navigate([""]);
   }
-      sendUser(){
-      
-     
-  }
-  resetPassword(email){
-     this.auth = firebase.auth();
+
+  resetPassword(email) {
+    this.auth = firebase.auth();
 
 
-    this.auth.sendPasswordResetEmail(email).then(function() {
+    this.auth.sendPasswordResetEmail(email).then(function () {
       alert(`email sent to ${email}`)
-    }, function(error) {
+    }, function (error) {
       alert("try again")
     });
   }

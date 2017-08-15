@@ -156,7 +156,7 @@
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
                 <div class="timelineItem-left col-lg-2 ">
-                    <p>{{item.startDate}}</p>
+                    <p>{{item.startDate-item.dueDate}}</p>
                 </div>
 
                 <!-- timelineItem-middle -->
@@ -233,15 +233,12 @@
                 <!-- timelineItem-right -->
                 <div class="timelineItem-edit col-lg-2">
                     <button type="button" 
-<<<<<<< HEAD
-=======
                             class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" 
                             (click)="getTask(item.$key)"
                             data-toggle="modal" data-target="#delete">
                             <span class="glyphicon glyphicon-calendar"></span>
                     </button>
                     <button type="button" 
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                             class="btn btn-default btn-sm btn-circle action-buttons col-lg-6 " 
                             data-toggle="modal" 
                             data-target="#myModal" 
@@ -253,13 +250,8 @@
                             class="btn btn-default btn-sm btn-circle action-buttons col-lg-6" 
                             (click)="getTask(item.$key)"
                             *ngIf="isManager==='true'" data-toggle="modal" data-target="#delete">
-<<<<<<< HEAD
-                                <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-=======
                             <span class="glyphicon glyphicon-remove"></span>
                     </button>
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                 </div>
            </li>
        </ul>
@@ -275,18 +267,7 @@
                 <div class="timelineItem-body closeout col-lg-8">
                     <div class="header">
                         <strong class="text-capitalize"> {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - Close Out </strong> 
-<<<<<<< HEAD
-                    </div>
-                    <div class="col-lg-12 details itemContent">
-                        {{timelineToShow?.project_number}} // {{timelineToShow?.project_name}} - click the button below to closeout
-                    </div>
-                
-                    <div class="col-lg-1 details">
-                        <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse"data-target="#closeout">+</button>
-                        
-=======
                         <button type="button" class="btn btn-sm action-buttons pull-right" data-toggle="collapse"data-target="#closeout">+</button>
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                     </div>
                     <div class="clearfix"></div>
                    <div id="closeout" class="collapse collapse-content ">

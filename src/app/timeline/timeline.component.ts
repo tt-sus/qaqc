@@ -63,7 +63,7 @@ getCloseout(projects:Array<Project>){
       console.log(ukey)
         if(tempKey===ukey){
           isUserproject=true;
-          alert(isUserproject)
+       
         }
     })
      return isUserproject;
