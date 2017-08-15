@@ -166,7 +166,12 @@ export class ProjectdetailsComponent implements OnInit {
       return task.categoryType === "Milestone";
     })
   }
-
+  
+  filterInProcressCategory() {
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.categoryType === true;
+    })
+  }
 
 
   showAll() {
