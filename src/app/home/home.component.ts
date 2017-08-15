@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, OnInit, ViewChild } from '@angular/core';
+=======
+import { Component, OnInit } from '@angular/core';
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from "rxjs/Observable";
 import { PagerService } from "pagination";
@@ -9,8 +13,11 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Project } from './project';
 import { Manager } from './manager';
+<<<<<<< HEAD
 import { Projects } from './projects';
 import { TimelineComponent } from '../timeline/timeline.component';
+=======
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
 
 
 @Component({
@@ -19,22 +26,33 @@ import { TimelineComponent } from '../timeline/timeline.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit   {
+<<<<<<< HEAD
   @ViewChild(TimelineComponent) timelineCmp:TimelineComponent;
 
   projectsName: Array<string>=[];
   userkey: string;
+=======
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
   params: string;
   isAdmin: string;
   dateInvalid: boolean;
   currentUser: string;
 
   projects:Observable<any>;
+<<<<<<< HEAD
   projectTitles:Array<Project>=[];
+=======
+  projectTitles:Array<any>=[];
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
   items: FirebaseListObservable<any[]>;
   users: FirebaseListObservable<any[]>;
   timeline: FirebaseListObservable<any[]>;
   Managers:any[]=[];
+<<<<<<< HEAD
   database:AngularFireDatabase;
+=======
+  database:any;
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
   project_key:string;
   constructor(db: AngularFireDatabase,
               private pagerService: PagerService,
@@ -42,6 +60,7 @@ export class HomeComponent implements OnInit   {
               private router:Router,
               private fb:FormBuilder
               ) {
+<<<<<<< HEAD
                     this.database=db;
                   
                  
@@ -128,6 +147,28 @@ getCloseout(projects:Array<Project>){
 projectStatus:boolean=false;
     addToList() {
      this.projectsTimeline=[];
+=======
+                  this.items = db.list('/projects')
+                  this.items.subscribe(res=> {
+                    this.projectTitles=res;
+                    this.setPage(1);
+                 });
+                    this.timeline = db.list('/projecttimeline');
+                    this.users = db.list('/users')
+                    this.users.subscribe(res=> {
+                  
+                    this.Managers=res;
+                    console.log(this.Managers)
+                      this.checkManager(this.Managers)
+                     this.database=db;
+                 })  
+                    
+                }
+// add project
+projectStatus:boolean=false;
+    addToList() {
+    
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
      this.project_key= this.timeline.push({
                       project_name:this.title, 
                       project_number:this.project_number,
@@ -147,11 +188,18 @@ projectStatus:boolean=false;
         climate:this.climate,
         timeline_key:this.project_key,
         projectStatus:this.projectStatus,
+<<<<<<< HEAD
         combined:this.title+this.manager+this.project_number,
         assigned_to:[]
       }
     );
 
+=======
+        combined:this.title+this.manager+this.project_number
+      }
+    );
+ 
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
   }
   reset(){
      this.inputsForm.reset()
@@ -166,6 +214,7 @@ projectStatus:boolean=false;
   //delete Project
   delete(){
     let time_key=this.project.timeline_key;
+<<<<<<< HEAD
     this.tasks = this.database.list(`/projecttimeline/${time_key}`);
     this.tasks.remove();
     this.items.remove(this.project_key).then((project)=>{
@@ -180,19 +229,41 @@ projectStatus:boolean=false;
 isManager:string;
   //authenticate manager
   checkManager(manager:Array<Manager>){
+=======
+      this.tasks = this.database.list(`/projecttimeline/${time_key}`);
+
+    
+    this.tasks.remove();
+  
+    this.items.remove(this.project_key).then((project)=>{
+      this.timeline.remove(time_key);
+
+    })
+  }
+isManager:string;
+  //authenticate manager
+  checkManager(manager:Array<any>){
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
     this.authService.user.subscribe((u)=>{
      this.setCurrentUser(u.email, manager)
     })
   }
+<<<<<<< HEAD
   setCurrentUser(user:string,manager:Array<Manager>){
+=======
+  setCurrentUser(user:string,manager){
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
    
     this.currentUser=user;
      for(let i=0;i<manager.length; i++){
 
       if(manager[i].email.toLowerCase()===user){
+<<<<<<< HEAD
         this.userkey=manager[i].$key;
          console.log(this.userkey)
     
+=======
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
         if(manager[i].manager_access){
           this.isManager="true";
           this.params="aabsvchfo134852f"
@@ -268,7 +339,13 @@ filter:Project=new Project();
   };
   inputsForm:FormGroup;
 startDate:Date=new Date();
+<<<<<<< HEAD
 zz
+=======
+say(){
+
+}
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
 title:string;
 manager:string;
 project_number:string;
@@ -277,6 +354,7 @@ status:string;
 client:string;
 climate:string
    ngOnInit() {
+<<<<<<< HEAD
    this.users = this.database.list('/users')
                     this.users.subscribe(res=> {
                     this.Managers=res;
@@ -289,6 +367,9 @@ climate:string
                     this.getCloseout(this.projectTitles)
                     this.setPage(1);
                  });
+=======
+  
+>>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
           this.inputsForm=this.fb.group({
      project_number:[this.project_number,[Validators.required]],
       title:[this.title,[Validators.required]],
