@@ -1,5 +1,4 @@
-
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from "rxjs/Observable";
 import { PagerService } from "pagination";
@@ -11,38 +10,25 @@ import { Router } from '@angular/router';
 import { Project } from './project';
 import { Manager } from './manager';
 
-import { Projects } from './projects';
-import { TimelineComponent } from '../timeline/timeline.component';
-
-
 
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-
 export class HomeComponent implements OnInit   {
-
-  @ViewChild(TimelineComponent) timelineCmp:TimelineComponent;
-
-  projectsName: Array<string>=[];
-  userkey: string;
-
   params: string;
   isAdmin: string;
   dateInvalid: boolean;
   currentUser: string;
 
-
   projects:Observable<any>;
-  projectTitles:Array<Project>=[];
-
+  projectTitles:Array<any>=[];
   items: FirebaseListObservable<any[]>;
   users: FirebaseListObservable<any[]>;
   timeline: FirebaseListObservable<any[]>;
   Managers:any[]=[];
-  database:AngularFireDatabase;
+  database:any;
   project_key:string;
   constructor(db: AngularFireDatabase,
               private pagerService: PagerService,
@@ -69,6 +55,7 @@ export class HomeComponent implements OnInit   {
 // add project
 projectStatus:boolean=false;
     addToList() {
+    
      this.project_key= this.timeline.push({
                       project_name:this.title, 
                       project_number:this.project_number,
@@ -88,70 +75,47 @@ projectStatus:boolean=false;
         climate:this.climate,
         timeline_key:this.project_key,
         projectStatus:this.projectStatus,
-
-        combined:this.title+this.manager+this.project_number,
-        assigned_to:[]
+        combined:this.title+this.manager+this.project_number
       }
     );
+ 
   }
-  reset() {
-    this.inputsForm.reset()
+  reset(){
+     this.inputsForm.reset()
   }
-
-  getProject(key, project) {
-    this.project_key = key
-    this.project = project;
+  
+  getProject(key,project){
+    this.project_key=key
+    this.project=project;
   }
   tasks: FirebaseListObservable<any[]>;
-  project: Project;
+  project:Project;
   //delete Project
-
   delete(){
     let time_key=this.project.timeline_key;
-    this.tasks = this.database.list(`/projecttimeline/${time_key}`);
+      this.tasks = this.database.list(`/projecttimeline/${time_key}`);
+
+    
     this.tasks.remove();
+  
     this.items.remove(this.project_key).then((project)=>{
-    this.timeline.remove(time_key);
-    // console.log(this.projectTitles)
-    this.getCloseout(this.projectTitles);
-    });
-  this.projectsTimeline=[];
-   this.timelineCmp.destroy()
-  this.timelineCmp.ngOnInit();
-  }
-isManager:string;
-  //authenticate manager
-  checkManager(manager:Array<Manager>){
-
-
-    this.tasks.remove();
-
-    this.items.remove(this.project_key).then((project) => {
       this.timeline.remove(time_key);
 
     })
   }
-  isManager: string;
+isManager:string;
   //authenticate manager
-
-  checkManager(managers: Array<any>) {
-    this.authService.user.subscribe((u) => {
-      this.setCurrentUser(u.email, managers)
+  checkManager(manager:Array<any>){
+    this.authService.user.subscribe((u)=>{
+     this.setCurrentUser(u.email, manager)
     })
-
-    alert(this.authService.isLoggedIn);
   }
-
-  setCurrentUser(user:string,manager:Array<Manager>){
-
+  setCurrentUser(user:string,manager){
+   
     this.currentUser=user;
      for(let i=0;i<manager.length; i++){
 
       if(manager[i].email.toLowerCase()===user){
-
-        this.userkey=manager[i].$key;
-         console.log(this.userkey)
-
         if(manager[i].manager_access){
           this.isManager="true";
           this.params="aabsvchfo134852f"
@@ -160,73 +124,76 @@ isManager:string;
           return
         }
         }
+       
+      else{
+       this.isManager= "false";
+      this.isAdmin= "false";
+      this.params="aabsvchfo1egsgu432f"
       }
+      }
+     
     }
   }
-
-  addUser() {
+  addUser(){
     this.router.navigate(["addUsers"])
   }
-  // pager object
+    // pager object
   pager: any = {};
-  // paged items
+    // paged items
   pagedItems: Project[];
 
-  //search filter
-  transform(filter: Project) {
-    if (!filter) {
+//search filter
+transform(filter:Project){
+  if(!filter){
+ 
+ this.pagedItems = this.projectTitles;
+  this.pager = this.pagerService.getPager(this.projectTitles.length, 1);
+ this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-      this.pagedItems = this.projectTitles;
-      this.pager = this.pagerService.getPager(this.projectTitles.length, 1);
-      this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
-
-    }
-    let temp: Array<any> = this.projectTitles;
-    temp = temp.filter((item: Project) => this.applyFilter(item, filter));
-
-    this.pager = this.pagerService.getPager(temp.length, 1);
-    this.pagedItems = temp.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
-  applyFilter(project: Project, filter: Project = new Project()): boolean {
+  let temp:Array<any>=this.projectTitles;
+  temp=temp.filter((item: Project) =>this.applyFilter(item, filter));
 
+  this.pager = this.pagerService.getPager(temp.length, 1);
+ this.pagedItems = temp.slice(this.pager.startIndex, this.pager.endIndex + 1);
+}
+ applyFilter(project: Project, filter: Project=new Project()): boolean {
+  
     for (let field in filter) {
-
+   
       if (filter[field]) {
 
-        if (project.combined.toLowerCase().indexOf(filter[field].toLowerCase()) === -1) {
-          return false;
-        }
-
+          if (project.combined.toLowerCase().indexOf(filter[field].toLowerCase()) === -1) {
+            return false;
+          }
+       
       }
     }
     return true;
-  }
-  //pagination
-  setPage(page: number) {
-    if (page < 1 || page > this.pager.totalPages) {
+}
+//pagination
+setPage(page: number) {
+  if (page < 1 || page > this.pager.totalPages) {
       return;
-    }
-    // get pager object from service
-    this.pager = this.pagerService.getPager(this.projectTitles.length, page);
-    // get current page of items
-    this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
-
   }
-
-  filter: Project = new Project();
-  //child routing
-  goToProject(project) {
-
-    this.router.navigate(['projectDetail', project.$key, `${this.params}`]);
-  };
-
-  inputsForm:FormGroup;
-startDate:Date=new Date();
-
-say(){
+  // get pager object from service
+  this.pager = this.pagerService.getPager(this.projectTitles.length, page);
+  // get current page of items
+  this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
 }
 
+filter:Project=new Project();
+//child routing
+  goToProject(project) {
+  
+    this.router.navigate(['projectDetail', project.$key,`${this.params}`]);
+  };
+  inputsForm:FormGroup;
+startDate:Date=new Date();
+say(){
+
+}
 title:string;
 manager:string;
 project_number:string;
@@ -235,20 +202,7 @@ status:string;
 client:string;
 climate:string
    ngOnInit() {
-
-   this.users = this.database.list('/users')
-                    this.users.subscribe(res=> {
-                    this.Managers=res;
-                    this.checkManager(this.Managers)
-                  
-                 }) 
-     this.items = this.database.list('/projects')
-                    this.items.subscribe(res=> {
-                    this.projectTitles=res;
-                    this.getCloseout(this.projectTitles)
-                    this.setPage(1);
-                 });
-
+  
           this.inputsForm=this.fb.group({
      project_number:[this.project_number,[Validators.required]],
       title:[this.title,[Validators.required]],
@@ -266,15 +220,14 @@ climate:string
         this.router.navigate([""]);
      }
     }
+checkDate(){
+ 
+  if(new Date(this.endDate).getTime() - new Date(this.startDate).getTime()<0 ){
+    this.dateInvalid=true;
   }
-  checkDate() {
-
-    if (new Date(this.endDate).getTime() - new Date(this.startDate).getTime() < 0) {
-      this.dateInvalid = true;
-    }
-    else {
-      this.dateInvalid = false;
-    }
+  else{
+    this.dateInvalid=false;
   }
+}
 
 }

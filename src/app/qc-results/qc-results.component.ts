@@ -35,7 +35,7 @@ user:string;
           this.taskCommentsObservable=this.database.list(`${this.taskId}/comments`);
         this.taskCommentsObservable.subscribe((comment)=>{
           this.commentsArray=comment;
-          //console.log(this.commentsArray)
+          console.log(this.commentsArray)
         });
   }
       setUser(user:string){
@@ -43,6 +43,8 @@ user:string;
       }
 submitComment(){
  let d1 = new Date();
+
+  console.log(this.chat)
  this.taskCommentsObservable.push({chat:this.chat,user:this.user,date:d1.toDateString()});
  this.inputsForm.reset();
 }
