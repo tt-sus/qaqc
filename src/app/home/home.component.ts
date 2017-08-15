@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from "rxjs/Observable";
 import { PagerService } from "pagination";
@@ -10,76 +11,88 @@ import { Router } from '@angular/router';
 import { Project } from './project';
 import { Manager } from './manager';
 
+import { Projects } from './projects';
+import { TimelineComponent } from '../timeline/timeline.component';
+
+
 
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+
+export class HomeComponent implements OnInit   {
+
+  @ViewChild(TimelineComponent) timelineCmp:TimelineComponent;
+
+  projectsName: Array<string>=[];
+  userkey: string;
+
   params: string;
   isAdmin: string;
   dateInvalid: boolean;
   currentUser: string;
 
-  projects: Observable<any>;
-  projectTitles: Array<any> = [];
+
+  projects:Observable<any>;
+  projectTitles:Array<Project>=[];
+
   items: FirebaseListObservable<any[]>;
   users: FirebaseListObservable<any[]>;
   timeline: FirebaseListObservable<any[]>;
-  Managers: any[] = [];
-  database: any;
-  project_key: string;
+  Managers:any[]=[];
+  database:AngularFireDatabase;
+  project_key:string;
   constructor(db: AngularFireDatabase,
-    private pagerService: PagerService,
-    public authService: AuthService,
-    private router: Router,
-    private fb: FormBuilder
-  ) {
-    this.items = db.list('/projects')
-    this.items.subscribe(res => {
-      this.projectTitles = res;
-      this.setPage(1);
-    });
-    this.timeline = db.list('/projecttimeline');
-    this.users = db.list('/users')
-    this.users.subscribe(res => {
-
-      this.Managers = res;
-      console.log(this.Managers)
-      this.checkManager(this.Managers)
-      this.database = db;
-    })
-
-  }
-  // add project
-  projectStatus: boolean = false;
-  addToList() {
-
-    this.project_key = this.timeline.push({
-      project_name: this.title,
-      project_number: this.project_number,
-      manager: this.manager
-    }).key
-    this.items.push(
+              private pagerService: PagerService,
+              public authService: AuthService,
+              private router:Router,
+              private fb:FormBuilder
+              ) {
+                  this.items = db.list('/projects')
+                  this.items.subscribe(res=> {
+                    this.projectTitles=res;
+                    this.setPage(1);
+                 });
+                    this.timeline = db.list('/projecttimeline');
+                    this.users = db.list('/users')
+                    this.users.subscribe(res=> {
+                  
+                    this.Managers=res;
+                    console.log(this.Managers)
+                      this.checkManager(this.Managers)
+                     this.database=db;
+                 })  
+                    
+                }
+// add project
+projectStatus:boolean=false;
+    addToList() {
+     this.project_key= this.timeline.push({
+                      project_name:this.title, 
+                      project_number:this.project_number,
+                      manager:this.manager}).key
+      this.items.push(
       {
-        title: this.title,
-        manager: this.manager,
-        project_number: this.project_number,
-        services: {
-          s1: "Building certification",
-          s2: "Energy ANalytics"
-        },
-        startDate: this.startDate,
-        endDate: this.endDate,
-        client: this.client,
-        climate: this.climate,
-        timeline_key: this.project_key,
-        projectStatus: this.projectStatus,
-        combined: this.title + this.manager + this.project_number
+      title: this.title,
+      manager:this.manager,
+      project_number:this.project_number,
+      services: {
+        s1: "Building certification",
+        s2:"Energy ANalytics"
+      },
+        startDate:this.startDate,
+        endDate:this.endDate,
+        client:this.client,
+        climate:this.climate,
+        timeline_key:this.project_key,
+        projectStatus:this.projectStatus,
+
+        combined:this.title+this.manager+this.project_number,
+        assigned_to:[]
       }
     );
-
   }
   reset() {
     this.inputsForm.reset()
@@ -92,9 +105,23 @@ export class HomeComponent implements OnInit {
   tasks: FirebaseListObservable<any[]>;
   project: Project;
   //delete Project
-  delete() {
-    let time_key = this.project.timeline_key;
+
+  delete(){
+    let time_key=this.project.timeline_key;
     this.tasks = this.database.list(`/projecttimeline/${time_key}`);
+    this.tasks.remove();
+    this.items.remove(this.project_key).then((project)=>{
+    this.timeline.remove(time_key);
+    // console.log(this.projectTitles)
+    this.getCloseout(this.projectTitles);
+    });
+  this.projectsTimeline=[];
+   this.timelineCmp.destroy()
+  this.timelineCmp.ngOnInit();
+  }
+isManager:string;
+  //authenticate manager
+  checkManager(manager:Array<Manager>){
 
 
     this.tasks.remove();
@@ -106,31 +133,32 @@ export class HomeComponent implements OnInit {
   }
   isManager: string;
   //authenticate manager
+
   checkManager(managers: Array<any>) {
     this.authService.user.subscribe((u) => {
       this.setCurrentUser(u.email, managers)
-      
     })
 
     alert(this.authService.isLoggedIn);
   }
-  setCurrentUser(user: string, managers) {
 
-    this.currentUser = user;
-    for (let i = 0; i < managers.length; i++) {
+  setCurrentUser(user:string,manager:Array<Manager>){
 
-      if (managers[i].email.toLowerCase() === user) {
-        if (managers[i].manager_access) {
-          this.isManager = "true";
-          this.params = "aabsvchfo134852f"
-          if (managers[i].admin_access) {
-            this.isAdmin = "true";
-            return
-          }
-        } else {
-          this.isManager = "false";
-          this.isAdmin = "false";
-          this.params = "aabsvchfo1egsgu432f"
+    this.currentUser=user;
+     for(let i=0;i<manager.length; i++){
+
+      if(manager[i].email.toLowerCase()===user){
+
+        this.userkey=manager[i].$key;
+         console.log(this.userkey)
+
+        if(manager[i].manager_access){
+          this.isManager="true";
+          this.params="aabsvchfo134852f"
+           if(manager[i].admin_access){
+          this.isAdmin="true";
+          return
+        }
         }
       }
     }
@@ -191,35 +219,52 @@ export class HomeComponent implements OnInit {
 
     this.router.navigate(['projectDetail', project.$key, `${this.params}`]);
   };
-  inputsForm: FormGroup;
-  startDate: Date = new Date();
-  say() {
 
-  }
-  title: string;
-  manager: string;
-  project_number: string;
-  endDate: Date;
-  status: string;
-  client: string;
-  climate: string
-  ngOnInit() {
+  inputsForm:FormGroup;
+startDate:Date=new Date();
 
-    this.inputsForm = this.fb.group({
-      project_number: [this.project_number, [Validators.required]],
-      title: [this.title, [Validators.required]],
-      manager: [this.manager, [Validators.required]],
-      startDate: [this.startDate, [Validators.required]],
-      endDate: [this.startDate, [Validators.required]],
-      client: [this.client, [Validators.required]],
-      climate: [this.climate, [Validators.required]]
-    })
-    this.authService.user.subscribe((val => { this.routeThis(val) }))
+say(){
 
-  }
-  routeThis(val) {
-    if (!val) {
-      this.router.navigate([""]);
+}
+
+title:string;
+manager:string;
+project_number:string;
+endDate:Date;
+status:string;
+client:string;
+climate:string
+   ngOnInit() {
+
+   this.users = this.database.list('/users')
+                    this.users.subscribe(res=> {
+                    this.Managers=res;
+                    this.checkManager(this.Managers)
+                  
+                 }) 
+     this.items = this.database.list('/projects')
+                    this.items.subscribe(res=> {
+                    this.projectTitles=res;
+                    this.getCloseout(this.projectTitles)
+                    this.setPage(1);
+                 });
+
+          this.inputsForm=this.fb.group({
+     project_number:[this.project_number,[Validators.required]],
+      title:[this.title,[Validators.required]],
+      manager:[this.manager,[Validators.required]],
+      startDate:[this.startDate,[Validators.required]],
+      endDate:[this.startDate,[Validators.required]],
+      client:[this.client,[Validators.required]],
+      climate:[this.climate,[Validators.required]]
+     })
+    this.authService.user.subscribe((val=>{this.routeThis(val)}))
+    
+   }
+    routeThis(val){
+       if(!val){
+        this.router.navigate([""]);
+     }
     }
   }
   checkDate() {
