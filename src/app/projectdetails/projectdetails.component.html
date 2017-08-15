@@ -154,10 +154,11 @@
                     <button type="button" class="btn btn-default btn-sm"  (click)="filterMilestoneCategory()">Milestones</button>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm" >InProgress</button>
-                    <button type="button" class="btn btn-default btn-sm" >Finished</button>
+                    <button type="button" class="btn btn-default btn-sm" (click)="filterInProcressCategory()">InProgress</button>
+                    <button type="button" class="btn btn-default btn-sm" (click)="filterFinishedCategory()">Finished</button>
                     <button type="button" class="btn btn-default btn-sm" >Attention</button>
                 </div>
+                <button type="button" class="btn btn-default btn-sm"  (click)="showMine()">My Tasks</button>   
                 <button type="button" class="btn btn-default btn-sm"  (click)="showAll()">All</button>                     
             </div>    
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">

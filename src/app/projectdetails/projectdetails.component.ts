@@ -109,6 +109,7 @@ export class ProjectdetailsComponent implements OnInit {
         this.isManager = "false"
       }
     });
+    
     this.database.object('projects/' + this.id).subscribe((res) => {
       this.projectToShow = res;
       this.getTimeline(this.projectToShow.timeline_key)
@@ -163,6 +164,25 @@ export class ProjectdetailsComponent implements OnInit {
       return task.categoryType === "Milestone";
     })
   }
+
+  filterInProcressCategory() {
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.status === false;
+    })
+  }
+
+  filterFinishedCategory() {
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.status === true;
+    })
+  }
+
+  showMine() {
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.assigned_to === true;
+    })
+  }
+
   showAll() {
     this.taskList = this.globalTasks;
   }
