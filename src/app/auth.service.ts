@@ -14,7 +14,9 @@ export class AuthService {
 
   userName: string;
   isLoggedIn: boolean;
-  
+  isManager:boolean;
+  isAdmin:boolean;
+
   constructor(private firebaseAuth: AngularFireAuth, private router: Router, ) {
     this.user = firebaseAuth.authState;
   }
@@ -34,6 +36,7 @@ export class AuthService {
       });
 
   }
+
 
 
   login(email: string, password: string) {
@@ -89,6 +92,8 @@ export class AuthService {
       alert("try again")
     });
   }
+
+  
 
 
 }
