@@ -43,12 +43,7 @@ export class HomeComponent implements OnInit   {
               private fb:FormBuilder
               ) {
                     this.database=db;
-                    this.users = db.list('/users')
-                    this.users.subscribe(res=> {
-                    this.Managers=res;
-                    this.checkManager(this.Managers)
-
-                 }) 
+                  
                  
                     this.timeline = db.list('/projecttimeline');
               
@@ -196,6 +191,8 @@ isManager:string;
 
       if(manager[i].email.toLowerCase()===user){
         this.userkey=manager[i].$key;
+         console.log(this.userkey)
+    
         if(manager[i].manager_access){
           this.isManager="true";
           this.params="aabsvchfo134852f"
@@ -280,7 +277,12 @@ status:string;
 client:string;
 climate:string
    ngOnInit() {
-    
+   this.users = this.database.list('/users')
+                    this.users.subscribe(res=> {
+                    this.Managers=res;
+                    this.checkManager(this.Managers)
+                  
+                 }) 
      this.items = this.database.list('/projects')
                     this.items.subscribe(res=> {
                     this.projectTitles=res;

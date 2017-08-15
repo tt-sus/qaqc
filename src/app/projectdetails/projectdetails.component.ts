@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import * as _ from 'underscore';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { Task } from './task';
 
 @Component({
   selector: 'app-projectdetails',
@@ -13,6 +14,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./projectdetails.component.css']
 })
 export class ProjectdetailsComponent implements OnInit {
+  taskref: any;
   user_key: string;
   projectStatus: string;
   dateInvalid: boolean = false;
@@ -225,7 +227,7 @@ else if(!this.sortUp){
 addTask(){
 
   let projectObj= this.database.list(`projects/${this.id}/assigned_to` );
-  projectObj.push({assigned_to:this.taskObj.assigned_to})
+ let assignedKey = projectObj.push({assigned_to:this.taskObj.assigned_to}).key
 
   this.edit=false;
   this.taskListObs.push({
@@ -238,6 +240,7 @@ addTask(){
           hours:this.taskObj.hours,
           status:false,
           imageUrl:this.taskObj.imageUrl,
+          assigned_ref:assignedKey,
     qaqc:[{task_name:this.taskObj.taskName}]
   })
 
@@ -261,6 +264,8 @@ getTask(taskKey){
   this.assigned_to.user_name=task.assigned_to;
 
   this.taskObj=task;
+  this.taskref=task.assigned_ref;
+  console.log(this.taskref)
   })
 }
 editTask(){
@@ -284,6 +289,8 @@ editTask(){
   this.sortTasks();
 }
 deleteTask(){
+ let projectObj= this.database.object(`projects/${this.id}/assigned_to/${this.taskref}` );
+projectObj.remove();
 
   let taskToDelete;
   let taskToDeleteObs = this.database.object(`projecttimeline/${this.timeline_key}/tasks/${this.taskId}`);
@@ -291,6 +298,8 @@ deleteTask(){
   taskToDelete=task;
  });
  taskToDeleteObs.remove();
+// let taskObs = this.database.object(`projecttimeline/${this.timeline_key}/tasks/${this.taskId}`);
+// taskObs.subscribe((task:Task)=>console.log(task.assigned_to))
  this.sortUp=true;
   this.sortTasks();
 }

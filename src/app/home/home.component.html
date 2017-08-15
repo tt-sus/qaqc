@@ -21,8 +21,9 @@
 </div>
 <div class="timeline">
 
-  <div >
-     <app-timeline ></app-timeline>
+  <div *ngIf="userkey">
+  
+     <app-timeline [Key]="userkey"></app-timeline>
   </div>
 
 </div>

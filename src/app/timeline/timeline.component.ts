@@ -16,8 +16,11 @@ declare var vis: any;
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
+@Input()
+Key:string;
+
   database: AngularFireDatabase;
-  userkey: string;
+
   projectsTimeline: any=[];
   projectsName: any;
   groups: any;
@@ -25,6 +28,7 @@ export class TimelineComponent implements OnInit {
   name:string;
   constructor(private element: ElementRef,db: AngularFireDatabase,) {
     this.database=db;
+    
   }
     taskA=[];
     items=new vis.DataSet([]);
@@ -33,9 +37,12 @@ export class TimelineComponent implements OnInit {
   render(){  
 
   this.items = new vis.DataSet(this.projectsTimeline);
-  this.options = {};  
+  this.options = {start:new Date()};  
   this.timeline = new vis.Timeline(this.element.nativeElement, this.items,this.groups ,this.options);
     // Create a Timeline
+    let startDate=new Date();
+    let endDate= startDate.setDate(startDate.getDate()+8*24*60*60*1000);
+    
   this.items.push()
   }
 destroy(){
@@ -45,16 +52,41 @@ getCloseout(projects:Array<Project>){
   this.items=[];
   this.projectsTimeline=[];
   this.projectsName=[];
+
+  let filteredProjects=projects.filter((project)=>{
+    let ukey="";
+    let isUserproject:boolean=false;
+    let tempKey=this.Key
+    Object.keys(project.assigned_to).forEach(function(key,index) {
+     
+      ukey=project.assigned_to[key].assigned_to;
+      console.log(ukey)
+        if(tempKey===ukey){
+          isUserproject=true;
+          alert(isUserproject)
+        }
+    })
+     return isUserproject;
+  })
+//user related tasks
 //   let filteredProject=projects.filter((project)=>{
 //   let ukey="";
+//   let isUserproject:boolean=false;
+//   let tempkey=this.Key
 // Object.keys(project.assigned_to).forEach(function(key,index) {
+//     // key: the name of the object key
+//     // index: the ordinal position of the key within the object 
 //      ukey=project.assigned_to[key][Object.keys(project.assigned_to[key])[0]];
+//     if(tempkey===ukey){
+//       isUserproject=true;
+//     }
 // });
-//     return ukey===this.userkey;
-//   })
+//   return isUserproject;
+   
+//   })//end
 
 
-  projects.forEach((project,i)=>{
+  filteredProjects.forEach((project,i)=>{
   let tasksA=[];
   let userTasks=[];
   let tasks= this.database.list(`/projecttimeline/${project.timeline_key}/tasks`);
@@ -85,6 +117,7 @@ this.groups = new vis.DataSet();
   setTimeout(()=>this.render(),500)
 }
   ngOnInit() {
+    
  this.items = this.database.list('/projects').take(1).toPromise()
              .then((res)=>{this.getCloseout(res)},err=>alert(err))
 
