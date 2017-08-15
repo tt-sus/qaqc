@@ -20,11 +20,6 @@ export class AppComponent implements OnInit   {
        this.auth.authState.subscribe((auth)=>{
          if(auth){
            this.authService.isLoggedIn=true;
-         
-<<<<<<< HEAD
-           
-=======
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
          }
           else{
            this.authService.isLoggedIn=false;
@@ -36,13 +31,10 @@ export class AppComponent implements OnInit   {
   logout(){
     this.authService.logout();
   }
-<<<<<<< HEAD
-=======
 
   goToProjects(){
   this.router.navigate(['home']);
   }
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
   checkLogin(){
 
     if(this.authService.isLoggedIn){
@@ -53,14 +45,7 @@ export class AppComponent implements OnInit   {
     }
   }
 
-<<<<<<< HEAD
-   ngOnInit() {
- 
-    
-    }
-=======
    ngOnInit() {}
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
     
 
 }

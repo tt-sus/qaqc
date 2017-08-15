@@ -125,5 +125,3 @@ this.groups = new vis.DataSet();
   }
 
 }
-
-

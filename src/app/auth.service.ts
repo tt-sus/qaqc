@@ -10,13 +10,9 @@ import { Router } from '@angular/router';
 export class AuthService {
   auth: firebase.auth.Auth;
   user: Observable<firebase.User>;
-
-
   userName: string;
   isLoggedIn: boolean;
-  isManager:boolean;
-  isAdmin:boolean;
-
+  
   constructor(private firebaseAuth: AngularFireAuth, private router: Router, ) {
     this.user = firebaseAuth.authState;
   }
@@ -37,14 +33,11 @@ export class AuthService {
 
   }
 
-
-
   login(email: string, password: string) {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
-
         //console.log(value)
         if (this.firebaseAuth.auth) {
           this.userName = value.email;
@@ -68,7 +61,6 @@ export class AuthService {
       return true;
     }
     else {
-
       return false;
     }
   }
@@ -77,7 +69,6 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
-
 
     this.router.navigate([""]);
   }
@@ -92,8 +83,6 @@ export class AuthService {
       alert("try again")
     });
   }
-
-  
 
 
 }
