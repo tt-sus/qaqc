@@ -43,11 +43,8 @@ export class HomeComponent implements OnInit   {
               private fb:FormBuilder
               ) {
                     this.database=db;
-                  
-                 
                     this.timeline = db.list('/projecttimeline');
               
-                    
                 }
 projectsTimeline:Array<any>=[];
 getCloseout(projects:Array<Project>){
