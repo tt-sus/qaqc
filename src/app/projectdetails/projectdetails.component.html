@@ -21,7 +21,6 @@
         </div>
      </div>
     <div class="timeline-wrapper" >
-<<<<<<< HEAD
         <h3>{{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}
         
      <span class=" back pull-right"(click)="goToProjects()"> Projects</span>
@@ -33,9 +32,6 @@
                 data-toggle="modal" 
                 data-target="#myModal"
                 (click)="edit=false; clean();"*ngIf="isManager==='true'">New Task</button>
-=======
-        <h3>{{timelineToShow?.project_number}} // {{timelineToShow?.project_name}}</h3>
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
         <p class="desc"><b> Project Manager:</b> {{timelineToShow?.manager}}</p>
         <!--modal-->
         <div id="myModal" class="modal fade" role="dialog">
@@ -72,11 +68,7 @@
                         <label class="control-label col-sm-4" for="pwd">Assign To</label>
                         <div class="col-sm-6"> 
                             <select type="number" [(ngModel)]="assigned_to.user_key" formControlName="assigned_to" (ngModelChange)="toNumberUsers()">
-<<<<<<< HEAD
                                 <option *ngFor="let user of userList | async" [ngValue]="user">{{user.user_name}}</option>
-=======
-                                <option *ngFor="let user of userList | async" [ngValue]="user" [selected]="user.$key == taskObj.assigned_to">{{user.user_name}}</option>
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                             </select>
                         </div>
                     </div>
@@ -98,14 +90,7 @@
                                 (ngModelChange)="taskObj.startDate = $event" 
                                 type="date" 
                                 name="startDate"
-<<<<<<< HEAD
                                 formControlName="startDate">
-=======
-                                formControlName="startDate"
-                                [value]="taskObj.startDate | date:'yyyy-MM-dd'"
-                                >
-                                
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                         </div>
                     </div>
                     <div class="form-group"> 
@@ -115,13 +100,7 @@
                                 (ngModelChange)="taskObj.dueDate = $event; checkDate()" 
                                 type="date" 
                                 name="dueDate"
-<<<<<<< HEAD
                                 formControlName="dueDate">
-=======
-                                formControlName="dueDate"
-                                [value]="taskObj.dueDate | date:'yyyy-MM-dd'"
-                                >
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                         </div>
                     </div>
                     <div class="form-group"> 
@@ -168,32 +147,11 @@
             </div>
                <!--edit Modalend ednd-->     
         <ul class="timeline">
-<<<<<<< HEAD
             <div class="filter-buttons">
                  <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="sortTasks()">Sort Tasks</button>
                 <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="filterTaskCategory()">Tasks</button>
                 <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="filterMilestoneCategory()">Milestones</button>
                 <button type="button" class="btn btn-default btn-sm action-buttons"  (click)="showAll()">All</button>                     
-=======
-            <div class="col-lg-offset-2">
-                <button type="button" 
-                class="btn btn-default btn-sm"
-                data-toggle="modal" 
-                data-target="#myModal"
-                (click)="edit=false; clean();"*ngIf="isManager==='true'">New Task</button>
-                <button type="button" class="btn btn-default btn-sm"  (click)="sortTasks()">Sort Tasks</button>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"  (click)="filterTaskCategory()">Tasks</button>
-                    <button type="button" class="btn btn-default btn-sm"  (click)="filterMilestoneCategory()">Milestones</button>
-                </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm" (click)="filterInProcressCategory()">InProgress</button>
-                    <button type="button" class="btn btn-default btn-sm" (click)="filterFinishedCategory()">Finished</button>
-                    <button type="button" class="btn btn-default btn-sm" >Attention</button>
-                </div>
-                <button type="button" class="btn btn-default btn-sm"  (click)="showMine()">My Tasks</button>   
-                <button type="button" class="btn btn-default btn-sm"  (click)="showAll()">All</button>                     
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
             </div>    
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
@@ -230,7 +188,6 @@
                     </div>
                     <div class="clearfix"></div>
                     <div id={{i}} class="collapse collapse-content ">
-<<<<<<< HEAD
                          <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -269,39 +226,6 @@
                             </div>
                         </div>
                          
-=======
-                        
-                            
-                        <div id="inputPanel{{i}}" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                        <!-- Nav tabs -->
-                            <ul class="nav nav-pills" role="tablist">
-                                <li class="nav-item active">
-                                <a class="nav-link active" data-toggle="tab" href="#qc1{{i}}" role="tab">QC-1</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#qc2{{i}}" role="tab">QC-2</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#qcc{{i}}" role="tab">Task logs</a>
-                                </li>
-                            </ul>
-                        <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="qc1{{i}}" role="tabpanel">
-                                    <app-qc1 [taskId]="item.$key"[isManager]="isManager"></app-qc1>
-                                </div>
-                                <div class="tab-pane " id="qc2{{i}}" role="tabpane2">
-                                        <app-qc2 [taskId]="item.$key" [isManager]="isManager"></app-qc2>
-                                </div>
-                                <div class="tab-pane " id="qcc{{i}}" role="tabpane2">
-                                        <app-qc-results [taskId]="item.$key"></app-qc-results>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                            
->>>>>>> 01abb4ce3bccb9968522feae2cc3ea8a8b42710b
                     </div>
                     <div class="clearfix"></div>
 
