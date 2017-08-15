@@ -24,6 +24,7 @@ import { QcResultsComponent } from './qc-results/qc-results.component';
 import { CloseoutComponent } from './closeout/closeout.component';
 import { Http } from '@angular/http';
 import { AddUSersComponent } from './add-users/add-users.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AddUSersComponent } from './add-users/add-users.component';
     Qc2Component,
     QcResultsComponent,
     CloseoutComponent,
-    AddUSersComponent
+    AddUSersComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,

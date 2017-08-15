@@ -123,7 +123,10 @@ position: relative !important;
 }
 .action-buttons{
     margin-right:5px;
+<<<<<<< HEAD
     padding: 3px 8.5px;
+=======
+>>>>>>> origin/master
 }
 
 .btn-circle {

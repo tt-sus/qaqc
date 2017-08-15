@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import * as _ from 'underscore';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { Task } from './task';
 
 @Component({
   selector: 'app-projectdetails',
@@ -13,6 +14,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./projectdetails.component.css']
 })
 export class ProjectdetailsComponent implements OnInit {
+  taskref: any;
   user_key: string;
   projectStatus: string;
   dateInvalid: boolean = false;
@@ -165,23 +167,7 @@ export class ProjectdetailsComponent implements OnInit {
     })
   }
 
-  filterInProcressCategory() {
-    this.taskList = this.globalTasks.filter((task) => {
-      return task.status === false;
-    })
-  }
 
-  filterFinishedCategory() {
-    this.taskList = this.globalTasks.filter((task) => {
-      return task.status === true;
-    })
-  }
-
-  showMine() {
-    this.taskList = this.globalTasks.filter((task) => {
-      return task.assigned_to === true;
-    })
-  }
 
   showAll() {
     this.taskList = this.globalTasks;

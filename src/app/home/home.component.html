@@ -19,6 +19,14 @@
 
   </div>
 </div>
+<div class="timeline">
+
+  <div *ngIf="userkey">
+  
+     <app-timeline [Key]="userkey"></app-timeline>
+  </div>
+
+</div>
   <div class="home-wrapper">
       <div  class="col-lg-12 sus-header">
         <h1 class="page-header">Project List <span class="pull-right" *ngIf="isAdmin==='true'"><a (click)="addUser()">Add Users</a></span></h1>

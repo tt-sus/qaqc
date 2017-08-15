@@ -21,6 +21,7 @@ export class AppComponent implements OnInit   {
          if(auth){
            this.authService.isLoggedIn=true;
          
+           
          }
           else{
            this.authService.isLoggedIn=false;

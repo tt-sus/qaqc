@@ -1,4 +1,6 @@
-
+.projects li label{
+    font-weight: bold
+}
 
 table td{
     cursor: pointer;
