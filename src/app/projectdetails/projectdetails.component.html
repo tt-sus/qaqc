@@ -58,7 +58,7 @@
                         <label class="control-label col-sm-4" for="pwd">Assign To</label>
                         <div class="col-sm-6"> 
                             <select type="number" [(ngModel)]="assigned_to.user_key" formControlName="assigned_to" (ngModelChange)="toNumberUsers()">
-                                <option *ngFor="let user of userList | async" [ngValue]="user" [selected]="user.$key == taskObj.assigned_to">{{user.user_name}}</option>
+                                <option *ngFor="let user of userList | async" [ngValue]="user" [selected]="user.$key === taskObj.assigned_to">{{user.user_name}}</option>
                             </select>
                         </div>
                     </div>
@@ -164,7 +164,7 @@
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">
                 <!-- timelineItem-left -->
                 <div class="timelineItem-left col-lg-2 ">
-                    <p>{{item.startDate-item.dueDate}}</p>
+                    <p>{{item.dueDate}}</p>
                 </div>
 
                 <!-- timelineItem-middle -->
