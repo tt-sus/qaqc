@@ -109,7 +109,7 @@ export class ProjectdetailsComponent implements OnInit {
         this.isManager = "false"
       }
     });
-    
+
     this.database.object('projects/' + this.id).subscribe((res) => {
       this.projectToShow = res;
       this.getTimeline(this.projectToShow.timeline_key)

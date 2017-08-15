@@ -12,26 +12,28 @@ export class AuthService {
   user: Observable<firebase.User>;
   userName: string;
   isLoggedIn: boolean;
-  
+  isManager:boolean;
+  isAdmin:boolean;
+
   constructor(private firebaseAuth: AngularFireAuth, private router: Router, ) {
     this.user = firebaseAuth.authState;
   }
 
-  // signup(email: string, password: string, displayName: string) {
-  //   alert(displayName)
-  //   this.firebaseAuth
-  //     .auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(user => {
-  //       console.log(user);
-  //       return user.updateProfile({ displayName: displayName })
+  signup(email: string, password: string, displayName: string) {
+    alert(displayName)
+    this.firebaseAuth
+      .auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        console.log(user);
+        return user.updateProfile({ displayName: displayName })
 
-  //     })
-  //     .catch(err => {
-  //       alert(`'Something went wrong:',${err.message}`);
-  //     });
+      })
+      .catch(err => {
+        alert(`'Something went wrong:',${err.message}`);
+      });
 
-  // }
+  }
 
   login(email: string, password: string) {
     this.firebaseAuth
@@ -83,6 +85,8 @@ export class AuthService {
       alert("try again")
     });
   }
+
+  
 
 
 }
