@@ -42,7 +42,7 @@ userProjectsTasks:{
             //TaskID: dueDate
             85a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdfs:{
                 dueDate:"2017-08-09",
-                hours:8,
+                type:"task",
             },
             ....
         }
@@ -99,8 +99,10 @@ ProjectQAQC:{ // keep QAQC details for each task of each projects
                 add:false,
                 aggregated:false
                 ....
-            }
+            },
+            
         },
+        closeOUt:{}
         ....
     }
 }

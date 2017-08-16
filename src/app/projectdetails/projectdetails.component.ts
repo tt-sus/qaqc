@@ -181,6 +181,10 @@ export class ProjectdetailsComponent implements OnInit {
     })
   }
 
+  showMine() {
+    //todo
+  }
+
   showAll() {
     this.taskList = this.globalTasks;
   }
