@@ -1,0 +1,13 @@
+
+
+
+user:{
+    mpeng:{
+        userName:"Mingbo Peng",
+        isManager:true,
+        isAdmin: true,
+        //tasks:[originalTaskID1，originalTaskID2],
+        //projects：[originalProjectID1，originalProjectID2]
+        
+    }
+}
