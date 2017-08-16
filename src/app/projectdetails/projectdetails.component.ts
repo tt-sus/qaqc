@@ -168,7 +168,18 @@ export class ProjectdetailsComponent implements OnInit {
     })
   }
 
+  filterInProcressCategory() {
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.status === false;
+    })
+  }
 
+  filterFinishedCategory() {
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.status === true;
+      
+    })
+  }
 
   showAll() {
     this.taskList = this.globalTasks;
