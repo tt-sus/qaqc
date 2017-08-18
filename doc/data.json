@@ -26,6 +26,17 @@ users:{
 userProjectsTasks:{ 
     mpeng:{
         managingProjects:{
+            ProjectNumber-5fa7-4df4-b199-5f634887fdba:{ //project ID
+                meta:{
+                    projectName:"this building Design",
+
+                },
+                staffList:{
+                    mpeng:"85a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdfs",
+                    atakle:"95a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdgs",
+
+                }
+            },
             ProjectNumber-5fa7-4df4-b199-5f634887fdba:{
                 meta:{
                     projectName:"this building Design",
@@ -46,8 +57,19 @@ userProjectsTasks:{
             },
             ....
         }
-    }
+    },
+    
 }
+
+if is {
+ grap
+}else{
+
+}
+
+
+
+
 
 
 
@@ -95,7 +117,7 @@ ProjectQAQC:{ // keep QAQC details for each task of each projects
                 acronyms: false,
                 ....
             },
-            QC2:{// be prepared to change
+            QC2:{ // be prepared to change
                 add:false,
                 aggregated:false
                 ....
