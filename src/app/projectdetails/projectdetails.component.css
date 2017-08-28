@@ -1,3 +1,4 @@
+
 h3,
 .desc {
   text-transform: uppercase;
@@ -29,10 +30,13 @@ h3 span a {
   letter-spacing: 3px;
 }
 
-.timelineItem-body {
-  border: 2px solid #F7F7F7;
-  border-top-width: 40px;
-  padding: 0;
+
+.timelineItem-body{
+    border:2px solid #F7F7F7;
+    border-top-width: 40px;
+    padding: 0;
+    border-radius: 5px;
+
 }
 
 .timelineItem-body:before {
@@ -64,6 +68,7 @@ h3 span a {
 .Missed {
   color: #EF6666;
   font-weight: 600;
+
 }
 
 
@@ -77,6 +82,7 @@ h3 span a {
     border-width: 8px;
 } */
 
+
 .timelineItem-body .status {
   height: 25px !important;
   left: 0pc !important;
@@ -87,6 +93,7 @@ h3 span a {
   width: auto !important;
   border: 0px !important;
   text-align: right;
+
 }
 
 
@@ -115,7 +122,7 @@ h3 span a {
 .timelineItem-edit {
   margin-top: 0.5em;
 }
-
+  
 .header {
   position: absolute;
   top: -40px;
@@ -123,6 +130,7 @@ h3 span a {
   padding-left: 15px;
   text-transform: uppercase;
   width: 100%;
+
 }
 
 .details {

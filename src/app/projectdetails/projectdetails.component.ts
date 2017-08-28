@@ -187,8 +187,9 @@ export class ProjectdetailsComponent implements OnInit {
     this.authService.user.subscribe((val => { this.routeThis(val) }));
 
   }
-  tagUser() {
-    this.projectService.tagUser(this.projectID, this.taskId, this.assigned_to.short_name, this.taskObj.taskName, this.taskObj.dueDate, this.projectManager);
+  tagUser(){
+    this.projectService.tagUser(this.projectID,this.taskId,this.assigned_to.short_name,this.taskObj.taskName,this.taskObj.dueDate,this.projectManager,false);
+
   }
   routeThis(val) {
     if (!val)
@@ -287,7 +288,9 @@ export class ProjectdetailsComponent implements OnInit {
       qc2: {},
       comments: {}
     });
-    this.projectService.addTasksForMe(this.assigned_to.short_name, this.projectID, this.project_name, task_key, this.taskObj.dueDate, this.taskObj.taskName, this.taskObj.categoryType)
+
+    this.projectService.tagUser(this.projectID,task_key,this.assigned_to.short_name,this.taskObj.taskName,this.taskObj.dueDate,this.projectManager,true);
+    this.projectService.addTasksForMe(this.assigned_to.short_name,this.projectID,this.project_name,task_key,this.taskObj.dueDate,this.taskObj.taskName,this.taskObj.categoryType)
     this.inputsForm.reset();
     this.sortUp = true;
     this.timelineCmp.destroy();
