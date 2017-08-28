@@ -6,6 +6,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -30,6 +31,10 @@ import { ProjectService } from './home/project.service';
 import { ManagerService } from './home/manager.service';
 import { CommentsService } from './qc-results/comments.service';
 import { TasksTimelineComponent } from './tasks-timeline/tasks-timeline.component';
+import { LearningComponent } from './learning/learning.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { UsertimelineComponent } from './usertimeline/usertimeline.component';
+import { SliderComponent } from './slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,11 @@ import { TasksTimelineComponent } from './tasks-timeline/tasks-timeline.componen
     CloseoutComponent,
     AddUSersComponent,
     TimelineComponent,
-    TasksTimelineComponent
+    TasksTimelineComponent,
+    LearningComponent,
+    NotificationsComponent,
+    UsertimelineComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +65,7 @@ import { TasksTimelineComponent } from './tasks-timeline/tasks-timeline.componen
     FormsModule,
     HttpModule,
     ReactiveFormsModule ,
+    BrowserAnimationsModule,
       RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
