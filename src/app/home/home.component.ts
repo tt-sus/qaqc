@@ -1,19 +1,22 @@
+
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from "rxjs/Observable";
+
+import { User } from './../user';
+import { UserService } from './../user.service';
+import { AuthService } from '../auth.service';
 import { PagerService } from "pagination";
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-
 import * as _ from 'underscore';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Project } from './project';
-import { Manager } from './manager';
 import { Projects } from './projects';
 import { TimelineComponent } from '../timeline/timeline.component';
-import { UserService } from './user.service';
+// import { UserListService } from './userlist.service';
 import { ProjectService } from './project.service';
-import { ManagerService } from './manager.service';
+
 
 
 @Component({
@@ -22,16 +25,18 @@ import { ManagerService } from './manager.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit   {
-  userName: any;
+  // userName: any;
   userTasks: any[];
-  user:string;
+  // user:string;
   @ViewChild(TimelineComponent) timelineCmp: TimelineComponent;
   projectsName: Array<string>=[];
   userkey: string;
   params: string;
-  isAdmin: string;
+  // isAdmin: string;
+  // isManager:string;
   dateInvalid: boolean;
-  currentUser: string;
+  //currentUser: string;
+  currentUser:User;
   projects:Observable<any>;
   projectTitles:Array<Project>=[];
   tasks: FirebaseListObservable<any[]>;
@@ -41,15 +46,15 @@ export class HomeComponent implements OnInit   {
   project_key:string;
   projectStatus:boolean=false;
   constructor(
-              private userService:UserService,
+              // private userListService:UserListService,
               private projectService:ProjectService,
               private pagerService: PagerService,
               public authService: AuthService,
               private router:Router,
               private fb:FormBuilder,
-              private managerService:ManagerService
+              private userService:UserService
               ) {
-              
+                  this.currentUser = UserService.currentUser;
                 }
 projectsTimeline:Array<any>=[];
 //project category
@@ -123,32 +128,35 @@ ProjectArea:number;
     this.timelineCmp.ngOnInit()
   }
   checkIfManager(){
-    let email;
-    let userObs=this.managerService.loggedInUser();
-    userObs.subscribe((user)=>{
-    let currentUser=this.managerService.setCurrentUser(user.email);
-    currentUser.subscribe((user=>{
-      this.isAdmin=`${user.admin_access}`;
-      this.isManager=`${user.manager_access}`;
-      this.userName=user.user_name;
-      this.user=user.short_name;
-      if(user.manager_access){
-        this.params="aabsvchfo134852f";
-      }
-      else{
-        this.params="aabsvchfo1egsgu432f";
-      }
-    }))
-    })
+
+    // let email;
+    
+    // let userObs=this.managerService.loggedInUser();
+    // userObs.subscribe((user)=>{
+    // let currentUser=this.managerService.setCurrentUser(user.email);
+    // currentUser.subscribe((user=>{
+    //   this.isAdmin=`${user.admin_access}`;
+    //   this.isManager=`${user.manager_access}`;
+    //   this.userName=user.user_name;
+    //   this.user=user.short_name;
+    //   if(user.manager_access){
+    //     this.params="aabsvchfo134852f";
+    //   }
+    //   else{
+    //     this.params="aabsvchfo1egsgu432f";
+    //   }
+    // }))
+    // })
   }
+  
   loadData(){
     let m;
     return setTimeout(()=>{
-      m=this.isManager;
+      m=this.currentUser.isManager;
       return m
     },800);
   }
-isManager:string;
+
   //authenticate manager
 
 
@@ -200,17 +208,17 @@ setPage(page: number) {
   this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
 }
-allManagers;
+// allManagers;
 filter:Project=new Project();
 //child routing
   goToProject(project) {
-    this.router.navigate(['projectDetail', project.$key,`${this.params}`]);
+    this.router.navigate(['projectDetail', project.$key]);
   };
   Prcategory(){
   }
-  getManagers(){
-    this.allManagers=this.projectService.getAllManagers();
-  }
+  // getManagers(){
+  //   this.allManagers=this.projectService.getAllManagers();
+  // }
 inputsForm:FormGroup;
 startDate:Date=new Date();
 title:string;
@@ -235,26 +243,26 @@ category:string;
        area:[this.ProjectArea]
     });
 
-  let userObs=this.userService.getUsers();
-  userObs.subscribe((user)=>{
-  this.Managers=user;
-  })
-  //get projects
-  let projectObs=this.projectService.getProjects();
-  projectObs.subscribe((project)=>{
-    this.projectTitles=project;
-    this.setPage(1);
-    this.getManagers()
-    //get users and check manager
-    this.checkIfManager()
-  });
-  this.authService.user.subscribe((val=>{this.routeThis(val)}))
-   }
-  routeThis(val){
-      if(!val){
-      this.router.navigate([""]);
-    }
+    // let userObs=this.userListService.getUsers();
+    // userObs.subscribe((user)=>{
+    // this.Managers=user;
+    // })
+    //get projects
+    let projectObs=this.projectService.getProjects();
+    projectObs.subscribe((project)=>{
+      this.projectTitles=project;
+      this.setPage(1);
+      // this.getManagers()
+      //get users and check manager
+      // this.checkIfManager()
+    });
+    //this.authService.user.subscribe((val=>{this.routeThis(val)}))
   }
+  // routeThis(val){
+  //   if(!val){
+  //     this.router.navigate([""]);
+  //   }
+  // }
   goToLearning(){
     this.router.navigate(["learning"])
   }

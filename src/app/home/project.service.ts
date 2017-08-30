@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable,FirebaseObjectObservable } from 'angularfire2/database';
-import { AuthService } from '../auth.service';
 import { Project } from './project';
 
 @Injectable()
@@ -18,7 +17,6 @@ export class ProjectService {
 
     constructor(
         db: AngularFireDatabase,
-        public authService: AuthService
     ) { 
        this.database=db; 
     }
@@ -172,7 +170,7 @@ export class ProjectService {
         let userObs=this.database.object(`users/${userId}/tagged/${taskId}`);
         userObs.remove();
     }
-    getManagerProjects(manager){
+    getManagerProjects(manager:string){
        return this.database.list(`projecttimeline`,{
             query:{
                 orderByChild:'manager',

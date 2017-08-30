@@ -8,19 +8,9 @@ import { LearningComponent } from './learning/learning.component';
 export const appRoutes: Routes = [
   { path: "login", component: AuthComponent},
   { path: "home", component: HomeComponent,canActivate: [LoginRouteGuard]},
-  {path:"projectDetail/:id/:manager",component:ProjectdetailsComponent,canActivate: [LoginRouteGuard]},
+  {path:"projectDetail/:id",component:ProjectdetailsComponent,canActivate: [LoginRouteGuard]},
   {path:"addUsers",component:AddUSersComponent,canActivate: [LoginRouteGuard]},
-  { path: 'learning', component: LearningComponent},
+  { path: 'learning', component: LearningComponent,canActivate: [LoginRouteGuard]},
   { path: '**', component: AuthComponent}
-//   { path: 'hero/:id',      component: HeroDetailComponent },
-//   {
-//     path: 'heroes',
-//     component: HeroListComponent,
-//     data: { title: 'Heroes List' }
-//   },
-//   { path: '',
-//     redirectTo: '/heroes',
-//     pathMatch: 'full'
-//   },
-//   { path: '**', component: PageNotFoundComponent } canActivate: [LoginRouteGuard]
+
 ];

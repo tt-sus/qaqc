@@ -1,3 +1,5 @@
+import { User } from './../user';
+import { UserService } from './../user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgModule, ElementRef} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
@@ -8,8 +10,8 @@ import 'rxjs/Rx'
 import { Project } from '../home/project';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ProjectService } from '../home/project.service';
-import { UserService } from '../home/user.service';
-import { ManagerService } from '../home/manager.service';
+import { UserListService } from '../home/userlist.service';
+
 declare var vis: any;
 
 
@@ -22,7 +24,7 @@ export class TimelineComponent implements OnInit {
   load: boolean;
   projectNames = [];
   tasks = [];
-  currentUser: string;
+  currentUser: User;
   userTasks: any[];
   @Input()
   Key:string;
@@ -32,7 +34,11 @@ export class TimelineComponent implements OnInit {
   groups: any;
   timeline: any;
   name:string;
-  constructor(private element: ElementRef,private projectService:ProjectService,private managerService:ManagerService) {
+  constructor(
+    private element: ElementRef,
+    private projectService:ProjectService,
+    private userService:UserService) {
+      this.currentUser= UserService.currentUser;
   }
   taskA=[];
   items=new vis.DataSet([]);
@@ -68,31 +74,28 @@ renderTimeline(){
 managerTasks(){
 
   this.projectNames=[];
-  this.managerService.loggedInUser()
- 
-  .subscribe((user)=>{
-     this.currentUser=user.displayName;
-     this.projectService.getManagerProjects(this.currentUser)
-       .subscribe((projects)=>{
-       // projects with manager as myself
-        projects.forEach((project,i)=>{
-          this.tasks=[]; 
-          this.tasks.push(project.tasks);//[tasks-project1,tasks-project2]
-          this.tasks.forEach((task)=>{
-            let taskKeys=Object.keys(task);
-            taskKeys.forEach((element,j) => {
-            this.formatTasks(task[Object.keys(task)[j]],i); 
-            });
-         })//finaltasks=[task1,task2]
-         this.projectNames.push(project.project_name);
-        })
-        this.groups = new vis.DataSet();
-        for (let g=0; g<this.projectNames.length;g++) {
-          this.groups.add({id: g, content:this.projectNames[g]});
-        }
-       })
-   })
-  let projects$=this.projectService.getManagerProjects(this.currentUser)
+  
+  this.projectService.getManagerProjects(this.currentUser.name)
+    .subscribe((projects)=>{
+    // projects with manager as myself
+      projects.forEach((project,i)=>{
+        this.tasks=[]; 
+        this.tasks.push(project.tasks);//[tasks-project1,tasks-project2]
+        this.tasks.forEach((task)=>{
+          let taskKeys=Object.keys(task);
+          taskKeys.forEach((element,j) => {
+          this.formatTasks(task[Object.keys(task)[j]],i); 
+          });
+      })//finaltasks=[task1,task2]
+      this.projectNames.push(project.project_name);
+      })
+      this.groups = new vis.DataSet();
+      for (let g=0; g<this.projectNames.length;g++) {
+        this.groups.add({id: g, content:this.projectNames[g]});
+      }
+    })
+  
+  let projects$=this.projectService.getManagerProjects(this.currentUser.name)
 }
   ngOnInit() { 
   this.finaltasks=[];

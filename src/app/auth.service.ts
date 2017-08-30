@@ -35,8 +35,9 @@ export class AuthService {
       .then(value => {
         if (this.firebaseAuth.auth) {
           this.userName = value.email;
-          if (this.firebaseAuth.auth.currentUser) { this.isLoggedIn = true; }
+          // if (this.firebaseAuth.auth.currentUser) { this.isLoggedIn = true; }
           this.router.navigate(["home"]);
+          
         }
         else {
           alert('Username or Password is not correct!');
@@ -44,8 +45,7 @@ export class AuthService {
         }
       })
       .catch(err => {
-        alert(`Something went wrong:, ${err.message} 
-Please contact the administrator`);
+        alert(`Something went wrong:, ${err.message} \n\nPlease contact the administrator`);
       });
   }
   sendToken() {

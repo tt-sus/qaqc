@@ -22,14 +22,12 @@
 <div class="timeline">
   <div class="col-lg-12">
       
-      
-      
       <div class="user col-lg-4 no-padding">
-        Welcome <span class="display-name">{{userName}}</span> <app-notifications></app-notifications>
+        Welcome <span class="display-name">{{currentUser.name}}</span> <app-notifications></app-notifications>
       </div>
 
       <div class="add-users no-padding pull-right">
-        <span *ngIf="isAdmin==='true'"><a  (click)="addUser()"><i class="fa fa-address-card-o" aria-hidden="true"></i> Add Users</a></span>
+        <span *ngIf="currentUser.isAdmin"><a  (click)="addUser()"><i class="fa fa-address-card-o" aria-hidden="true"></i> Add Users</a></span>
       </div>
 
       <div class="learning no-padding pull-right">
@@ -37,21 +35,21 @@
       </div>
 
       <div class="clearfix"></div>
-      <div *ngIf="isManager==='true'">
-        <app-timeline [Key]="userkey" [manager]="isManager"></app-timeline>
+      <div *ngIf="currentUser.isManager">
+        <app-timeline [Key]="userkey" [manager]="currentUser.isManager"></app-timeline>
       </div> 
-      <div *ngIf="isManager==='false'">
+      <div *ngIf="!currentUser.isManager">
           <app-usertimeline [user]="user"></app-usertimeline>
       </div>
       
   </div>
 </div>
-  <div class="home-wrapper" *ngIf="isManager">
+  <div class="home-wrapper" *ngIf="currentUser.isManager">
       <div  class="col-lg-12 sus-header">
         <h1 class="page-header">Project List </h1>
         
         <!-- add new project -->
-        <button type="button" class="btn btn-default btn-sm pull-right" *ngIf="isManager==='true'" data-toggle="modal" data-target="#myModal">New Project</button>
+        <button type="button" class="btn btn-default btn-sm pull-right" *ngIf="currentUser.isManager" data-toggle="modal" data-target="#myModal">New Project</button>
         <!-- search -->
         <div class="col-xs-5 row mb-2">
           <input  type="text"  
@@ -74,7 +72,7 @@
               <th class="col-lg-1">CZ</th>
               <th class="col-lg-2"> Market Sector </th>
               <th class="col-lg-3">Scope </th>
-              <th class="col-lg-2" *ngIf="isAdmin==='true'">Action</th>
+              <th class="col-lg-2" *ngIf="currentUser.isAdmin">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -88,7 +86,7 @@
               <td *ngIf="!res.projectStatus">Open</td> -->
               <td (click)="goToProject(res)">{{res.market_sector}}</td>
               <td (click)="goToProject(res)">{{res.category}}</td>
-              <td *ngIf="isAdmin==='true'"><button type="button" class="btn btn-default btn-xs"data-toggle="modal" data-target="#delete" (click)="getProject(res.$key,res)">Delete</button></td>
+              <td *ngIf="currentUser.isAdmin"><button type="button" class="btn btn-default btn-xs"data-toggle="modal" data-target="#delete" (click)="getProject(res.$key,res)">Delete</button></td>
             </tr>
           </tbody>
         </table>

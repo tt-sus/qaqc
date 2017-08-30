@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ManagerService } from '../home/manager.service';
-import { UserService } from '../home/user.service';
+import { UserService } from './../user.service';
+import { User } from './../user';
+import { UserListService } from '../home/userlist.service';
 import { Router } from '@angular/router';
 import { ProjectService } from '../home/project.service';
 
@@ -10,51 +11,57 @@ import { ProjectService } from '../home/project.service';
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
-  userId: any;
+  // userId: any;
   params: string;
-  isAdmin: string;
-  isManager:string;
+  currentUser:User;
+  // isAdmin: string;
+  // isManager:string;
   tasks=[];
   notifications=[];
-  constructor(private managerService:ManagerService,
-              private userService:UserService,
+  constructor(
+              private userService:UserListService,
               private router: Router,
-              private projectService:ProjectService) { }
-  checkIfManager(){
+              private projectService:ProjectService) { 
+              // this.currentUser = UserService.currentUser;
+              }
+  // checkIfManager(){
+  //   this.tasks=[];
+  //   this.notifications=[];
+  //   let email;
+  //   let userObs=this.managerService.loggedInUser();
+  //   userObs.subscribe((user)=>{
+  //   let currentUser=this.managerService.setCurrentUser(user.email);
+  //   currentUser.subscribe((user=>{
+  //     this.isAdmin=`${user.admin_access}`;
+  //     this.isManager=`${user.manager_access}`;
+  //     this.tasks=user.tagged;
+  //     this.userId=user.short_name
+  //     let taskKeys;
+  //     taskKeys=Object.keys(this.tasks);
+  //     taskKeys.forEach(key => {
+  //       this.notifications.push(this.tasks[key])
+  //     });
+  //     if(user.manager_access){
+  //       this.params="aabsvchfo134852f";
+  //     }
+  //     else{
+  //       this.params="aabsvchfo1egsgu432f";
+  //     }
+  //   }))
+  //   })
+  // }
+  clearOne(taskId){
     this.tasks=[];
     this.notifications=[];
-    let email;
-    let userObs=this.managerService.loggedInUser();
-    userObs.subscribe((user)=>{
-    let currentUser=this.managerService.setCurrentUser(user.email);
-    currentUser.subscribe((user=>{
-      this.isAdmin=`${user.admin_access}`;
-      this.isManager=`${user.manager_access}`;
-      this.tasks=user.tagged;
-      this.userId=user.short_name
-      let taskKeys;
-      taskKeys=Object.keys(this.tasks);
-      taskKeys.forEach(key => {
-        this.notifications.push(this.tasks[key])
-      });
-      if(user.manager_access){
-        this.params="aabsvchfo134852f";
-      }
-      else{
-        this.params="aabsvchfo1egsgu432f";
-      }
-    }))
-    })
-  }
-  clearOne(taskId){
-    this.projectService.clearOneNotification(this.userId,taskId);
-    this.checkIfManager();
+    this.projectService.clearOneNotification(this.currentUser.$key,taskId);
+    // this.checkIfManager();
   }
   goToTask(projectKey){
         this.router.navigate(['projectDetail',projectKey,`${this.params}`]);
   }
   ngOnInit() {
-  this.checkIfManager();
+
+  // this.checkIfManager();
   }
 
 }

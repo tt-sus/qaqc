@@ -1,3 +1,6 @@
+import { User } from './../user';
+import { UserService } from './../user.service';
+
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { ActivatedRoute } from "@angular/router";
@@ -8,9 +11,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Task } from './task';
 import { ProjectService } from '../home/project.service';
-import { UserService } from '../home/user.service';
+import { UserListService } from '../home/userlist.service';
 import { TasksTimelineComponent } from '../tasks-timeline/tasks-timeline.component';
-import { ManagerService } from '../home/manager.service';
+
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -23,7 +26,7 @@ export class ProjectdetailsComponent implements OnInit {
   marketSector: string;
   projectCategory: any;
   user_short_before: string;
-  loggedInUser: string;
+  // loggedInUser: string;
   @ViewChild(TasksTimelineComponent) timelineCmp: TasksTimelineComponent;
   projectManager: any;
   project_name: any;
@@ -31,10 +34,10 @@ export class ProjectdetailsComponent implements OnInit {
   project_number: any;
   projectID: any;
   taskref: any;
-  user_key: string;
+  // user_key: string;
   projectStatus: string;
   dateInvalid: boolean = false;
-  isManager: string;
+  // isManager: string;
   query_id: any;
   timelineToShow: any;
   projectId: number;
@@ -47,18 +50,20 @@ export class ProjectdetailsComponent implements OnInit {
   userList: FirebaseListObservable<any[]>;
   taskList: any[] = [];
   userArray = [];
+
+  currentUser:User;
   constructor(
     private location: Location,
     private projectService: ProjectService,
-    private userService: UserService,
+    private userListService: UserListService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
     public authService: AuthService,
-    private managerService: ManagerService
+    private userService: UserService
   ) {
 
-    this.isManager = "false";
+    // this.isManager = "false";
 
   }
   //modelling inputs
@@ -130,22 +135,23 @@ export class ProjectdetailsComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.projectID = params['id'];
-      this.user_key = params['user'];
-      let routeparams = params['manager'];
-      if (routeparams === 'aabsvchfo134852f') {
-        this.isManager = "true";
-      }
-      else {
-        this.isManager = "false"
-      }
+      // this.user_key = params['user'];
+      // let routeparams = params['manager'];
+      // if (routeparams === 'aabsvchfo134852f') {
+      //   this.isManager = "true";
+      // }
+      // else {
+      //   this.isManager = "false"
+      // }
     });
-    this.managerService.loggedInUser()
-      .subscribe(user => {
-        this.loggedInUser = user.email;
-        let $pos = this.loggedInUser.indexOf('@');
-        this.loggedInUser = this.loggedInUser.substr(0, $pos);
-        this.loggedInUser = this.loggedInUser.charAt(0).toUpperCase() + this.loggedInUser.charAt(1).toUpperCase() + this.loggedInUser.slice(2);
-      });
+
+    // this.managerService.loggedInUser()
+    //   .subscribe(user => {
+    //     this.loggedInUser = user.email;
+    //     let $pos = this.loggedInUser.indexOf('@');
+    //     this.loggedInUser = this.loggedInUser.substr(0, $pos);
+    //     this.loggedInUser = this.loggedInUser.charAt(0).toUpperCase() + this.loggedInUser.charAt(1).toUpperCase() + this.loggedInUser.slice(2);
+    //   });
 
 
     let timelineInfo = this.projectService.getTimelineInfo(this.projectID);
@@ -158,7 +164,7 @@ export class ProjectdetailsComponent implements OnInit {
       this.marketSector = info.market_sector;
       this.projectArea = info.area
     })
-    this.userList = this.userService.getUsers();
+    this.userList = this.userListService.getUsers();
     let projectTasksObs = this.projectService.getTimeline(this.projectID);
 
     projectTasksObs.subscribe(tasks => {
@@ -345,7 +351,7 @@ export class ProjectdetailsComponent implements OnInit {
     this.projectService.editNotification({
       due_date: this.taskObj.dueDate, manager: this.projectManager, project_id: this.projectID, task_id: this.taskId, task_name: this.taskObj.taskName
     }, this.taskObj.user_short, this.taskId)
-    if (this.isManager) {
+    if (this.currentUser.isManager) {
       this.projectService.editTasksForMe(
         this.user_short_before,
         this.taskObj.user_short,
@@ -371,8 +377,8 @@ export class ProjectdetailsComponent implements OnInit {
   }
   userTasks() {
     this.taskList = this.globalTasks.filter((task) => {
-      return task.user_short === this.loggedInUser;
+      return task.user_short === this.currentUser.$key;
     });
-    this.timelineCmp.filterMyTaskCategory(this.loggedInUser);
+    this.timelineCmp.filterMyTaskCategory(this.currentUser.$key);
   }
 }

@@ -26,9 +26,9 @@ import { CloseoutComponent } from './closeout/closeout.component';
 import { Http } from '@angular/http';
 import { AddUSersComponent } from './add-users/add-users.component';
 import { TimelineComponent } from './timeline/timeline.component';
-import { UserService } from './home/user.service';
+import { UserListService } from './home/userlist.service';
 import { ProjectService } from './home/project.service';
-import { ManagerService } from './home/manager.service';
+import { UserService } from './user.service';
 import { CommentsService } from './qc-results/comments.service';
 import { TasksTimelineComponent } from './tasks-timeline/tasks-timeline.component';
 import { LearningComponent } from './learning/learning.component';
@@ -71,7 +71,7 @@ import { SliderComponent } from './slider/slider.component';
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [ PagerService,AuthService,LoginRouteGuard,UserService,ProjectService,ManagerService,CommentsService],
+  providers: [ PagerService,AuthService,LoginRouteGuard,UserListService,ProjectService,UserService,CommentsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

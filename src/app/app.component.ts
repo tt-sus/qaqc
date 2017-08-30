@@ -6,6 +6,9 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {trigger, state, style, transition, animate} from '@angular/animations';
+
+import { User } from './user';
+import { UserService } from './user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,17 +27,22 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
   ]
 })
 export class AppComponent implements OnInit   {
-
+  currentUser:User;
   constructor(  public authService: AuthService,
                 private router:Router,
                 private auth: AngularFireAuth,
-                private http:Http
+                private http:Http,
+                
                 ){
             
         if(this.auth.authState){
        this.auth.authState.subscribe((auth)=>{
          if(auth){
            this.authService.isLoggedIn=true;
+           let userService:UserService;
+           this.currentUser = UserService.currentUser;
+           console.log("tttttttttttt"+this.currentUser);
+           
          }
           else{
            this.authService.isLoggedIn=false;

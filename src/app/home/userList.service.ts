@@ -3,7 +3,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { AuthService } from '../auth.service';
 
 @Injectable()
-export class UserService {
+export class UserListService {
     users: FirebaseListObservable<any[]>;
     database: AngularFireDatabase;
 
