@@ -19,3 +19,9 @@ body{
 .vis-labelset .vis-label .vis-inner {
     color: #c73f50;
 }
+.vis-timeline {
+    border:none !important;
+}
+.vis-time-axis .vis-grid.vis-major {
+    border:none !important;
+}
