@@ -45,7 +45,11 @@ export class TimelineComponent implements OnInit {
   options:any;
   render(){  
     this.items = new vis.DataSet(this.finaltasks);
-    this.options = {start:new Date()};  
+    let oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    let threeWeeksLater=new Date();
+    threeWeeksLater.setDate(oneWeekAgo.getDate() + 21);
+    this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 1}};  
     this.timeline = new vis.Timeline(this.element.nativeElement, this.items,this.groups ,this.options);
     let startDate=new Date();
     let endDate= startDate.setDate(startDate.getDate()+8*24*60*60*1000);
