@@ -40,11 +40,6 @@ body{
 .vis-time-axis .vis-grid.vis-major {
     border:none !important;
 
-
-.vis-timeline {
-    border:0;
-}
-
 .vis-text {
     font-size: x-small;
 }
