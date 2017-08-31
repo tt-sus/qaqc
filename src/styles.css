@@ -35,8 +35,10 @@ body{
 }
 
 .vis-timeline {
-    border:0;
+    border:none !important;
 }
+.vis-time-axis .vis-grid.vis-major {
+    border:none !important;
 
 .vis-text {
     font-size: x-small;
@@ -47,4 +49,5 @@ body{
 
 .vis-time-axis .vis-grid.vis-vertical {
     border-left: 0;
+
 }
