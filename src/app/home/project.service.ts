@@ -65,7 +65,6 @@ export class ProjectService {
          this.taskObs.update(task)
     }
     editNotification(task,user,taskId){
-        alert(taskId+user)
         this.database.object(`users/${user}/tagged/${taskId}`).update(task)
     }
     deleteTask(userId){
@@ -129,7 +128,6 @@ export class ProjectService {
         })
     }
     editTasksForMe(user_before,user,projectId,task_key,dueDate,task_name,task_type){
-        alert(user_before)
         let z=this.database.object(`userTasks/${user_before}/${projectId}/tasks/${task_key}/`)
         z.remove();
         let x=this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}/`)
@@ -139,7 +137,7 @@ export class ProjectService {
         });
     }
     deleteTasksForMe(user,task_key,projectId){
-        alert(user+ projectId+task_key)
+
         let z=this.database.object(`userTasks/${user}/${projectId}/${task_key}/`)
         z.remove();
     }
