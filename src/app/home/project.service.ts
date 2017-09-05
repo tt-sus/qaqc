@@ -170,6 +170,10 @@ export class ProjectService {
         let userObs=this.database.object(`users/${userId}/tagged/${taskId}`);
         userObs.remove();
     }
+    clearOneNotificationAdded(userId,taskId){
+        let userObs=this.database.object(`users/${userId}/tagged/${taskId}add`);
+        userObs.remove();
+    }
     getManagerProjects(manager){
        return this.database.list(`projecttimeline`,{
             query:{

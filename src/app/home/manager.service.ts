@@ -20,8 +20,7 @@ export class ManagerService {
     setCurrentUser(email){
        let $pos = email.indexOf('@');
        let shortEmail=email.substr(0, $pos);
-       return this.database.object(`/users/${shortEmail}`)
-        
+       return this.database.object(`/users/${shortEmail}`) 
     }
     // setCurrentUser(user:string,manager:Array<Manager>){
     //     this.currentUser=user;

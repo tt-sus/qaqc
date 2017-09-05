@@ -70,9 +70,9 @@ renderTimeline(){
 managerTasks(){
   this.projectNames=[];
   this.managerService.loggedInUser()
- 
   .subscribe((user)=>{
      this.currentUser=user.displayName;
+     console.log(user.displayName)
      this.projectService.getManagerProjects(this.currentUser)
        .subscribe((projects)=>{
        // projects with manager as myself
@@ -86,6 +86,7 @@ managerTasks(){
             });
          })//finaltasks=[task1,task2]
          this.projectNames.push(project.project_name);
+         console.log(this.projectNames)
         })
         this.groups = new vis.DataSet();
         for (let g=0; g<this.projectNames.length;g++) {
