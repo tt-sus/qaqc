@@ -1,0 +1,130 @@
+
+users:{
+    mpeng:{
+        name:"Mingbo Peng",
+        account:"mpeng",
+        email:"mpeng@thorntontomasetti.com"
+        isManager:true,
+        isAdmin: true,
+        imageUrl:"https://media.licdn.com/mpr/mpr/shrinknp_200_200.png"
+        
+        //tasks:[originalTaskID1，originalTaskID2],
+        //projects：[originalProjectID1，originalProjectID2]
+        
+    }
+    atakle:{
+        name:"Akshar Takle",
+        account:"atakle",
+        email:"mpeng@thorntontomasetti.com",
+        isManager:true,
+        isAdmin: true,
+        imageUrl:"https://media.licdn.com/mpr/mpr/shrinknp_200_200.png"
+    }
+}
+
+//for timeline component
+userProjectsTasks:{ 
+    mpeng:{
+        managingProjects:{
+            ProjectNumber-5fa7-4df4-b199-5f634887fdba:{ //project ID
+                meta:{
+                    projectName:"this building Design",
+
+                },
+                staffList:{
+                    mpeng:"85a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdfs",
+                    atakle:"95a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdgs",
+
+                }
+            },
+            ProjectNumber-5fa7-4df4-b199-5f634887fdba:{
+                meta:{
+                    projectName:"this building Design",
+
+                },
+                stuffList:{
+                    mpeng:"mpeng",
+                    atakle:"atakle"
+                }
+            },
+            ....
+        },
+        assignedTasks:{
+            //TaskID: dueDate
+            85a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdfs:{
+                dueDate:"2017-08-09",
+                type:"task",
+            },
+            ....
+        }
+    },
+    
+}
+
+if is {
+ grap
+}else{
+
+}
+
+
+
+
+
+
+
+Projects:{ // keep project details 
+    ProjectNumber-5fa7-4df4-b199-5f634887fdba:{ //project ID
+        client:"aaaa",
+        climate:"tttt",
+        searchKey:"aadfdsfsdaf",
+        endDate:"2017-08-24",
+        manager:mpeng,
+        projectName:"this building Design",
+        ....
+    }
+}
+
+ProjectTimelines:{ // keep tasks for each projects
+    ProjectNumber-5fa7-4df4-b199-5f634887fdba:{ //same as project ID
+        // meta:{
+        //     manager:mpeng
+        // },
+        85a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdfs:{ //task ID
+            assignedTo:mpeng,
+            categoryType:"Task",
+            details:"tdssdfsfdsfasdf",
+            hours:5,
+            dueDate:2017-08-06,
+            startDate:2017-08-01,
+            isFinished:false,
+            taskName:"sdfsdfsadfoj"
+
+        },
+        75a575a5-75a5-75a5-75a5-75a5sdyssdfs:{ //another Task
+            ....
+        },
+    }
+
+}
+
+ProjectQAQC:{ // keep QAQC details for each task of each projects
+    ProjectNumber-5fa7-4df4-b199-5f634887fdba:{ //same as project ID
+        85a5sdfs-dsfd-sdfs-sdfs-sdfssdfssdfs:{ //same as task ID
+            comments:{}, //keep the same as current 
+            QC1:{ // be prepared to change
+                accuracy:false,
+                acronyms: false,
+                ....
+            },
+            QC2:{ // be prepared to change
+                add:false,
+                aggregated:false
+                ....
+            },
+            
+        },
+        closeOUt:{}
+        ....
+    }
+}

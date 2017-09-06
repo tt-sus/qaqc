@@ -22,15 +22,20 @@
 <div class="timeline">
   <div class="col-lg-12">
       
-      <div class="col-lg-2 add-users no-padding">
-        <span *ngIf="isAdmin==='true'"><a  (click)="addUser()"><i class="fa fa-address-card-o" aria-hidden="true"></i> Add Users</a></span>
-      </div>
-      <div class="learning col-lg-2 no-padding">
-            <a (click)="goToLearning()" > Lessons Learned</a>
-      </div>
+      
+      
       <div class="user col-lg-4 no-padding">
         Welcome <span class="display-name">{{userName}}</span> <app-notifications></app-notifications>
-    </div>
+      </div>
+
+      <div class="add-users no-padding pull-right">
+        <span *ngIf="isAdmin==='true'"><a  (click)="addUser()"><i class="fa fa-address-card-o" aria-hidden="true"></i> Add Users</a></span>
+      </div>
+
+      <div class="learning no-padding pull-right">
+        <a (click)="goToLearning()" >Lessons Learned</a>
+      </div>
+
       <div class="clearfix"></div>
       <div *ngIf="isManager==='true'">
         <app-timeline [Key]="userkey" [manager]="isManager"></app-timeline>
@@ -38,6 +43,7 @@
       <div *ngIf="isManager==='false'">
           <app-usertimeline [user]="user"></app-usertimeline>
       </div>
+      
   </div>
 </div>
   <div class="home-wrapper" *ngIf="isManager">
