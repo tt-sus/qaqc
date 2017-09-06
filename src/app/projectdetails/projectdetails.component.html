@@ -193,7 +193,7 @@
                     <div class="header">
                   
                       <p>  <strong class="text-capitalize"> {{item.taskName}} </strong> // {{item.assigned_to}}  
-                        <span class="status" [ngClass]="calStatus(item.dueDate,item.status).split(' ',1)"> {{calStatus(item.dueDate,item.status)}}</span>
+                        <span class="status" [ngClass]="calStatus(item.dueDate,item.status)"> {{calStatus(item.dueDate,item.status)}}</span>
 
                     </p>
                     </div>
