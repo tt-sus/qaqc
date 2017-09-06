@@ -188,6 +188,7 @@ export class ProjectdetailsComponent implements OnInit {
 
   }
   tagUser(){
+    alert(this.assigned_to.short_name)
     this.projectService.tagUser(this.projectID,this.taskId,this.assigned_to.short_name,this.taskObj.taskName,this.taskObj.dueDate,this.projectManager,false);
 
   }

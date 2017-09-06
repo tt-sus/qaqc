@@ -1,0 +1,24 @@
+[debug] [2017-08-30T16:22:27.354Z] ----------------------------------------------------------------------
+[debug] [2017-08-30T16:22:27.354Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\aksha\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-08-30T16:22:27.354Z] CLI Version:   3.9.2
+[debug] [2017-08-30T16:22:27.354Z] Platform:      win32
+[debug] [2017-08-30T16:22:27.354Z] Node Version:  v6.11.2
+[debug] [2017-08-30T16:22:27.354Z] Time:          Wed Aug 30 2017 12:22:27 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-08-30T16:22:27.354Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-08-30T16:22:27.374Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-08-30T16:22:27.374Z] > authorizing via signed-in user
+[debug] [2017-08-30T16:22:27.374Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-08-30T16:22:27.374Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/cN_Pgopu2s-5c4ad0DrbKdCZEfmEOGCNUDDenTPkmaQMTwsu7qcHQCM6eAXKWe6H',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Aug 30 2017 12:22:27 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-08-30T16:22:27.582Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-30T16:22:27.649Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/qaqc-f9eac  
+ Wed Aug 30 2017 12:22:27 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-08-30T16:22:28.056Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-30T16:22:28.056Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/qaqc-f9eac/tokens  
+ Wed Aug 30 2017 12:22:28 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-08-30T16:22:28.565Z] <<< HTTP RESPONSE 200

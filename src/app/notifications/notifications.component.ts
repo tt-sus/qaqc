@@ -50,6 +50,10 @@ export class NotificationsComponent implements OnInit {
     this.projectService.clearOneNotification(this.userId,taskId);
     this.checkIfManager();
   }
+  clearAddedtask(taskId){
+    this.projectService.clearOneNotificationAdded(this.userId,taskId);
+    this.checkIfManager();
+  }
   goToTask(projectKey){
         this.router.navigate(['projectDetail',projectKey,`${this.params}`]);
   }

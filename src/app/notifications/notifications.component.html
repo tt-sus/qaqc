@@ -20,7 +20,7 @@
       </div>
      <div class="notifications-wrapper" *ngFor="let notification of notifications">
         <a class="content" *ngIf="notification.type==true">
-            <span class="pull-right clear" (click)="clearOne(notification.task_id)">clear</span>
+            <span class="pull-right clear" (click)="clearAddedtask(notification.task_id)">clear</span>
              <div class="notification-item">
               <h4 class="item-title"  (click)="goToTask(notification.project_id)"><b>{{notification.manager}}</b> added a new - {{notification.task_name}} task for you  </h4>
               <p class="item-info"  (click)="goToTask(notification.project_id)">Due on - {{notification.due_date |date}}</p>

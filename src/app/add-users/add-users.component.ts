@@ -56,7 +56,7 @@ saveUser(){
 }
     signup() {
     let user=this.email;
-    this.email=`${this.email}@thorntontomasetti.com`
+    this.email=(`${this.email}@thorntontomasetti.com`).toLowerCase();
     this.authService.signup(this.email, this.password, this.user_name);
     this.user=this.database.object(`/users/${user}`);
     this.user.set({
