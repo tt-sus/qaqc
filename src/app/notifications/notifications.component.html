@@ -1,0 +1,40 @@
+| <p *ngIf="notifications.length>0" class="notifyText">  <span class="span-red">{{notifications.length}} new</span> notification<span *ngIf="notifications.length>1">s</span></p>
+
+<div class="dropdown" >
+    <a id="dLabel" role="button" data-toggle="dropdown" data-target="#">
+      <span class="number"*ngIf="notifications.length>0" >{{notifications.length}}</span>
+      <i class="fa fa-bell" aria-hidden="true"></i>
+    </a>
+    
+    <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
+      <div class="notification-heading"><h4 class="menu-title">Notifications</h4>
+      </div>
+      <li class="divider"></li>
+      <div class="notifications-wrapper" *ngIf="notifications.length==0">
+          <a class="content">
+              <div class="notification-item">
+               <h4 class="item-title"> You have no new Notifications </h4>
+               <p class="item-info"></p>
+             </div>
+          </a>
+      </div>
+     <div class="notifications-wrapper" *ngFor="let notification of notifications">
+        <a class="content" *ngIf="notification.type==true">
+            <span class="pull-right clear" (click)="clearAddedtask(notification.task_id)">clear</span>
+             <div class="notification-item">
+              <h4 class="item-title"  (click)="goToTask(notification.project_id)"><b>{{notification.manager}}</b> added a new - {{notification.task_name}} task for you  </h4>
+              <p class="item-info"  (click)="goToTask(notification.project_id)">Due on - {{notification.due_date |date}}</p>
+            </div>
+        </a>
+       <a class="content"  *ngIf="notification.type==false">
+        <span class="pull-right clear" (click)="clearOne(notification.task_id)">clear</span>
+         <div class="notification-item">
+          <h4 class="item-title"  (click)="goToTask(notification.project_id)"><b>{{notification.manager}}</b> wants you to have a look at {{notification.task_name}} </h4>
+          <p class="item-info"  (click)="goToTask(notification.project_id)">Due on - {{notification.due_date |date}}</p>
+        </div>
+      </a>
+     
+     </div>
+      <li class="divider"></li>
+    </ul>
+  </div>
