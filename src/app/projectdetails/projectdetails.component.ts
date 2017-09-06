@@ -110,7 +110,7 @@ export class ProjectdetailsComponent implements OnInit {
       else if (subTime <= (86400*1000*2)) {
         return "Approaching Deadline";
       }else{
-        // return "In Progress";
+        return "In Progress";
       }
     }
   }
@@ -188,9 +188,7 @@ export class ProjectdetailsComponent implements OnInit {
 
   }
   tagUser(){
-    alert(this.assigned_to.short_name)
     this.projectService.tagUser(this.projectID,this.taskId,this.assigned_to.short_name,this.taskObj.taskName,this.taskObj.dueDate,this.projectManager,false);
-
   }
   routeThis(val) {
     if (!val)
