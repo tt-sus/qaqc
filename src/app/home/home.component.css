@@ -62,3 +62,13 @@ table td{
     padding-left:0px;
     padding-right:0px;
 }
+.managerTimelineView{
+    font-size: 14px;
+}
+.managerTimelineView label{
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: text-bottom;
+    margin-bottom: 0px;
+    font-weight: normal;
+}

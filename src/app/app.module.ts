@@ -35,6 +35,7 @@ import { LearningComponent } from './learning/learning.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UsertimelineComponent } from './usertimeline/usertimeline.component';
 import { SliderComponent } from './slider/slider.component';
+import {PopoverModule} from "ngx-popover";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SliderComponent } from './slider/slider.component';
     RouterModule,
     FormsModule,
     HttpModule,
+    PopoverModule,
     ReactiveFormsModule ,
     BrowserAnimationsModule,
       RouterModule.forRoot(

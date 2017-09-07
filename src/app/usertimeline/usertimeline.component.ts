@@ -18,7 +18,11 @@ user:string;
   timeline: any;
   render(){  
     this.items = new vis.DataSet(this.userTasks);
-    this.options = {start:new Date()};  
+    let oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    let threeWeeksLater=new Date();
+    threeWeeksLater.setDate(oneWeekAgo.getDate() + 21);
+    this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5}};  
     this.timeline = new vis.Timeline(this.element.nativeElement, this.items,this.groups ,this.options);
     let startDate=new Date();
     let endDate= startDate.setDate(startDate.getDate()+8*24*60*60*1000);
@@ -41,9 +45,11 @@ destroy(){
 
             this.groups.add({id: g, content:this.projectname[g]});
           }
-      
-          let keys=Object.keys(project['tasks']);
-          taskKeys=[...keys]
+          let keys;
+          if(Object.keys(project).includes('tasks')){
+            keys=Object.keys(project['tasks']);
+           taskKeys=[...keys]
+          }
        
           taskKeys.forEach(key=>{
   
@@ -61,7 +67,7 @@ destroy(){
   ngOnInit() {
     this.getuserTasks();
     this.load=true;
-    setTimeout(()=>{this.render();this.load=false;},3000);
+    setTimeout(()=>{this.render();this.load=false;},1000);
   }
 
 }

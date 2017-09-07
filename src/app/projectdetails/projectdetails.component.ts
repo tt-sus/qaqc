@@ -342,13 +342,14 @@ export class ProjectdetailsComponent implements OnInit {
       user_short: this.assigned_to.short_name,
     });
     this.projectService.editNotification({
-      due_date: this.taskObj.dueDate, manager: this.projectManager, project_id: this.projectID, task_id: this.taskId, task_name: this.taskObj.taskName
+      due_date: this.taskObj.dueDate, manager: this.projectManager,type:true, project_id: this.projectID, task_id: this.taskId, task_name: this.taskObj.taskName
     }, this.taskObj.user_short, this.taskId)
     if (this.isManager) {
       this.projectService.editTasksForMe(
         this.user_short_before,
         this.taskObj.user_short,
         this.projectID,
+        this.project_name,
         this.taskId,
         this.taskObj.dueDate,
         this.taskObj.taskName,
