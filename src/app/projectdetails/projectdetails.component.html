@@ -41,9 +41,15 @@
             </div>
          </div>
     <div class="timeline-wrapper" >
-        <h3>{{project_number}} // {{project_name}}</h3>
+        <h3>{{project_number}} // {{project_name}} <span><button class="infoButton" [popover]="myPopover"><i>i</i></button></span></h3>
         <p class="desc"><b> Project Manager:</b> {{projectManager}}</p>
-        <p class="desc"><b>Client: </b> {{projectClient}}</p>
+        <p class="desc"><b>Client: </b> {{projectClient}}</p>.
+        
+        <popover-content #myPopover title="Project Details" placement="right" [closeOnClickOutside]="true">
+                <b>Market Sector: </b> {{marketSector}}<br>
+                <b>Category: </b> {{projectCategory}}<br>
+                <b>Area: </b> {{projectArea}}<br>
+        </popover-content>
         <!--modal-->
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">

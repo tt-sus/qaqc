@@ -14,14 +14,14 @@ export class NotificationsComponent implements OnInit {
   params: string;
   isAdmin: string;
   isManager:string;
-  tasks=[];
+  tasks={};
   notifications=[];
   constructor(private managerService:ManagerService,
               private userService:UserService,
               private router: Router,
               private projectService:ProjectService) { }
   checkIfManager(){
-    this.tasks=[];
+    this.tasks={};
     this.notifications=[];
     let email;
     let userObs=this.managerService.loggedInUser();
@@ -33,10 +33,13 @@ export class NotificationsComponent implements OnInit {
       this.tasks=user.tagged;
       this.userId=user.short_name
       let taskKeys;
+      console.log(Object.keys(this.tasks))
       taskKeys=Object.keys(this.tasks);
       taskKeys.forEach(key => {
+        console.log(this.tasks[key])
         this.notifications.push(this.tasks[key])
       });
+      console.log(this.notifications)
       if(user.manager_access){
         this.params="aabsvchfo134852f";
       }
@@ -47,6 +50,7 @@ export class NotificationsComponent implements OnInit {
     })
   }
   clearOne(taskId){
+   
     this.projectService.clearOneNotification(this.userId,taskId);
     this.checkIfManager();
   }

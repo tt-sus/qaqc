@@ -127,18 +127,21 @@ export class ProjectService {
             className:type
         })
     }
-    editTasksForMe(user_before,user,projectId,task_key,dueDate,task_name,task_type){
+    editTasksForMe(user_before,user,projectId,project_name,task_key,dueDate,task_name,type){
         let z=this.database.object(`userTasks/${user_before}/${projectId}/tasks/${task_key}/`)
         z.remove();
+        let y=this.database.object(`userTasks/${user}/${projectId}/project_name`);
+        y.set(project_name)
         let x=this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}/`)
         x.set({
             start:dueDate,
-            content:task_name
+            content:task_name,
+            className:type
         });
     }
     deleteTasksForMe(user,task_key,projectId){
 
-        let z=this.database.object(`userTasks/${user}/${projectId}/${task_key}/`)
+        let z=this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}`)
         z.remove();
     }
     getMyTasks(user){
@@ -167,10 +170,12 @@ export class ProjectService {
         }
     }
     clearOneNotification(userId,taskId){
+        this.database.object(`users/${userId}/tagged/${taskId}add`).remove();
         let userObs=this.database.object(`users/${userId}/tagged/${taskId}`);
         userObs.remove();
     }
     clearOneNotificationAdded(userId,taskId){
+        this.database.object(`users/${userId}/tagged/${taskId}`).remove()
         let userObs=this.database.object(`users/${userId}/tagged/${taskId}add`);
         userObs.remove();
     }

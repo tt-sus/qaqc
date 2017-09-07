@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit   {
   userkey: string;
   params: string;
   isAdmin: string;
+  timelineView:boolean;
   dateInvalid: boolean;
   currentUser: string;
   projects:Observable<any>;
@@ -130,6 +131,12 @@ ProjectArea:number;
     currentUser.subscribe((user=>{
       this.isAdmin=`${user.admin_access}`;
       this.isManager=`${user.manager_access}`;
+      if(user.manager_access=true){
+        this.timelineView=false
+      }
+      else if(user.manager_access=false){
+        this.timelineView=false;
+      }
       this.userName=user.user_name;
       this.user=user.short_name;
       if(user.manager_access){
