@@ -42,8 +42,6 @@ export class CloseoutComponent implements OnInit {
     this.onComplete.emit(bool);
   }
   ngOnInit() {
-
-    console.log(this.projectArea +" "+this.marketSector)
     this.closeOut={
         projectBackground:"",
         contract:"",

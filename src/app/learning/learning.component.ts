@@ -51,7 +51,7 @@ export class LearningComponent implements OnInit {
           return true
         }
         else{
-          return projects.category===this.category;
+          return projects.category.includes(this.category);
         }
       }).filter(projects=>{
         if(this.selectedSector==null || this.selectedSector==='no selection'){

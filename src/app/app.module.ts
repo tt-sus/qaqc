@@ -36,6 +36,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { UsertimelineComponent } from './usertimeline/usertimeline.component';
 import { SliderComponent } from './slider/slider.component';
 import {PopoverModule} from "ngx-popover";
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {PopoverModule} from "ngx-popover";
     PopoverModule,
     ReactiveFormsModule ,
     BrowserAnimationsModule,
+    MultiselectDropdownModule,
       RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only

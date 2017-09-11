@@ -14,7 +14,7 @@ import { TimelineComponent } from '../timeline/timeline.component';
 import { UserService } from './user.service';
 import { ProjectService } from './project.service';
 import { ManagerService } from './manager.service';
-
+import { IMultiSelectOption, IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'home',
@@ -54,15 +54,14 @@ export class HomeComponent implements OnInit   {
                 }
 projectsTimeline:Array<any>=[];
 //project category
-projectCategory=["Energy Modeling",
-                "CFD",
-                "Daylighting",
-                "LEED consulting",
-                "Compliance modeling",
-                "Hygrothermal analysis",
-                "Heat Transfer analysis",
-                "Envelop Consulting",
-                "Sustainability Strategies"];
+projectCategory=[{id:"Energy Modeling",name:"Energy Modeling"},
+{id:"CFD",name:"CFD"},
+{id:"Daylighting",name:"Daylighting"},
+{id:"Compliance modeling",name:"Compliance modeling"},
+{id:"Hydrothermal analysis",name:"Hydrothermal analysis"},
+{id:"Heat Transfer analysis",name: "Heat Transfer analysis"},
+{id:"Sustainability Strategies",name:"Sustainability Strategies"},
+{id:"Envelop Consulting",name:"Envelop Consulting"}]
 selectedSector:string;
 market_sector=["Aviation",
                "Commercial",
@@ -76,6 +75,15 @@ market_sector=["Aviation",
                "Sports",
                "Transportation"];
 ProjectArea:number;
+optionsModel: [""];
+mySettings: IMultiSelectSettings = {
+  enableSearch: true,
+  checkedStyle: 'fontawesome',
+  buttonClasses: 'btn btn-default btn-block ',
+  containerClasses:'pr_category',
+  dynamicTitleMaxItems: 3,
+  displayAllSelectedText: true
+};
 // add project
   addToList() {
     let project_key=this.projectService.addProject(
@@ -91,7 +99,7 @@ ProjectArea:number;
           startDate:this.startDate,
           endDate:this.endDate,
           combined:this.title+this.manager+this.project_number,
-          category:this.category,
+          category:this.optionsModel,
           market_sector:this.selectedSector,
           area:this.ProjectArea
         }
@@ -102,7 +110,7 @@ ProjectArea:number;
       project_number:this.project_number,
       manager:this.manager,
       client:this.client,
-      category:this.category,
+      category:this.optionsModel,
       market_sector:this.selectedSector,
       area:this.ProjectArea,
       tasks:[]
@@ -131,20 +139,16 @@ ProjectArea:number;
     currentUser.subscribe((user=>{
       this.isAdmin=`${user.admin_access}`;
       this.isManager=`${user.manager_access}`;
-      if(user.manager_access=true){
-        this.timelineView=false
-      }
-      else if(user.manager_access=false){
+      if(this.isManager==='true'){
         this.timelineView=false;
+        this.params="aabsvchfo134852f";
+      }
+      else if(this.isManager==='false'){
+        this.timelineView=false;
+        this.params="aabsvchfo1egssgu432f";
       }
       this.userName=user.user_name;
       this.user=user.short_name;
-      if(user.manager_access){
-        this.params="aabsvchfo134852f";
-      }
-      else{
-        this.params="aabsvchfo1egsgu432f";
-      }
     }))
     })
   }
@@ -227,7 +231,7 @@ endDate:Date;
 status:string;
 client:string;
 climate:string;
-category:string;
+category:[""];
   ngOnInit() {
     this.inputsForm=this.fb.group({
       project_number:[this.project_number,[Validators.required]],
@@ -237,7 +241,7 @@ category:string;
        endDate:[this.startDate,[Validators.required]],
        client:[this.client,[Validators.required]],
        climate:[this.climate,[Validators.required]],
-       categoryType:[this.category],
+       categoryType:[this.optionsModel],
        market_sector:[this.selectedSector],
        area:[this.ProjectArea]
     });

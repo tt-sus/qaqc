@@ -47,6 +47,7 @@ export class ProjectdetailsComponent implements OnInit {
   userList: FirebaseListObservable<any[]>;
   taskList: any[] = [];
   userArray = [];
+  scope:string;
   constructor(
     private location: Location,
     private projectService: ProjectService,
@@ -74,6 +75,7 @@ export class ProjectdetailsComponent implements OnInit {
     hours: 0,
     status: false,
     user_short: "",
+    scope:this.scope,
     imageUrl: this.assigned_to.imageUrl,
   }
   clean() {
@@ -89,7 +91,8 @@ export class ProjectdetailsComponent implements OnInit {
       hours: 0,
       status: false,
       imageUrl: "",
-      user_short: ""
+      user_short: "",
+      scope:""
     }
   }
   categoryArray: Array<Object> = [
@@ -175,6 +178,7 @@ export class ProjectdetailsComponent implements OnInit {
       details: [this.taskObj.details],
       hours: [this.taskObj.hours],
       status: [this.taskObj.status],
+      scope:[this.scope]
       
     })
 
@@ -283,6 +287,7 @@ export class ProjectdetailsComponent implements OnInit {
       status: false,
       imageUrl: this.taskObj.imageUrl,
       user_short: this.assigned_to.short_name,
+      scope:this.scope,      
       qc1: {},
       qc2: {},
       comments: {}
@@ -308,7 +313,8 @@ export class ProjectdetailsComponent implements OnInit {
       hours: 0,
       status: false,
       imageUrl: this.assigned_to.imageUrl,
-      user_short: ""
+      user_short: "",
+      scope:""
     }
 
   }
@@ -374,5 +380,11 @@ export class ProjectdetailsComponent implements OnInit {
       return task.user_short === this.loggedInUser;
     });
     this.timelineCmp.filterMyTaskCategory(this.loggedInUser);
+  }
+  filterByScope(scope){
+    this.taskList = this.globalTasks.filter((task) => {
+      return task.scope === scope;
+    });
+    this.timelineCmp.filterByScope(scope);
   }
 }
