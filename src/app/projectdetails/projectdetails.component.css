@@ -265,3 +265,9 @@ textarea {
   border-radius: 3px;
   border: 1px solid #ccc;
 }
+.scopeSelect{
+  display: inline-block;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
