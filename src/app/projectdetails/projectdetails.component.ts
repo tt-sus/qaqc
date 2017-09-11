@@ -48,7 +48,7 @@ export class ProjectdetailsComponent implements OnInit {
   taskList: any[] = [];
   userArray = [];
   scope:string;
-  scopeFilter:string='allScopes';
+  
   constructor(
     private location: Location,
     private projectService: ProjectService,
@@ -383,7 +383,9 @@ export class ProjectdetailsComponent implements OnInit {
     });
     this.timelineCmp.filterMyTaskCategory(this.loggedInUser);
   }
+  scopeFilter:string;
   filterByScope(){
+    alert(this.scopeFilter)
     if(this.scopeFilter==='allScopes'){
       this.taskList = this.globalTasks;
       this.timelineCmp.showAll();

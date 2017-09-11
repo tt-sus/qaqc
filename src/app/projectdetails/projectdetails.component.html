@@ -192,8 +192,8 @@
                 
                 <button type="button" class="btn btn-default btn-sm"  (click)="userTasks()">My Tasks</button>   
                 <button type="button" class="btn btn-default btn-sm"  (click)="showAll()">All</button> 
-                <select type="number" class="scopeSelect" (ngModelChange)="filterByScope()" [(ngModel)]="scopeFilter" >
-                    <option value="allScopes" selected="selected">All Scopes</option>
+                <select type="number" class="scopeSelect"  [(ngModel)]="scopeFilter" (ngModelChange)="filterByScope()" >
+                   <option selected="selected" value="allScopes">All Scopes</option>
                     <option *ngFor="let category of projectCategory" [ngValue]="category" >{{category}}</option>
                 </select>
             </div>   
