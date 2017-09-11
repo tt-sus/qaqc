@@ -192,9 +192,10 @@
                 
                 <button type="button" class="btn btn-default btn-sm"  (click)="userTasks()">My Tasks</button>   
                 <button type="button" class="btn btn-default btn-sm"  (click)="showAll()">All</button> 
-                <div class="btn-group" *ngFor="let scope of projectCategory">
-                        <button type="button" class="btn btn-default btn-sm"  (click)="filterByScope(scope)">{{scope}}</button>
-                </div>                    
+                <select type="number" class="scopeSelect" (ngModelChange)="filterByScope()" [(ngModel)]="scopeFilter" >
+                    <option value="allScopes" selected="selected">All Scopes</option>
+                    <option *ngFor="let category of projectCategory" [ngValue]="category" >{{category}}</option>
+                </select>
             </div>   
 
             <li *ngFor="let item of taskList; let i =index"  class="timelineItem row col-lg-12">

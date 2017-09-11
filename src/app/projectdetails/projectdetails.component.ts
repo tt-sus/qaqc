@@ -48,6 +48,7 @@ export class ProjectdetailsComponent implements OnInit {
   taskList: any[] = [];
   userArray = [];
   scope:string;
+  scopeFilter:string='allScopes';
   constructor(
     private location: Location,
     private projectService: ProjectService,
@@ -181,7 +182,7 @@ export class ProjectdetailsComponent implements OnInit {
       scope:[this.scope]
       
     })
-
+    this.scopeFilter='allScopes';
     if (!this.taskObj.status) {
       this.projectStatus = "In Progress";
     }
@@ -330,6 +331,7 @@ export class ProjectdetailsComponent implements OnInit {
       this.categoryType = task.categoryType;
       this.assigned_to.user_name = task.assigned_to;
       this.assigned_to.short_name = task.user_short;
+      this.scope=task.scope
     })
     this.user_short_before = this.taskObj.user_short;
 
@@ -381,10 +383,17 @@ export class ProjectdetailsComponent implements OnInit {
     });
     this.timelineCmp.filterMyTaskCategory(this.loggedInUser);
   }
-  filterByScope(scope){
-    this.taskList = this.globalTasks.filter((task) => {
-      return task.scope === scope;
-    });
-    this.timelineCmp.filterByScope(scope);
+  filterByScope(){
+    if(this.scopeFilter==='allScopes'){
+      this.taskList = this.globalTasks;
+      this.timelineCmp.showAll();
+    }
+    else{
+      this.taskList = this.globalTasks.filter((task) => {
+        return task.scope === this.scopeFilter;
+      });
+      this.timelineCmp.filterByScope(this.scopeFilter);
+    }
+    
   }
 }
