@@ -38,17 +38,18 @@ destroy(){
         let taskKeys=[];
         projects.forEach((project,i)=>{
        
-          this.projectname=[...this.projectname,...project.project_name]// get project names
+       // get project names
           console.log(this.projectname)
           this.groups = new vis.DataSet();
-          for (let g=0; g<this.projectname.length;g++) {
-
-            this.groups.add({id: g, content:this.projectname[g]});
-          }
+         
           let keys;
           if(Object.keys(project).includes('tasks')){
             keys=Object.keys(project['tasks']);
-           taskKeys=[...keys]
+           taskKeys=[...keys];
+           this.projectname=[...this.projectname,...project.project_name];
+           for (let g=0; g<this.projectname.length;g++) {
+                        this.groups.add({id: g, content:this.projectname[g]});
+          }
           }
        
           taskKeys.forEach(key=>{
@@ -65,6 +66,7 @@ destroy(){
     console.log(this.userTasks)
   }
   ngOnInit() {
+    this.projectname=[];
     this.getuserTasks();
     this.load=true;
     setTimeout(()=>{this.render();this.load=false;},1000);

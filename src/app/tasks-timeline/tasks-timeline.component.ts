@@ -89,6 +89,16 @@ export class TasksTimelineComponent implements OnInit {
     this.tasks = this.allTasks.filter((task) => {
       return task.user_short === user;
     });
+ 
+    this.userTasks=[];
+    this.formatTasks( this.tasks);
+    this.destroy();
+    this.quickRender();
+  }
+  filterByScope(scope){
+    this.tasks = this.allTasks.filter((task) => {
+      return task.scope === scope;
+    });
     this.userTasks=[];
     this.formatTasks( this.tasks);
     this.destroy();

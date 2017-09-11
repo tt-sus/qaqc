@@ -25,7 +25,6 @@ inputsForm:FormGroup;
 chat:string;
 user:string;
   ngOnInit() {
-    console.log(this.isManager)
     let user;
        this.auth.authState.subscribe((auth)=>{
           this.user= auth.displayName;

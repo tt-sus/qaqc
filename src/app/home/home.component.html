@@ -176,9 +176,7 @@
           <div class="form-group" >
             <label class="control-label col-sm-4" for="pwd">Service:</label>
             <div class="col-sm-6"> 
-              <select type="text" [(ngModel)]="category" formControlName="categoryType" (ngModelChange)="Prcategory()">
-                <option *ngFor="let category of projectCategory" [ngValue]="category">{{category}}</option>
-              </select>
+                <ss-multiselect-dropdown [settings]="mySettings"[options]="projectCategory" formControlName="categoryType" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>                
           </div>
           </div>
           <div class="form-group" >
@@ -190,7 +188,7 @@
             </div>
             </div>
             <div class="form-group" >
-                <label class="control-label col-sm-4" for="pwd">Project Area</label>
+                <label class="control-label col-sm-4" for="pwd">Project Area:</label>
                 <div class="col-sm-6"> 
                     <input  
                     (ngModelChange)="ProjectArea = $event" 
