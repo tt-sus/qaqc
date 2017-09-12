@@ -85,6 +85,9 @@ mySettings: IMultiSelectSettings = {
   displayAllSelectedText: true
 };
 // add project
+onChange(){
+  
+}
   addToList() {
     let project_key=this.projectService.addProject(
       {

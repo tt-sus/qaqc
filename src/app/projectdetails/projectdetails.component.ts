@@ -48,7 +48,7 @@ export class ProjectdetailsComponent implements OnInit {
   taskList: any[] = [];
   userArray = [];
   scope:string;
-  scopeFilter:string='allScopes';
+  
   constructor(
     private location: Location,
     private projectService: ProjectService,
@@ -211,13 +211,16 @@ export class ProjectdetailsComponent implements OnInit {
   taskCategory = [];
   MilestoneCategory = [];
   globalTasks = [];
+  filter:string;
   filterTaskCategory() {
+    this.filter="task";
     this.taskList = this.globalTasks.filter((task) => {
       return task.categoryType === "Task";
     });
     this.timelineCmp.filterTaskCategory();
   }
   filterMilestoneCategory() {
+    this.filter="milestone";
     this.taskList = this.globalTasks.filter((task) => {
       return task.categoryType === "Milestone";
     });
@@ -242,6 +245,7 @@ export class ProjectdetailsComponent implements OnInit {
   }
 
   showAll() {
+    this.filter="all"
     this.taskList = this.globalTasks;
     this.timelineCmp.showAll();
   }
@@ -378,12 +382,15 @@ export class ProjectdetailsComponent implements OnInit {
     this.timelineCmp.drawTimeline();
   }
   userTasks() {
+    this.filter="mytask"
     this.taskList = this.globalTasks.filter((task) => {
       return task.user_short === this.loggedInUser;
     });
     this.timelineCmp.filterMyTaskCategory(this.loggedInUser);
   }
+  scopeFilter:string;
   filterByScope(){
+   
     if(this.scopeFilter==='allScopes'){
       this.taskList = this.globalTasks;
       this.timelineCmp.showAll();

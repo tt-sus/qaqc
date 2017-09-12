@@ -33,13 +33,13 @@ destroy(){
   getuserTasks(){
     this.projectService.getMyTasks(this.user)
       .subscribe((projects)=>{
-        console.log(projects)
+        
         this.projectname=[];
         let taskKeys=[];
         projects.forEach((project,i)=>{
        
        // get project names
-          console.log(this.projectname)
+         
           this.groups = new vis.DataSet();
          
           let keys;
@@ -51,9 +51,7 @@ destroy(){
                         this.groups.add({id: g, content:this.projectname[g]});
           }
           }
-       
           taskKeys.forEach(key=>{
-  
             this.formatTask((project['tasks'][key]),i);
           })
         });
@@ -61,9 +59,9 @@ destroy(){
   }
   userTasks=[];
   formatTask(task,i){
+    console.log(task)
     task['group']=i;
     this.userTasks=[...this.userTasks,task];
-    console.log(this.userTasks)
   }
   ngOnInit() {
     this.projectname=[];

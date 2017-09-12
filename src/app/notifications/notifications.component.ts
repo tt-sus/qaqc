@@ -62,6 +62,7 @@ export class NotificationsComponent implements OnInit {
         this.router.navigate(['projectDetail',projectKey,`${this.params}`]);
   }
   ngOnInit() {
+    this.notifications=[];
   this.checkIfManager();
   }
 
