@@ -132,24 +132,19 @@ export class ProjectdetailsComponent implements OnInit {
     this.projectService.updateProjectStatus(this.projectID, bool);
   }
   ngOnInit() {
+    let m= localStorage.getItem("manager");
+    this.isManager=`${m}`;
     this.sub = this.route.params.subscribe(params => {
       this.projectID = params['id'];
       this.user_key = params['user'];
-      let routeparams = params['manager'];
-      if (routeparams === 'aabsvchfo134852f') {
-        this.isManager = "true";
-      }
-      else {
-        this.isManager = "false"
-      }
+      // if (routeparams === 'akshar') {
+      //   this.isManager = "true";
+      // }
+      // else {
+      //   this.isManager = "false"
+      // }
     });
     this.managerService.loggedInUser()
-      .subscribe(user => {
-        this.loggedInUser = user.email;
-        let $pos = this.loggedInUser.indexOf('@');
-        this.loggedInUser = this.loggedInUser.substr(0, $pos);
-        this.loggedInUser = this.loggedInUser.charAt(0).toUpperCase() + this.loggedInUser.charAt(1).toUpperCase() + this.loggedInUser.slice(2);
-      });
 
 
     let timelineInfo = this.projectService.getTimelineInfo(this.projectID);
@@ -352,6 +347,7 @@ export class ProjectdetailsComponent implements OnInit {
       status: this.taskObj.status,
       imageUrl: this.taskObj.imageUrl,
       user_short: this.assigned_to.short_name,
+      scope:this.scope,
     });
     this.projectService.editNotification({
       due_date: this.taskObj.dueDate, manager: this.projectManager,type:true, project_id: this.projectID, task_id: this.taskId, task_name: this.taskObj.taskName

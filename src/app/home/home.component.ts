@@ -144,11 +144,13 @@ onChange(){
       this.isManager=`${user.manager_access}`;
       if(this.isManager==='true'){
         this.timelineView=false;
-        this.params="aabsvchfo134852f";
+       
+        localStorage.setItem("manager",`${this.isManager}`)
       }
+      
       else if(this.isManager==='false'){
+        localStorage.setItem("manager",`${this.isManager}`)
         this.timelineView=false;
-        this.params="aabsvchfo1egssgu432f";
       }
       this.userName=user.user_name;
       this.user=user.short_name;
@@ -218,7 +220,7 @@ allManagers;
 filter:Project=new Project();
 //child routing
   goToProject(project) {
-    this.router.navigate(['projectDetail', project.$key,`${this.params}`]);
+    this.router.navigate(['projectDetail', project.$key]);
   };
   Prcategory(){
   }
