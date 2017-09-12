@@ -8,7 +8,7 @@ import { LearningComponent } from './learning/learning.component';
 export const appRoutes: Routes = [
   { path: "login", component: AuthComponent},
   { path: "home", component: HomeComponent,canActivate: [LoginRouteGuard]},
-  {path:"projectDetail/:id/:manager",component:ProjectdetailsComponent,canActivate: [LoginRouteGuard]},
+  {path:"projectDetail/:id",component:ProjectdetailsComponent,canActivate: [LoginRouteGuard]},
   {path:"addUsers",component:AddUSersComponent,canActivate: [LoginRouteGuard]},
   { path: 'learning', component: LearningComponent},
   { path: '**', component: AuthComponent}

@@ -18,4 +18,7 @@ export class UserService {
         this.users = this.database.list('/users')
         return this.users;
     }
+    checkManager(user){
+        return this.database.object(`users/${user}/manager_access`)
+    }
 }

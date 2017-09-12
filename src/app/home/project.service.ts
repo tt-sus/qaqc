@@ -45,6 +45,7 @@ export class ProjectService {
         this.timelineArray=this.database.list(`/projecttimeline`);
         this.timelineArray.remove(key);
         this.database.object(`/closeouts/${key}`).remove();
+        this.database.object(`/task-logs/${key}`).remove();
     }
     getTimeline(timelineId){
         return this.timelineTasks = this.database.list(`/projecttimeline/${timelineId}/tasks`)
