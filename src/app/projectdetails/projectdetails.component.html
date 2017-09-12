@@ -186,11 +186,11 @@
                 (click)="edit=false; clean();"*ngIf="isManager==='true'">New Task</button>
                 <button type="button" class="btn btn-default btn-sm"  (click)="sortTasks()">Sort Tasks</button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"  (click)="filterTaskCategory()">Tasks</button>
-                    <button type="button" class="btn btn-default btn-sm"  (click)="filterMilestoneCategory()">Milestones</button>
+                    <button type="button" class="btn btn-default btn-sm" [class.active]="filter==='task'" (click)="filterTaskCategory()">Tasks</button>
+                    <button type="button" class="btn btn-default btn-sm" [class.active]="filter==='milestone'" (click)="filterMilestoneCategory()">Milestones</button>
                 </div>
                 
-                <button type="button" class="btn btn-default btn-sm"  (click)="userTasks()">My Tasks</button>   
+                <button type="button" class="btn btn-default btn-sm"  [class.active]="filter==='mytask'" (click)="userTasks()">My Tasks</button>   
                 <button type="button" class="btn btn-default btn-sm"  (click)="showAll()">All</button> 
                 <select type="number" class="scopeSelect"  [(ngModel)]="scopeFilter" (ngModelChange)="filterByScope()" >
                    <option selected="selected" value="allScopes">All Scopes</option>
