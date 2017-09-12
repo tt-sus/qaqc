@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {Observable} from "rxjs/Rx";
 import {Http} from '@angular/http'
 import * as _ from 'underscore';
@@ -62,5 +62,8 @@ export class AppComponent implements OnInit   {
   }
    ngOnInit() {}
     
-
+   @HostListener('window:unload', [ '$event' ])
+   unloadHandler(event) {
+     this.logout()
+   }
 }
