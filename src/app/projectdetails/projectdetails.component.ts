@@ -131,18 +131,13 @@ export class ProjectdetailsComponent implements OnInit {
   onComplete(bool) {
     this.projectService.updateProjectStatus(this.projectID, bool);
   }
+  projectHours:number=0;
   ngOnInit() {
     let m= localStorage.getItem("manager");
     this.isManager=`${m}`;
     this.sub = this.route.params.subscribe(params => {
       this.projectID = params['id'];
       this.user_key = params['user'];
-      // if (routeparams === 'akshar') {
-      //   this.isManager = "true";
-      // }
-      // else {
-      //   this.isManager = "false"
-      // }
     });
     this.managerService.loggedInUser()
 
@@ -164,6 +159,9 @@ export class ProjectdetailsComponent implements OnInit {
       this.taskList = tasks;
       this.globalTasks = tasks;
       this.custom(this.globalTasks)
+      this.globalTasks.forEach(task=>{
+        this.projectHours  = this.projectHours+ task.hours; 
+      })
     })
     this.inputsForm = this.fb.group({
       taskName: [this.taskObj.taskName],
