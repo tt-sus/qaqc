@@ -44,7 +44,7 @@ export class ProjectdetailsComponent implements OnInit {
   id: any;
   inputsForm: FormGroup;
   taskListObs: FirebaseListObservable<any[]>;
-  userList: FirebaseListObservable<any[]>;
+  userList: Observable<any[]>;
   taskList: any[] = [];
   userArray = [];
   scope:string;
@@ -152,7 +152,17 @@ export class ProjectdetailsComponent implements OnInit {
       this.marketSector = info.market_sector;
       this.projectArea = info.area
     })
-    this.userList = this.userService.getUsers();
+    this.userList = this.userService.getUsers()
+      .map(users=>users.sort((a: any, b: any) => {
+        if (a.user_name < b.user_name) {
+          return -1;
+        } else if (a.user_name > b.user_name) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }))
+     
     let projectTasksObs = this.projectService.getTimeline(this.projectID);
 
     projectTasksObs.subscribe(tasks => {
