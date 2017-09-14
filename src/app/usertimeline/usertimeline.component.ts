@@ -7,6 +7,7 @@ declare var vis: any;
   styleUrls: ['./usertimeline.component.css']
 })
 export class UsertimelineComponent implements OnInit {
+  toggleFull: boolean=false;
   load: boolean;
   projectname = [];
   @Input()
@@ -22,13 +23,22 @@ user:string;
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     let threeWeeksLater=new Date();
     threeWeeksLater.setDate(oneWeekAgo.getDate() + 21);
-    this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5}};  
+    if(this.toggleFull=false){
+      this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5},verticalScroll:true,maxHeight:"200px"};        
+    }
+    else if(this.toggleFull=false){
+      this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5}};              
+     }
     this.timeline = new vis.Timeline(this.element.nativeElement, this.items,this.groups ,this.options);
     let startDate=new Date();
     let endDate= startDate.setDate(startDate.getDate()+8*24*60*60*1000);
   }
 destroy(){
    this.timeline.destroy();
+}
+fullScreen(){
+this.toggleFull=true;
+this.render();
 }
   getuserTasks(){
     this.projectService.getMyTasks(this.user)

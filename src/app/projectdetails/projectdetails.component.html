@@ -85,7 +85,7 @@
                     <div class="form-group select" >
                         <label class="control-label col-sm-4" for="pwd">Assign To</label>
                         <div class="col-sm-6"> 
-                            <select type="number" [(ngModel)]="assigned_to" formControlName="assigned_to" (ngModelChange)="toNumberUsers()">
+                            <select type="number"  [(ngModel)]="assigned_to" formControlName="assigned_to" (ngModelChange)="toNumberUsers()">
                                 <option *ngFor="let user of userList | async" [ngValue]="user" [selected]="assigned_to.user_name===user.user_name">{{user?.user_name}}</option>
                             </select>
                         </div>
@@ -112,7 +112,7 @@
                     <div class="form-group"> 
                     <label class="control-label col-sm-4" for="pwd">Start Date:</label>
                         <div class="col-sm-6"> 
-                        <input  
+                        <input  class="date"
                                 (ngModelChange)="taskObj.startDate = $event" 
                                 type="date" 
                                 name="startDate"
@@ -125,7 +125,7 @@
                     <div class="form-group"> 
                     <label class="control-label col-sm-4" for="pwd">Due Date:</label>
                         <div class="col-sm-6"> 
-                        <input  
+                        <input  class="date"
                                 (ngModelChange)="taskObj.dueDate = $event; checkDate()" 
                                 type="date" 
                                 name="dueDate"

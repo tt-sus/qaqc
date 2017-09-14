@@ -118,7 +118,6 @@ export class ProjectdetailsComponent implements OnInit {
       }
     }
   }
-
   toNumber() {
     this.taskObj.categoryType = this.categoryType
   }
@@ -140,8 +139,12 @@ export class ProjectdetailsComponent implements OnInit {
       this.user_key = params['user'];
     });
     this.managerService.loggedInUser()
-
-
+      .subscribe(user=>{
+        let $pos = user.email.indexOf('@');
+        let shortEmail=user.email.substr(0, $pos);
+       this.loggedInUser=shortEmail;
+      }
+    )
     let timelineInfo = this.projectService.getTimelineInfo(this.projectID);
     timelineInfo.subscribe((info) => {
       this.project_number = info.project_number;
@@ -162,7 +165,7 @@ export class ProjectdetailsComponent implements OnInit {
           return 0;
         }
       }))
-     
+     this.taskObj.startDate.setDate(new Date().getDate())
     let projectTasksObs = this.projectService.getTimeline(this.projectID);
 
     projectTasksObs.subscribe(tasks => {
@@ -196,6 +199,7 @@ export class ProjectdetailsComponent implements OnInit {
 
   }
   tagUser(){
+
     this.projectService.tagUser(this.projectID,this.taskId,this.assigned_to.short_name,this.taskObj.taskName,this.taskObj.dueDate,this.projectManager,false);
   }
   routeThis(val) {
@@ -300,9 +304,9 @@ export class ProjectdetailsComponent implements OnInit {
       qc2: {},
       comments: {}
     });
-
-    this.projectService.tagUser(this.projectID,task_key,this.assigned_to.short_name,this.taskObj.taskName,this.taskObj.dueDate,this.projectManager,true);
-    this.projectService.addTasksForMe(this.assigned_to.short_name,this.projectID,this.project_name,task_key,this.taskObj.dueDate,this.taskObj.taskName,this.taskObj.categoryType)
+    if(this.assigned_to.short_name!=this.loggedInUser){
+      this.projectService.addTasksForMe(this.assigned_to.short_name,this.projectID,this.project_name,task_key,this.taskObj.dueDate,this.taskObj.taskName,this.taskObj.categoryType)      
+    }
     this.inputsForm.reset();
     this.sortUp = true;
     this.timelineCmp.destroy();
