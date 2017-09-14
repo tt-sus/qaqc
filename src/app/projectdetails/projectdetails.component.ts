@@ -44,7 +44,7 @@ export class ProjectdetailsComponent implements OnInit {
   id: any;
   inputsForm: FormGroup;
   taskListObs: FirebaseListObservable<any[]>;
-  userList: FirebaseListObservable<any[]>;
+  userList: Observable<any[]>;
   taskList: any[] = [];
   userArray = [];
   scope:string;
@@ -131,18 +131,13 @@ export class ProjectdetailsComponent implements OnInit {
   onComplete(bool) {
     this.projectService.updateProjectStatus(this.projectID, bool);
   }
+  projectHours:number=0;
   ngOnInit() {
     let m= localStorage.getItem("manager");
     this.isManager=`${m}`;
     this.sub = this.route.params.subscribe(params => {
       this.projectID = params['id'];
       this.user_key = params['user'];
-      // if (routeparams === 'akshar') {
-      //   this.isManager = "true";
-      // }
-      // else {
-      //   this.isManager = "false"
-      // }
     });
     this.managerService.loggedInUser()
 
@@ -157,13 +152,26 @@ export class ProjectdetailsComponent implements OnInit {
       this.marketSector = info.market_sector;
       this.projectArea = info.area
     })
-    this.userList = this.userService.getUsers();
+    this.userList = this.userService.getUsers()
+      .map(users=>users.sort((a: any, b: any) => {
+        if (a.user_name < b.user_name) {
+          return -1;
+        } else if (a.user_name > b.user_name) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }))
+     
     let projectTasksObs = this.projectService.getTimeline(this.projectID);
 
     projectTasksObs.subscribe(tasks => {
       this.taskList = tasks;
       this.globalTasks = tasks;
       this.custom(this.globalTasks)
+      this.globalTasks.forEach(task=>{
+        this.projectHours  = this.projectHours+ task.hours; 
+      })
     })
     this.inputsForm = this.fb.group({
       taskName: [this.taskObj.taskName],

@@ -62,8 +62,8 @@ export class AppComponent implements OnInit   {
   }
    ngOnInit() {}
     
-   @HostListener('window:unload', [ '$event' ])
-   unloadHandler(event) {
-     this.logout()
-   }
+  //  @HostListener('window:unload', [ '$event' ])
+  //  unloadHandler(event) {
+  //    this.logout()
+  //  }
 }
