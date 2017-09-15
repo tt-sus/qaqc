@@ -57,7 +57,7 @@ fullScreen(){
 this.timelineHeight=1200
   }
   windowed(){
-this.timelineHeight=200
+this.timelineHeight=700
   }
 finaltasks=[];
 formatTasks(task,i){
@@ -105,7 +105,7 @@ managerTasks(){
   let projects$=this.projectService.getManagerProjects(this.currentUser)
 }
   ngOnInit() { 
-  this.timelineHeight=200
+  this.timelineHeight=700
   this.finaltasks=[];
   this.managerTasks();
   this.renderTimeline();
