@@ -87,6 +87,7 @@ saveUser(){
         this.router.navigate([""]);
      }
   }
+  //navigate to home
 toHome(){
   this.router.navigate(["/home"])
 }
