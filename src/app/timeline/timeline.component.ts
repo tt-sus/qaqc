@@ -45,7 +45,7 @@ export class TimelineComponent implements OnInit {
     let threeWeeksLater=new Date();
     threeWeeksLater.setDate(oneWeekAgo.getDate() + 21);
 
-    this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5},verticalScroll:true,maxHeight:`${this.timelineHeight}px`};   
+    this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5},maxHeight:`${this.timelineHeight}px`};   
     this.timeline = new vis.Timeline(this.element.nativeElement, this.items,this.groups ,this.options);
     let startDate=new Date();
     let endDate= startDate.setDate(startDate.getDate()+8*24*60*60*1000);
@@ -57,7 +57,7 @@ fullScreen(){
 this.timelineHeight=1200
   }
   windowed(){
-this.timelineHeight=200
+this.timelineHeight=700
   }
 finaltasks=[];
 formatTasks(task,i){
@@ -105,7 +105,7 @@ managerTasks(){
   let projects$=this.projectService.getManagerProjects(this.currentUser)
 }
   ngOnInit() { 
-  this.timelineHeight=200
+  this.timelineHeight=700
   this.finaltasks=[];
   this.managerTasks();
   this.renderTimeline();

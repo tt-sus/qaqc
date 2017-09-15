@@ -22,6 +22,7 @@ import { IMultiSelectOption, IMultiSelectSettings } from 'angular-2-dropdown-mul
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit   {
+  current: any;
   userName: any;
   userTasks: any[];
   user:string;
@@ -151,7 +152,8 @@ onChange(){}
     currentUser.subscribe((user=>{
       this.isAdmin=`${user.admin_access}`;
       this.isManager=`${user.manager_access}`;
-      this.manager=user.user_short;
+      this.current=user.short_name;
+      this.manager=user.user_name;
       if(this.isManager==='true'){
         this.timelineView=false;
        
@@ -176,8 +178,6 @@ onChange(){}
   }
 isManager:string;
   //authenticate manager
-
-
   addUser(){
     this.router.navigate(["addUsers"])
   }
@@ -236,20 +236,11 @@ filter:Project=new Project();
   }
   getManagers(){
     this.allManagers=this.projectService.getAllManagers()
-    // .map(users=>users.sort((a: any, b: any) => {
-    //   if (a.user_name < b.user_name) {
-    //     return -1;
-    //   } else if (a.user_name > b.user_name) {
-    //     return 1;
-    //   } else {
-    //     return 0;
-    //   }
-    // }));
   }
 inputsForm:FormGroup;
 startDate:Date=new Date();
 title:string;
-manager:string;
+manager:string=this.current;
 project_number:string;
 endDate:Date;
 status:string;

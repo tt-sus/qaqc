@@ -3,4 +3,5 @@ export class Manager{
     $key:string;
     manager_access:boolean;
     admin_access:boolean;
+    short_name:string;
 }
