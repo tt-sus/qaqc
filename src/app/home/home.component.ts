@@ -81,13 +81,21 @@ mySettings: IMultiSelectSettings = {
   checkedStyle: 'fontawesome',
   buttonClasses: 'btn btn-default btn-block ',
   containerClasses:'pr_category',
-  dynamicTitleMaxItems: 3,
+  dynamicTitleMaxItems: 2,
   displayAllSelectedText: true
 };
-// add project
-onChange(){
-  
+fullScreen(){
+  this.timelineCmp.fullScreen()
+  this.timelineCmp.destroyTimeline()
+  this.timelineCmp.renderTimeline()
 }
+windowed(){
+  this.timelineCmp.windowed()
+  this.timelineCmp.destroyTimeline()
+  this.timelineCmp.renderTimeline()
+}
+// add project
+onChange(){}
   addToList() {
     let project_key=this.projectService.addProject(
       {
@@ -107,6 +115,7 @@ onChange(){
           area:this.ProjectArea
         }
     )
+  
     this.projectsTimeline=[];
     this.projectService.addTimeline({
       project_name:this.title, 
@@ -142,6 +151,7 @@ onChange(){
     currentUser.subscribe((user=>{
       this.isAdmin=`${user.admin_access}`;
       this.isManager=`${user.manager_access}`;
+      this.manager=user.user_short;
       if(this.isManager==='true'){
         this.timelineView=false;
        
@@ -225,7 +235,16 @@ filter:Project=new Project();
   Prcategory(){
   }
   getManagers(){
-    this.allManagers=this.projectService.getAllManagers();
+    this.allManagers=this.projectService.getAllManagers()
+    // .map(users=>users.sort((a: any, b: any) => {
+    //   if (a.user_name < b.user_name) {
+    //     return -1;
+    //   } else if (a.user_name > b.user_name) {
+    //     return 1;
+    //   } else {
+    //     return 0;
+    //   }
+    // }));
   }
 inputsForm:FormGroup;
 startDate:Date=new Date();

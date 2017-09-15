@@ -37,6 +37,8 @@
       <form class="managerTimelineView" *ngIf="isManager==='true'">
         <label for="user">User view</label>
         <input type="checkbox" [(ngModel)]="timelineView"  name="user" value="user">
+        <label class="fullView" (click)="fullScreen()">Full View</label>
+        <label class="fullView" (click)="windowed()">Windowed</label>
     </form>
       <div *ngIf="isManager==='true' && timelineView==false">
         <app-timeline [Key]="userkey" [manager]="isManager"></app-timeline>
@@ -69,9 +71,9 @@
           <thead>
             <tr>
               <th class="col-lg-1"># </th>
-              <th class="col-lg-3">Project Name </th>
+              <th class="col-lg-2">Project Name </th>
               <th class="col-lg-2"> Manager </th>
-              <th class="col-lg-1">Client </th>
+              <th class="col-lg-2">Client </th>
               <th class="col-lg-1">CZ</th>
               <th class="col-lg-2"> Market Sector </th>
               <th class="col-lg-3">Scope </th>
@@ -79,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let res of pagedItems " >
+            <tr *ngFor="let res of pagedItems" >
               <td (click)="goToProject(res)">{{res.project_number}}</td>
               <td (click)="goToProject(res)">{{res.title}}</td>
               <td (click)="goToProject(res)">{{res.manager}}</td>
@@ -88,7 +90,7 @@
               <!-- <td *ngIf="res.projectStatus">Closed</td>
               <td *ngIf="!res.projectStatus">Open</td> -->
               <td (click)="goToProject(res)">{{res.market_sector}}</td>
-              <td (click)="goToProject(res)">{{res.category}}</td>
+              <td (click)="goToProject(res)" [ngClass]="res.category.length>1?'small':'big'">{{res.category}}</td>
               <td *ngIf="isAdmin==='true'"><button type="button" class="btn btn-default btn-xs"data-toggle="modal" data-target="#delete" (click)="getProject(res.$key,res)">Delete</button></td>
             </tr>
           </tbody>
@@ -156,7 +158,7 @@
             <label class="control-label col-sm-4" for="pwd">Manager Name:</label>
             <div class="col-sm-6"> 
               <select type="text" [(ngModel)]="manager" formControlName="manager">
-                  <option *ngFor="let manager of allManagers|async" [ngValue]="manager.user_name">{{manager.user_name}}</option>
+                  <option *ngFor="let manager of allManagers|async" [ngValue]="manager.user_name" [selected]="manager" >{{manager.user_name}}</option>
               </select>
               <p *ngIf="inputsForm.controls.manager.dirty && inputsForm.controls.manager?.errors" class="formInvalid">Manager is Required</p>
             </div>
@@ -216,6 +218,7 @@
            <label class="control-label col-sm-4" for="pwd">Start Date:</label>
             <div class="col-sm-6"> 
              <input  
+                    [(ngModel)]="startDate"
                     (ngModelChange)="startDate = $event" 
                     type="date" 
                     name="startDate"
