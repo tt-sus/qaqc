@@ -4,13 +4,13 @@
 
 table td{
     cursor: pointer;
-    font-size: 13px;
+    font-size: 0.85em;
 }
 
 .sus-header{
     margin-bottom: 50px;
 }
-.results{
+.results thead{
     text-transform: uppercase;
 }
 .formInvalid{
@@ -85,9 +85,6 @@ table td{
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #F5F5F5;
-}
-.small{
-    font-size: 12px !important;
 }
 .fullView{
     background-color: #f8f8f8;

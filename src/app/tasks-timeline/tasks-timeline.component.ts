@@ -28,7 +28,19 @@ export class TasksTimelineComponent implements OnInit {
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     let threeWeeksLater=new Date();
     threeWeeksLater.setDate(oneWeekAgo.getDate() + 21);
-    this.options = {start:oneWeekAgo,end:threeWeeksLater,timeAxis: {scale: 'day', step: 5}};  
+    this.options = {
+      start: oneWeekAgo,
+      end: threeWeeksLater,
+      timeAxis: { scale: 'weekday'},
+      format: {
+        minorLabels: {weekday: 'dd D'}
+      },
+      zoomMin: 1209600000,
+      zoomMax: 31536000000,
+      moment: function(date) {
+        return vis.moment(date).utcOffset('-05:00');
+      }
+     };
     this.timeline = new vis.Timeline(this.element.nativeElement, this.items,this.options);
     }
     destroy(){
@@ -36,7 +48,7 @@ export class TasksTimelineComponent implements OnInit {
    }
    drawTimeline(){
     this.load=true;
-    setTimeout(()=>{this.render();this.load=false;},1500);
+    setTimeout(()=>{this.render();this.load=false;},1000);
    }
    quickRender(){
      this.render()

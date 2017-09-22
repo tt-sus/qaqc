@@ -131,6 +131,7 @@ export class ProjectdetailsComponent implements OnInit {
     this.projectService.updateProjectStatus(this.projectID, bool);
   }
   projectHours:number=0;
+  projectHoursLeft:number=0;
   ngOnInit() {
     let m= localStorage.getItem("manager");
     this.isManager=`${m}`;
@@ -174,6 +175,9 @@ export class ProjectdetailsComponent implements OnInit {
       this.custom(this.globalTasks)
       this.globalTasks.forEach(task=>{
         this.projectHours  = this.projectHours+ task.hours; 
+        if (!task.status) {
+          this.projectHoursLeft = this.projectHoursLeft + task.hours;
+        }
       })
     })
     this.inputsForm = this.fb.group({

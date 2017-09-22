@@ -7,25 +7,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  email: string="";
+  email: string = '';
   password: string;
-  userList:Array<any>;
-  resetPassword:boolean;
-  constructor(public authService: AuthService, private router:Router) {}
-  username:string="";
+  userList: Array<any>;
+  resetPassword: boolean;
+  constructor(public authService: AuthService, private router: Router) { }
+  username: string = '';
   login() {
-    this.email=`${this.email}@thorntontomasetti.com`;  
+    this.email = `${this.email.toLowerCase()}@thorntontomasetti.com`;
     this.authService.login(this.email, this.password)
-    this.email = this.password = '';    
+    this.email = this.password = '';
   }
   logout() {
     this.authService.logout();
   }
-  reset(email){
-    email=`${email}@thorntontomasetti.com`;
-    alert("email sent to "+email)
+  reset(email) {
+    email = `${email}@thorntontomasetti.com`;
+    alert('email sent to ' + email)
     this.authService.resetPassword(email)
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

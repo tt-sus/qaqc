@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable,FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AuthService } from '../auth.service';
 import { Project } from './project';
 
@@ -19,90 +19,90 @@ export class ProjectService {
     constructor(
         db: AngularFireDatabase,
         public authService: AuthService
-    ) { 
-       this.database=db; 
+    ) {
+        this.database = db;
     }
-    usersArray:Array<any>
-    getProjects(){
+    usersArray: Array<any>
+    getProjects() {
         this.projects = this.database.list('/projects')
         return this.projects;
     }
-    addProject(project){
-       return this.projects.push(project).key
+    addProject(project) {
+        return this.projects.push(project).key
     }
-    updateProjectStatus(key,val){
+    updateProjectStatus(key, val) {
         let projectObj = this.database.object('projects/' + key);
         projectObj.update({
             projectStatus: val
         })
     }
-    addTimeline(timeline,key){
+    addTimeline(timeline, key) {
         this.timeline = this.database.object(`/projecttimeline/${key}`);
         this.timeline.set(timeline)
     }
-    deleteProject(key){
+    deleteProject(key) {
         this.projects.remove(key);
-        this.timelineArray=this.database.list(`/projecttimeline`);
+        this.timelineArray = this.database.list(`/projecttimeline`);
         this.timelineArray.remove(key);
         this.database.object(`/closeouts/${key}`).remove();
         this.database.object(`/task-logs/${key}`).remove();
     }
-    getTimeline(timelineId){
+    getTimeline(timelineId) {
         return this.timelineTasks = this.database.list(`/projecttimeline/${timelineId}/tasks`)
     }
-    getTimelineInfo(timelineId){
+    getTimelineInfo(timelineId) {
         return this.database.object(`/projecttimeline/${timelineId}`)
     }
-    addTasks(task){
-       return this.timelineTasks.push(task).key;
+    addTasks(task) {
+        return this.timelineTasks.push(task).key;
     }
-    getTask(key,timelineKey){
-        this.timelineKey=timelineKey;
-        this.taskKey=key;
-        this.taskObs=this.database.object(`/projecttimeline/${this.timelineKey}/tasks/${this.taskKey}`);
+    getTask(key, timelineKey) {
+        this.timelineKey = timelineKey;
+        this.taskKey = key;
+        this.taskObs = this.database.object(`/projecttimeline/${this.timelineKey}/tasks/${this.taskKey}`);
         return this.taskObs;
     }
-    editTask(task){
-         this.taskObs.update(task)
+    editTask(task) {
+        this.taskObs.update(task)
     }
-    editNotification(task,user,taskId){
+    editNotification(task, user, taskId) {
         this.database.object(`users/${user}/tagged/${taskId}`).update(task)
     }
-    deleteTask(userId){
+    deleteTask(userId) {
         this.taskObs.remove();
-        let userObsTask=this.database.object(`users/${userId}/tagged/${this.taskKey}`);
+        let userObsTask = this.database.object(`users/${userId}/tagged/${this.taskKey}`);
         userObsTask.remove();
         this.database.object(`users/${userId}/tagged/${this.taskKey}add`).remove();
     }
-    addQC1(timelineId,taskId,QC1){
-        this.taskQC1Observable=this.database.object(`/QC1/${timelineId}/${taskId}`);
+    addQC1(timelineId, taskId, QC1) {
+        this.taskQC1Observable = this.database.object(`/QC1/${timelineId}/${taskId}`);
         this.taskQC1Observable.set(QC1);
     }
-    getQC1(timelineId,taskId){
-        return this.taskQC1Observable=this.database.object(`/QC1/${timelineId}/${taskId}`);
+    getQC1(timelineId, taskId) {
+        return this.taskQC1Observable = this.database.object(`/QC1/${timelineId}/${taskId}`);
     }
-    editqC1(taskId,timelineId,QC1){
+    editqC1(taskId, timelineId, QC1) {
         this.database.object(`/QC1/${timelineId}/${taskId}`).update(QC1);
     }
-    addQC2(timelineId,taskId,QC2){
-        this.taskQC1Observable=this.database.object(`/QC2/${timelineId}/${taskId}`);
+    addQC2(timelineId, taskId, QC2) {
+        this.taskQC1Observable = this.database.object(`/QC2/${timelineId}/${taskId}`);
         this.taskQC1Observable.set(QC2);
     }
-    getQC2(timelineId,taskId){
-        return this.taskQC1Observable=this.database.object(`/QC2/${timelineId}/${taskId}`);
+    getQC2(timelineId, taskId) {
+        return this.taskQC1Observable = this.database.object(`/QC2/${timelineId}/${taskId}`);
     }
-    editqC2(taskId,timelineId,QC2){
+    editqC2(taskId, timelineId, QC2) {
         this.database.object(`/QC2/${timelineId}/${taskId}`).update(QC2);
     }
-    closeProject(projectId,closeout){
-        let closeoutObs=this.database.object(`/closeouts/${projectId}`);
+    closeProject(projectId, closeout) {
+        let closeoutObs = this.database.object(`/closeouts/${projectId}`);
         closeoutObs.set(closeout);
     }
-    getCloseout(projectId){
+    getCloseout(projectId) {
         return this.database.object(`/closeouts/${projectId}`);
     }
-    editCloseOut(projectId,closeout){
-        let closeoutObs=this.database.object(`/closeouts/${projectId}`);
+    editCloseOut(projectId, closeout) {
+        let closeoutObs = this.database.object(`/closeouts/${projectId}`);
         closeoutObs.update(closeout);
     }
     //check
@@ -118,73 +118,73 @@ export class ProjectService {
     //     let x=this.database.object(`userTasks/${user}/managing_projects/${projectId}/staffList/${assigned_to+task_key}`)
     //     x.set(task_key);
     // }
-    addTasksForMe(user,projectId,project_name,task_key,dueDate,task_name,type){
-        let y=this.database.object(`userTasks/${user}/${projectId}/project_name`);
+    addTasksForMe(user, projectId, project_name, task_key, dueDate, task_name, type) {
+        let y = this.database.object(`userTasks/${user}/${projectId}/project_name`);
         y.set(project_name)
-        let z=this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}`)
+        let z = this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}`)
         z.set({
-            start:dueDate,
-            content:task_name,
-            className:type
+            start: dueDate,
+            content: task_name,
+            className: type
         })
     }
-    editTasksForMe(user_before,user,projectId,project_name,task_key,dueDate,task_name,type){
-        let z=this.database.object(`userTasks/${user_before}/${projectId}/tasks/${task_key}/`)
+    editTasksForMe(user_before, user, projectId, project_name, task_key, dueDate, task_name, type) {
+        let z = this.database.object(`userTasks/${user_before}/${projectId}/tasks/${task_key}/`);
         z.remove();
-        let y=this.database.object(`userTasks/${user}/${projectId}/project_name`);
+        let y = this.database.object(`userTasks/${user}/${projectId}/project_name`);
         y.set(project_name)
-        let x=this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}/`)
+        let x = this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}/`);
         x.set({
-            start:dueDate,
-            content:task_name,
-            className:type
+            start: dueDate,
+            content: task_name,
+            className: type
         });
     }
-    deleteTasksForMe(user,task_key,projectId){
+    deleteTasksForMe(user, task_key, projectId) {
 
-        let z=this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}`)
+        let z = this.database.object(`userTasks/${user}/${projectId}/tasks/${task_key}`)
         z.remove();
     }
-    getMyTasks(user){
+    getMyTasks(user) {
         return this.database.list(`/userTasks/${user}`)
     }
-    getAllManagers(){
-        return this.database.list(`/users`,{
-            query:{
-                orderByChild:'manager_access',
-                equalTo:true
+    getAllManagers() {
+        return this.database.list(`/users`, {
+            query: {
+                orderByChild: 'manager_access',
+                equalTo: true
             }
         })
     }
     //end
-    getLearningProjects(){
+    getLearningProjects() {
         return this.database.list(`/closeouts`)
     }
-    tagUser(projectId,taskId,userId,taskName,dueDate,manager,type){
-        if(type==false){
-            let userObs=this.database.object(`users/${userId}/tagged/${taskId}`);
-            userObs.set({task_name:taskName,due_date:dueDate,project_id:projectId,task_id:taskId,manager:manager,type:type});    
+    tagUser(projectId, taskId, userId, taskName, dueDate, manager, type) {
+        if (type == false) {
+            let userObs = this.database.object(`users/${userId}/tagged/${taskId}`);
+            userObs.set({ task_name: taskName, due_date: dueDate, project_id: projectId, task_id: taskId, manager: manager, type: type });
         }
-        else{
-            let userObs=this.database.object(`users/${userId}/tagged/${taskId}add`);
-            userObs.set({task_name:taskName,due_date:dueDate,project_id:projectId,task_id:taskId,manager:manager,type:type});    
+        else {
+            let userObs = this.database.object(`users/${userId}/tagged/${taskId}add`);
+            userObs.set({ task_name: taskName, due_date: dueDate, project_id: projectId, task_id: taskId, manager: manager, type: type });
         }
     }
-    clearOneNotification(userId,taskId){
+    clearOneNotification(userId, taskId) {
         this.database.object(`users/${userId}/tagged/${taskId}add`).remove();
-        let userObs=this.database.object(`users/${userId}/tagged/${taskId}`);
+        let userObs = this.database.object(`users/${userId}/tagged/${taskId}`);
         userObs.remove();
     }
-    clearOneNotificationAdded(userId,taskId){
+    clearOneNotificationAdded(userId, taskId) {
         this.database.object(`users/${userId}/tagged/${taskId}`).remove()
-        let userObs=this.database.object(`users/${userId}/tagged/${taskId}add`);
+        let userObs = this.database.object(`users/${userId}/tagged/${taskId}add`);
         userObs.remove();
     }
-    getManagerProjects(manager){
-       return this.database.list(`projecttimeline`,{
-            query:{
-                orderByChild:'manager',
-                equalTo:manager
+    getManagerProjects(manager) {
+        return this.database.list(`projecttimeline`, {
+            query: {
+                orderByChild: 'manager',
+                equalTo: manager
             }
         })
     }

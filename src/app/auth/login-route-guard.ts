@@ -7,18 +7,15 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @Injectable()
 export class LoginRouteGuard implements CanActivate {
 
-  constructor(private auth: AngularFireAuth, private router:Router,) {}
+  constructor(private auth: AngularFireAuth, private router: Router, ) { }
 
   canActivate() {
-     if(this.auth.authState){
-            return true
-     }
-          else{
-          this.router.navigate(["/"]);
-          return false
-          }
-       
-      }
- 
-  
+    if (this.auth.authState) {
+      return true
+    }else {
+      this.router.navigate(['/']);
+      return false
+    }
+
+  }
 }

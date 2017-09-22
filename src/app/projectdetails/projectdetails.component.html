@@ -42,9 +42,9 @@
          </div>
     <div class="timeline-wrapper" >
         <h3>{{project_number}} // {{project_name}} <span><button class="infoButton" [popover]="myPopover"><i>i</i></button></span></h3>
-        <p class="desc"><b> Project Manager:</b> {{projectManager}}</p>
-        <p class="desc"><b>Client: </b> {{projectClient}}</p>
-        <p class="desc"><b>Total Project Hours: </b> {{projectHours}}</p>
+        <p class="desc"><b>Manager:</b> {{projectManager}}</p>
+        <p class="desc"><b>Client:</b> {{projectClient}}</p>
+        <p class="desc"><b>Total Hours: </b>{{projectHours}} ({{projectHoursLeft}} remaining)</p>
         
         <popover-content #myPopover title="Project Details" placement="right" [closeOnClickOutside]="true">
                 <b>Market Sector: </b> {{marketSector}}<br>
@@ -233,7 +233,6 @@
                     </div>
                     <div class="col-lg-1 details">
                         <button type="button" class="btn btn-sm action-buttons" data-toggle="collapse" [attr.data-target]="'#' + i"(click)="getTask(item.$key)">+</button>
-                        
                     </div>
                     <div class="clearfix"></div>
                     <div id={{i}} class="collapse collapse-content ">

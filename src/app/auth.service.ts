@@ -36,23 +36,20 @@ export class AuthService {
         if (this.firebaseAuth.auth) {
           this.userName = value.email;
           if (this.firebaseAuth.auth.currentUser) { this.isLoggedIn = true; }
-          this.router.navigate(["home"]);
-        }
-        else {
+          this.router.navigate(['home']);
+        }else {
           alert('Username or Password is not correct!');
-          this.router.navigate([""]);
+          this.router.navigate(['']);
         }
       })
       .catch(err => {
-        alert(`Something went wrong:, ${err.message} 
-Please contact the administrator`);
+        alert(`Something went wrong:, ${err.message} \nPlease contact the administrator`);
       });
   }
   sendToken() {
     if (this.firebaseAuth.auth.currentUser) {
       return true;
-    }
-    else {
+    }else {
       return false;
     }
   }
@@ -62,7 +59,7 @@ Please contact the administrator`);
       .auth
       .signOut();
 
-    this.router.navigate([""]);
+    this.router.navigate(['']);
   }
   resetPassword(email) {
     this.auth = firebase.auth();

@@ -33,13 +33,13 @@ export class NotificationsComponent implements OnInit {
       this.tasks=user.tagged;
       this.userId=user.short_name
       let taskKeys;
-      console.log(Object.keys(this.tasks))
+      // console.log(Object.keys(this.tasks))
       taskKeys=Object.keys(this.tasks);
       taskKeys.forEach(key => {
-        console.log(this.tasks[key])
+        // console.log(this.tasks[key])
         this.notifications.push(this.tasks[key])
       });
-      console.log(this.notifications)
+      // console.log(this.notifications)
       if(user.manager_access){
         this.params="aabsvchfo134852f";
       }

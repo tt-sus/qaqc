@@ -52,4 +52,12 @@ body{
     border-left: 0;
 }
 
-
+/* 
+.vis-time-axis .vis-grid.vis-saturday,
+.vis-time-axis .vis-grid.vis-sunday {
+  background: #F3F3F3;
+} */
+.vis-time-axis .vis-text.vis-saturday,
+.vis-time-axis .vis-text.vis-sunday {
+  color: #DDDDDD;
+}
