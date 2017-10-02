@@ -32,6 +32,9 @@ body{
 }
 .vis-labelset .vis-label .vis-inner {
     color: #c73f50;
+    max-width: 120px;
+    width: auto;
+    font-size: smaller;
 }
 
 .vis-timeline {
@@ -57,7 +60,9 @@ body{
 .vis-time-axis .vis-grid.vis-sunday {
   background: #F3F3F3;
 } */
-.vis-time-axis .vis-text.vis-saturday,
-.vis-time-axis .vis-text.vis-sunday {
-  color: #DDDDDD;
+.vis-time-axis .vis-text.vis-major {
+    color: #4d4d4d;
+}
+.vis-time-axis .vis-text.vis-minor {
+  color: #ccc;
 }

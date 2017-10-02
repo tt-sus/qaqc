@@ -55,13 +55,14 @@
         
         <!-- add new project -->
         <button type="button" class="btn btn-default btn-sm pull-right" *ngIf="isManager==='true'" data-toggle="modal" data-target="#myModal">New Project</button>
+        <button type="button" class="btn btn-default btn-sm pull-right"  (click)="userProjects()">My Projects</button>   
         <!-- search -->
         <div class="col-xs-5 row mb-2">
           <input  type="text"  
                 placeholder="Search: project number, name, or manager" 
                 name="Search" 
                 [(ngModel)]="filter.combined"
-                class="form-control"
+                class="form-control input-sm"
                 (keyup)="transform(filter)"> 
         </div>
       </div>

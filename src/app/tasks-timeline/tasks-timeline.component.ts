@@ -31,10 +31,6 @@ export class TasksTimelineComponent implements OnInit {
     this.options = {
       start: oneWeekAgo,
       end: threeWeeksLater,
-      timeAxis: { scale: 'weekday'},
-      format: {
-        minorLabels: {weekday: 'dd D'}
-      },
       zoomMin: 1209600000,
       zoomMax: 31536000000,
       moment: function(date) {

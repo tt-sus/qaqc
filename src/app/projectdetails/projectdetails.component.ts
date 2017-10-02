@@ -48,6 +48,7 @@ export class ProjectdetailsComponent implements OnInit {
   taskList: any[] = [];
   userArray = [];
   scope:string;
+  todayDate: Date;
   
   constructor(
     private location: Location,
@@ -61,6 +62,8 @@ export class ProjectdetailsComponent implements OnInit {
   ) {
 
     this.isManager = "false";
+    const today = new Date();
+    this.todayDate = today;
 
   }
   //modelling inputs
@@ -86,7 +89,7 @@ export class ProjectdetailsComponent implements OnInit {
       taskName: "",
       categoryType: null,
       assigned_to: "",
-      startDate: null,
+      startDate: this.todayDate,
       dueDate: null,
       details: "",
       hours: 0,

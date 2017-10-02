@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   project_key: string;
   projectStatus: boolean;
   projectsTimeline: Array<any> = [];
+  isMyProjects: boolean;
   //project category
   projectCategory = [{ id: "Energy Modeling", name: "Energy Modeling" },
   { id: "CFD", name: "CFD" },
@@ -84,6 +85,7 @@ export class HomeComponent implements OnInit {
     private managerService: ManagerService
   ) {
     this.projectStatus = false;
+    this.isMyProjects = false;
   }
   fullScreen() {
     this.timelineCmp.fullScreen()
@@ -183,10 +185,11 @@ export class HomeComponent implements OnInit {
   // paged items
   pagedItems: Project[];
 
+
+
   //search filter
   transform(filter: Project) {
     if (!filter) {
-
       this.pagedItems = this.projectTitles;
       this.pager = this.pagerService.getPager(this.projectTitles.length, 1);
       this.pagedItems = this.projectTitles.slice(this.pager.startIndex, this.pager.endIndex + 1);
@@ -212,6 +215,17 @@ export class HomeComponent implements OnInit {
     }
     return true;
   }
+  userProjects() {
+    this.isMyProjects = !this.isMyProjects;
+    if (this.isMyProjects) {
+      this.pagedItems = this.projectTitles.filter((proj) => {
+        return proj.manager.valueOf === this.userName;
+      });
+    }else {
+      this.pagedItems = this.projectTitles;
+    }
+  }
+
   //pagination
   setPage(page: number) {
     if (page < 1 || page > this.pager.totalPages) {
@@ -265,7 +279,7 @@ export class HomeComponent implements OnInit {
     //get projects
     let projectObs = this.projectService.getProjects();
     projectObs.subscribe((project) => {
-      this.projectTitles = project;
+      this.projectTitles = project.reverse();
       this.setPage(1);
       this.getManagers()
       //get users and check manager
@@ -282,11 +296,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["learning"])
   }
   checkDate() {
-
     if (new Date(this.endDate).getTime() - new Date(this.startDate).getTime() < 0) {
       this.dateInvalid = true;
-    }
-    else {
+    }else {
       this.dateInvalid = false;
     }
   }
