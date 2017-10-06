@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   { id: "CFD", name: "CFD" },
   { id: "Daylighting", name: "Daylighting" },
   { id: "Compliance modeling", name: "Compliance modeling" },
-  { id: "Hydrothermal analysis", name: "Hydrothermal analysis" },
+  { id: "Hygrothermal analysis", name: "Hygrothermal analysis" },
   { id: "Heat Transfer analysis", name: "Heat Transfer analysis" },
   { id: "Sustainability Strategies", name: "Sustainability Strategies" },
   { id: "Envelop Consulting", name: "Envelop Consulting" }]
@@ -158,13 +158,14 @@ export class HomeComponent implements OnInit {
         this.manager = user.user_name;
         if (this.isManager === 'true') {
           this.timelineView = false;
-          localStorage.setItem('manager', `${this.isManager}`)
         }else if (this.isManager === 'false') {
-          localStorage.setItem('manager', `${this.isManager}`)
           this.timelineView = false;
         }
         this.userName = user.user_name;
         this.user = user.short_name;
+
+        localStorage.setItem('manager', `${this.isManager}`)
+        localStorage.setItem('userName', `${this.userName}`)
       }))
     })
   }
@@ -219,7 +220,7 @@ export class HomeComponent implements OnInit {
     this.isMyProjects = !this.isMyProjects;
     if (this.isMyProjects) {
       this.pagedItems = this.projectTitles.filter((proj) => {
-        return proj.manager.valueOf === this.userName;
+        return proj.manager === this.userName;
       });
     }else {
       this.pagedItems = this.projectTitles;

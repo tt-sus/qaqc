@@ -84,30 +84,30 @@ export class TimelineComponent implements OnInit {
   }
   managerTasks() {
     this.projectNames = [];
-    this.managerService.loggedInUser()
-      .subscribe((user) => {
-        this.currentUser = user.displayName;
-        this.projectService.getManagerProjects(this.currentUser)
-          .subscribe((projects) => {
-            // projects with manager as myself
-            projects.forEach((project, i) => {
-              console.log(project.project_name);
-              this.tasks = [];
-              this.tasks.push(project.tasks); //[tasks-project1,tasks-project2]
-              this.tasks.forEach((task) => {
-                let taskKeys = Object.keys(task);
-                taskKeys.forEach((element, j) => {
-                  this.formatTasks(task[Object.keys(task)[j]], i);
-                });
-              })//finaltasks=[task1,task2]
-              this.projectNames.push(project.project_name);
-            })
-            this.groups = new vis.DataSet();
-            for (let g = 0; g < this.projectNames.length; g++) {
-              this.groups.add({ id: g, content: this.projectNames[g] });
-            }
-          })
+    this.currentUser = localStorage.getItem("userName");
+
+    console.log(this.currentUser);
+    this.projectService.getManagerProjects(this.currentUser)
+      .subscribe((projects) => {
+        // projects with manager as myself
+        projects.forEach((project, i) => {
+          console.log(project.project_name);
+          this.tasks = [];
+          this.tasks.push(project.tasks); //[tasks-project1,tasks-project2]
+          this.tasks.forEach((task) => {
+            let taskKeys = Object.keys(task);
+            taskKeys.forEach((element, j) => {
+              this.formatTasks(task[Object.keys(task)[j]], i);
+            });
+          })//finaltasks=[task1,task2]
+          this.projectNames.push(project.project_name);
+        })
+        this.groups = new vis.DataSet();
+        for (let g = 0; g < this.projectNames.length; g++) {
+          this.groups.add({ id: g, content: this.projectNames[g] });
+        }
       })
+
     let projects$ = this.projectService.getManagerProjects(this.currentUser)
   }
   ngOnInit() {

@@ -126,7 +126,7 @@ export class ProjectdetailsComponent implements OnInit {
   }
   toNumberUsers() {
 
-    this.taskObj.assigned_to = this.assigned_to.user_name
+    this.taskObj.assigned_to = this.assigned_to.user_name;
     this.taskObj.imageUrl = this.assigned_to.imageUrl;
   }
   timeline_key: "";
