@@ -35,6 +35,7 @@ export class LearningComponent implements OnInit {
   "Higher Education",
   "Hospitality/Gaming",
   "Mission Critical",
+  "Multifamily/Dorm",
   "Sports",
   "Transportation"];
   selectedSector:string='no selection';
