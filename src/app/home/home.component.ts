@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
     "Higher Education",
     "Hospitality/Gaming",
     "Mission Critical",
+    "Multifamily/Dorm",
     "Sports",
     "Transportation"];
   ProjectArea: number;

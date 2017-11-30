@@ -59,13 +59,14 @@ export class UsertimelineComponent implements OnInit {
             keys = Object.keys(project['tasks']);
             taskKeys = [...keys];
             this.projectname = [...this.projectname, ...project.project_name];
+            console.log(this.projectname);
             for (let g = 0; g < this.projectname.length; g++) {
               this.groups.add({ id: g, content: this.projectname[g] });
             }
+            taskKeys.forEach(key => {
+              this.formatTask((project['tasks'][key]), i);
+            })
           }
-          taskKeys.forEach(key => {
-            this.formatTask((project['tasks'][key]), i);
-          })
         });
       })
   }

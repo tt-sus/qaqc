@@ -10,8 +10,8 @@ export class UserService {
     constructor(
         db: AngularFireDatabase,
         public authService: AuthService
-    ) { 
-       this.database=db; 
+    ) {
+       this.database = db;
     }
     usersArray:Array<any>
     getUsers(){

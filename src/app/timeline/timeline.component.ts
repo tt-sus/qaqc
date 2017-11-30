@@ -94,12 +94,16 @@ export class TimelineComponent implements OnInit {
           console.log(project.project_name);
           this.tasks = [];
           this.tasks.push(project.tasks); //[tasks-project1,tasks-project2]
-          this.tasks.forEach((task) => {
-            let taskKeys = Object.keys(task);
-            taskKeys.forEach((element, j) => {
-              this.formatTasks(task[Object.keys(task)[j]], i);
-            });
-          })//finaltasks=[task1,task2]
+          console.log(this.tasks);
+          if (this.tasks[0] !== undefined) {
+            this.tasks.forEach((task) => {
+              let taskKeys = Object.keys(task);
+              taskKeys.forEach((element, j) => {
+                this.formatTasks(task[Object.keys(task)[j]], i);
+              });
+            })//finaltasks=[task1,task2]
+          }
+
           this.projectNames.push(project.project_name);
         })
         this.groups = new vis.DataSet();
