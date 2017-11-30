@@ -18,7 +18,9 @@ export class UsertimelineComponent implements OnInit {
   timeline: any;
   constructor(private projectService: ProjectService, private element: ElementRef) { }
   render() {
+    
     this.items = new vis.DataSet(this.userTasks);
+    console.log(this.userTasks);
     let oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     let threeWeeksLater = new Date();
@@ -27,15 +29,16 @@ export class UsertimelineComponent implements OnInit {
     //   this.options = { start: oneWeekAgo, end: threeWeeksLater, timeAxis: { scale: 'day', step: 5 }, verticalScroll: true, maxHeight: "200px" };
     // }
     // else if (this.toggleFull = false) {}
-      this.options = {
-        start: oneWeekAgo,
-        end: threeWeeksLater,
-        zoomMin: 1209600000,
-        zoomMax: 31536000000,
-        moment: function(date) {
-          return vis.moment(date).utcOffset('-05:00');
-        }
-       };
+    this.options = {
+      start: oneWeekAgo,
+      end: threeWeeksLater,
+      zoomMin: 1209600000,
+      zoomMax: 31536000000,
+      moment: function(date) {
+        return vis.moment(date).utcOffset('-05:00');
+      }
+    };
+    console.log(this.groups);
     this.timeline = new vis.Timeline(this.element.nativeElement, this.items, this.groups, this.options);
   }
   destroy() {
@@ -51,6 +54,7 @@ export class UsertimelineComponent implements OnInit {
 
         this.projectname = [];
         let taskKeys = [];
+        console.log(projects);
         projects.forEach((project, i) => {
           // get project names
           this.groups = new vis.DataSet();
@@ -59,12 +63,11 @@ export class UsertimelineComponent implements OnInit {
             keys = Object.keys(project['tasks']);
             taskKeys = [...keys];
             this.projectname = [...this.projectname, ...project.project_name];
-            console.log(this.projectname);
             for (let g = 0; g < this.projectname.length; g++) {
               this.groups.add({ id: g, content: this.projectname[g] });
             }
             taskKeys.forEach(key => {
-              this.formatTask((project['tasks'][key]), i);
+              this.formatTask((project['tasks'][key]), this.userTasks.length);
             })
           }
         });
@@ -74,6 +77,7 @@ export class UsertimelineComponent implements OnInit {
   formatTask(task, i) {
     task['group'] = i;
     this.userTasks = [...this.userTasks, task];
+    
   }
   ngOnInit() {
     this.projectname = [];

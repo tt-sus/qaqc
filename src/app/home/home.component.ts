@@ -178,7 +178,7 @@ export class HomeComponent implements OnInit {
     }, 800);
   }
   isManager: string;
-  //authenticate manager
+  // authenticate manager
   addUser() {
     this.router.navigate(["addUsers"])
   }
