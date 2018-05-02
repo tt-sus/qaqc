@@ -18,7 +18,13 @@ export class UserService {
         this.users = this.database.list('/users')
         return this.users;
     }
-    checkManager(user){
+    checkManager(user) {
         return this.database.object(`users/${user}/manager_access`)
+    }
+
+    getCurrentUserObj(email) {
+        const $pos = email.indexOf('@');
+        const shortEmail = email.substr(0, $pos).toLowerCase();
+        return this.database.object(`/users/${shortEmail}`);
     }
 }

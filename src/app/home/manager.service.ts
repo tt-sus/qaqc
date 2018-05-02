@@ -1,3 +1,4 @@
+import { log } from 'util';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Manager } from './manager';
@@ -13,12 +14,7 @@ export class ManagerService {
         this.database = db;
     }
     loggedInUser() {
-        let user = this.authService.user;
+        const user = this.authService.user;
         return user;
-    }
-    setCurrentUser(email) {
-        let $pos = email.indexOf('@');
-        let shortEmail = email.substr(0, $pos);
-        return this.database.object(`/users/${shortEmail}`)
     }
 }

@@ -19,7 +19,7 @@ declare var vis: any;
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  timelineHeight: number;
+  timelineHeight = 400;
   load: boolean;
   projectNames = [];
   tasks = [];
@@ -50,6 +50,7 @@ export class TimelineComponent implements OnInit {
       start: oneWeekAgo,
       end: threeWeeksLater,
       maxHeight: `${this.timelineHeight}px`,
+      // maxHeight: `200px`,
       zoomMin: 1209600000,
       zoomMax: 31536000000,
       moment: function(date) {
@@ -65,7 +66,7 @@ export class TimelineComponent implements OnInit {
     this.timelineHeight = 1200
   }
   windowed() {
-    this.timelineHeight = 700
+    this.timelineHeight = 500
   }
   formatTasks(task, i) {
     this.finaltasks.push({
@@ -86,15 +87,13 @@ export class TimelineComponent implements OnInit {
     this.projectNames = [];
     this.currentUser = localStorage.getItem("userName");
 
-    console.log(this.currentUser);
     this.projectService.getManagerProjects(this.currentUser)
       .subscribe((projects) => {
         // projects with manager as myself
         projects.forEach((project, i) => {
-          console.log(project.project_name);
           this.tasks = [];
           this.tasks.push(project.tasks); //[tasks-project1,tasks-project2]
-          console.log(this.tasks);
+
           if (this.tasks[0] !== undefined) {
             this.tasks.forEach((task) => {
               let taskKeys = Object.keys(task);
@@ -115,7 +114,6 @@ export class TimelineComponent implements OnInit {
     let projects$ = this.projectService.getManagerProjects(this.currentUser)
   }
   ngOnInit() {
-    this.timelineHeight = 700
     this.finaltasks = [];
     this.managerTasks();
     this.renderTimeline();

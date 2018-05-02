@@ -44,30 +44,30 @@ export class HomeComponent implements OnInit {
   projectStatus: boolean;
   projectsTimeline: Array<any> = [];
   isMyProjects: boolean;
-  //project category
-  projectCategory = [{ id: "Energy Modeling", name: "Energy Modeling" },
-  { id: "CFD", name: "CFD" },
-  { id: "Daylighting", name: "Daylighting" },
-  { id: "Compliance modeling", name: "Compliance modeling" },
-  { id: "Hygrothermal analysis", name: "Hygrothermal analysis" },
-  { id: "Heat Transfer analysis", name: "Heat Transfer analysis" },
-  { id: "Sustainability Strategies", name: "Sustainability Strategies" },
-  { id: "Envelop Consulting", name: "Envelop Consulting" }]
+  // project category
+  projectCategory = [{ id: 'Energy Modeling', name: 'Energy Modeling' },
+  { id: 'CFD', name: 'CFD' },
+  { id: 'Daylighting', name: 'Daylighting' },
+  { id: 'Compliance modeling', name: 'Compliance modeling' },
+  { id: 'Hygrothermal analysis', name: 'Hygrothermal analysis' },
+  { id: 'Heat Transfer analysis', name: 'Heat Transfer analysis' },
+  { id: 'Sustainability Strategies', name: 'Sustainability Strategies' },
+  { id: 'Envelop Consulting', name: 'Envelop Consulting' }]
   selectedSector: string;
-  market_sector = ["Aviation",
-    "Commercial",
-    "Cultural/Institutional",
-    "Education K-12",
-    "Government",
-    "Healthcare",
-    "Higher Education",
-    "Hospitality/Gaming",
-    "Mission Critical",
-    "Multifamily/Dorm",
-    "Sports",
-    "Transportation"];
+  market_sector = ['Aviation',
+    'Commercial',
+    'Cultural/Institutional',
+    'Education K-12',
+    'Government',
+    'Healthcare',
+    'Higher Education',
+    'Hospitality/Gaming',
+    'Mission Critical',
+    'Multifamily/Dorm',
+    'Sports',
+    'Transportation'];
   ProjectArea: number;
-  optionsModel: [""];
+  optionsModel: [''];
   mySettings: IMultiSelectSettings = {
     enableSearch: true,
     checkedStyle: 'fontawesome',
@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit {
   // add project
   onChange() { }
   addToList() {
-    let project_key = this.projectService.addProject(
+    const project_key = this.projectService.addProject(
       {
         project_number: this.project_number,
         manager: this.manager,
@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit {
     this.project = project;
   }
   project: Project;
-  //delete Project
+  // delete Project
   delete() {
     this.projectService.deleteProject(this.project_key);
     this.projectsTimeline = [];
@@ -148,11 +148,15 @@ export class HomeComponent implements OnInit {
     this.timelineCmp.ngOnInit()
   }
   checkIfManager() {
-    let email;
-    let userObs = this.managerService.loggedInUser();
-    userObs.subscribe((user) => {
-      let currentUser = this.managerService.setCurrentUser(user.email);
+
+    const userObs = this.managerService.loggedInUser();
+    userObs.subscribe((userOb) => {
+      console.log(userOb);
+      let userEmail = userOb.email;
+      userEmail = 'VGooje@ThorntonTomasetti.com';
+      const currentUser = this.userService.getCurrentUserObj(userEmail);
       currentUser.subscribe((user => {
+        
         this.isAdmin = `${user.admin_access}`;
         this.isManager = `${user.manager_access}`;
         this.current = user.short_name;
@@ -162,9 +166,9 @@ export class HomeComponent implements OnInit {
         }else if (this.isManager === 'false') {
           this.timelineView = false;
         }
+
         this.userName = user.user_name;
         this.user = user.short_name;
-
         localStorage.setItem('manager', `${this.isManager}`)
         localStorage.setItem('userName', `${this.userName}`)
       }))
@@ -177,10 +181,10 @@ export class HomeComponent implements OnInit {
       return m
     }, 800);
   }
-  isManager: string;
+  isManager: string = 'true';
   // authenticate manager
   addUser() {
-    this.router.navigate(["addUsers"])
+    this.router.navigate(['addUsers'])
   }
   // pager object
   pager: any = {};
@@ -189,7 +193,7 @@ export class HomeComponent implements OnInit {
 
 
 
-  //search filter
+  // search filter
   transform(filter: Project) {
     if (!filter) {
       this.pagedItems = this.projectTitles;
@@ -205,7 +209,7 @@ export class HomeComponent implements OnInit {
   }
   applyFilter(project: Project, filter: Project = new Project()): boolean {
 
-    for (let field in filter) {
+    for (const field in filter) {
 
       if (filter[field]) {
 
@@ -228,7 +232,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //pagination
+  // pagination
   setPage(page: number) {
     if (page < 1 || page > this.pager.totalPages) {
       return;
@@ -241,7 +245,7 @@ export class HomeComponent implements OnInit {
   }
   allManagers;
   filter: Project = new Project();
-  //child routing
+  // child routing
   goToProject(project) {
     this.router.navigate(['projectDetail', project.$key]);
   };
@@ -259,7 +263,7 @@ export class HomeComponent implements OnInit {
   status: string;
   client: string;
   climate: string;
-  category: [""];
+  category: [''];
   ngOnInit() {
     this.inputsForm = this.fb.group({
       project_number: [this.project_number, [Validators.required]],
@@ -274,28 +278,28 @@ export class HomeComponent implements OnInit {
       area: [this.ProjectArea]
     });
 
-    let userObs = this.userService.getUsers();
+    const userObs = this.userService.getUsers();
     userObs.subscribe((user) => {
       this.Managers = user;
     })
-    //get projects
-    let projectObs = this.projectService.getProjects();
+    // get projects
+    const projectObs = this.projectService.getProjects();
     projectObs.subscribe((project) => {
       this.projectTitles = project.reverse();
       this.setPage(1);
       this.getManagers()
-      //get users and check manager
+      // get users and check manager
       this.checkIfManager()
     });
     this.authService.user.subscribe((val => { this.routeThis(val) }))
   }
   routeThis(val) {
     if (!val) {
-      this.router.navigate([""]);
+      this.router.navigate(['']);
     }
   }
   goToLearning() {
-    this.router.navigate(["learning"])
+    this.router.navigate(['learning'])
   }
   checkDate() {
     if (new Date(this.endDate).getTime() - new Date(this.startDate).getTime() < 0) {
