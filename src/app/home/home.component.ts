@@ -151,9 +151,8 @@ export class HomeComponent implements OnInit {
 
     const userObs = this.managerService.loggedInUser();
     userObs.subscribe((userOb) => {
-      console.log(userOb);
-      let userEmail = userOb.email;
-      userEmail = 'VGooje@ThorntonTomasetti.com';
+      
+      const userEmail = userOb.email;
       const currentUser = this.userService.getCurrentUserObj(userEmail);
       currentUser.subscribe((user => {
         
